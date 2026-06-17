@@ -20,6 +20,7 @@ public class PlayerController : MonoBehaviour
     public bool isGrounded;
     public float yVelocity => rb.linearVelocity.y;
     private bool canMove = true;
+    public bool CanMove => canMove;
 
     public float FacingDirection { get; private set; } = 1f;
     public bool IsGrounded => isGrounded;
@@ -104,7 +105,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    private void OnDrawGizmosSelected()
+    private void OnDrawGizmos()
     {
         if (groundCheck == null) return;
         Gizmos.DrawWireSphere(groundCheck.position, groundCheckRadius);

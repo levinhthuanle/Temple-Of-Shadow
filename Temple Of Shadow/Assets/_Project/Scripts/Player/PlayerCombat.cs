@@ -24,6 +24,7 @@ public class PlayerCombat : MonoBehaviour
     private static readonly int Slash = Animator.StringToHash("slash");
     private static readonly int Throw = Animator.StringToHash("throw");
     private static readonly int Kick = Animator.StringToHash("kick");
+    
 
     private void Awake()
     {
@@ -33,7 +34,8 @@ public class PlayerCombat : MonoBehaviour
 
     private void Update()
     {
-        if (isAttacking) return;
+        // Chặn tấn công nếu đang bị thương (CanMove = false) hoặc đã đang tấn công
+        if (isAttacking || !playerController.CanMove) return;
 
         if (Input.GetKeyDown(KeyCode.J))
         {
@@ -143,6 +145,19 @@ public class PlayerCombat : MonoBehaviour
         playerController.SetCanMove(true);
     }
 
+    // Dùng để reset trạng thái đánh khi bị ngắt (như bị nhận sát thương)
+    public void ResetCombatState()
+    {
+        isAttacking = false;
+
+        if (animator != null)
+        {
+            animator.ResetTrigger(Slash);
+            animator.ResetTrigger(Throw);
+            animator.ResetTrigger(Kick);
+        }
+    }
+
     private void HitEnemies(float radius, int damage)
     {
         Collider2D[] enemies = Physics2D.OverlapCircleAll(
@@ -162,7 +177,7 @@ public class PlayerCombat : MonoBehaviour
         }
     }
 
-    private void OnDrawGizmosSelected()
+    private void OnDrawGizmos()
     {
         if (attackPoint == null) return;
 
