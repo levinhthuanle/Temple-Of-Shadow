@@ -5,36 +5,33 @@ using UnityEngine.UIElements;
 public class EnemyHealth : MonoBehaviour
 {
     [SerializeField] private int maxHp = 5;
-    private SpriteRenderer spriteRenderer;
 
     private int currentHp;
+    private Animator animator;
+
+    private static readonly int hurt = Animator.StringToHash("Hurt");
 
     private void Awake()
     {
         currentHp = maxHp;
-        spriteRenderer = GetComponent<SpriteRenderer>();
+        animator = GetComponentInChildren<Animator>();
     }
 
     public void TakeDamage(int damage)
     {
-        currentHp -= damage;
+        currentHp -= damage;   
 
 
         Debug.Log($"{gameObject.name} took {damage} damage. HP left: {currentHp}");
-        StartCoroutine(FlashRed());
-
+        Hurt();
         if (currentHp <= 0)
         {
             Destroy(gameObject);
         }
     }
 
-    private IEnumerator FlashRed()
+    public void Hurt()
     {
-        spriteRenderer.color = Color.red;
-
-        yield return new WaitForSeconds(0.1f);
-
-        spriteRenderer.color = Color.white;
+        animator.SetTrigger(hurt);
     }
 }
