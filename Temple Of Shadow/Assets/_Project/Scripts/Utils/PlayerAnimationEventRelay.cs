@@ -3,10 +3,12 @@ using UnityEngine;
 public class PlayerAnimationEventRelay : MonoBehaviour
 {
     private PlayerCombat combat;
+    private PlayerHealth health;
 
     private void Awake()
     {
         combat = GetComponentInParent<PlayerCombat>();
+        health = GetComponentInParent<PlayerHealth>();
     }
 
     public void SlashHit()
@@ -35,4 +37,11 @@ public class PlayerAnimationEventRelay : MonoBehaviour
     {
         combat.FinishAttack();
     }
+
+    public void FinishHurt()
+    {
+        health.FinishHurt();
+    }
+
+
 }
