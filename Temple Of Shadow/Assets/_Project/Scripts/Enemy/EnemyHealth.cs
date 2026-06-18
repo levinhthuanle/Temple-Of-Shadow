@@ -10,6 +10,7 @@ public class EnemyHealth : MonoBehaviour
     [SerializeField] private float destroyDelay = 1f;
     [SerializeField] private EnemyHealthBar healthBar;
     [SerializeField] private DamagePopupSpawner damagePopupSpawner;
+    [SerializeField] private EnemyDrop enemyDrop;
 
     private int currentHp;
     private bool isDeadOrNot = false;
@@ -46,6 +47,7 @@ public class EnemyHealth : MonoBehaviour
         if (currentHp <= 0)
         {
             DieEnemy();
+            enemyDrop.DropCoins();
             return;
         }
 

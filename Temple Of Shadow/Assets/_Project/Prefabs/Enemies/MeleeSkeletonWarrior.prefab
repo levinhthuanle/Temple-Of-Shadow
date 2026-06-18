@@ -107,6 +107,7 @@ GameObject:
   - component: {fileID: 479151319519889853}
   - component: {fileID: 7076238302099052756}
   - component: {fileID: 7499295503150056574}
+  - component: {fileID: 2562983673254654610}
   m_Layer: 7
   m_Name: MeleeSkeletonWarrior
   m_TagString: Untagged
@@ -214,6 +215,7 @@ MonoBehaviour:
   destroyDelay: 1
   healthBar: {fileID: 3592011549919810342}
   damagePopupSpawner: {fileID: 7499295503150056574}
+  enemyDrop: {fileID: 2562983673254654610}
 --- !u!114 &7644077755568720534
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -285,6 +287,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::DamagePopupSpawner
   damagePopupPrefab: {fileID: 7611586977180144439, guid: f4da9055340ee2041bb69e4702fa1467, type: 3}
   offset: {x: 2, y: 2, z: 0}
+--- !u!114 &2562983673254654610
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 841366296366608694}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6c76006238c52664ea4454d3af08d95c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: '::'
+  coinPrefab: {fileID: 8055987561453798124, guid: 99689a70ca97a534987b4bea9a6f3288, type: 3}
+  coinAmount: 3
+  dropRadius: 0.5
 --- !u!1 &1774422505747252229
 GameObject:
   m_ObjectHideFlags: 0
