@@ -8,6 +8,7 @@ public class EnemyHealth : MonoBehaviour
 
     [SerializeField] private int maxHp = 5;
     [SerializeField] private float destroyDelay = 1f;
+    [SerializeField] private EnemyHealthBar healthBar;
 
     private int currentHp;
     private bool isDeadOrNot = false;
@@ -25,6 +26,12 @@ public class EnemyHealth : MonoBehaviour
         enemyAttack = GetComponent<EnemyAttack>();
     }
 
+    private void Start()
+    {
+        healthBar.UpdateHealthBar(currentHp, maxHp);
+    }
+
+    //---------------------------UTILITY METHODS---------------------------//
     public void TakeDamage(int damage)
     {
         if (isDeadOrNot) return;
@@ -32,12 +39,17 @@ public class EnemyHealth : MonoBehaviour
         currentHp -= damage;
 
         Debug.Log($"{gameObject.name} took {damage} damage. HP left: {currentHp}");
+        healthBar.UpdateHealthBar(currentHp, maxHp);
 
         if (currentHp <= 0)
         {
             DieEnemy();
             return;
         }
+
+
+
+
 
         animator.SetTrigger(Hurt);
 
