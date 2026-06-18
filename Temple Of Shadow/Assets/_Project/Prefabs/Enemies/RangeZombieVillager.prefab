@@ -231,6 +231,7 @@ GameObject:
   - component: {fileID: 6729692426312394079}
   - component: {fileID: 6166932714862382120}
   - component: {fileID: 2872113640085738458}
+  - component: {fileID: 8867029440252032650}
   m_Layer: 7
   m_Name: RangeZombieVillager
   m_TagString: Untagged
@@ -337,6 +338,7 @@ MonoBehaviour:
   maxHp: 5
   destroyDelay: 1
   healthBar: {fileID: 1414596715543206991}
+  damagePopupSpawner: {fileID: 8867029440252032650}
 --- !u!114 &6166932714862382120
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -373,6 +375,20 @@ MonoBehaviour:
   shootPoint: {fileID: 8068410329877531373}
   projectilePrefab: {fileID: 7608615690213230301, guid: 53de08ac65406b6499636452094985d5, type: 3}
   attackCooldown: 2.17
+--- !u!114 &8867029440252032650
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3730567077228330134}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d1d87cada73cd454ab391cb74c74f051, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: '::'
+  damagePopupPrefab: {fileID: 7611586977180144439, guid: f4da9055340ee2041bb69e4702fa1467, type: 3}
+  offset: {x: 2.06, y: 2.02, z: 0}
 --- !u!1 &5035969197273031286
 GameObject:
   m_ObjectHideFlags: 0

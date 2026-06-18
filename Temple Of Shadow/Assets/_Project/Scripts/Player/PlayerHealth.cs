@@ -7,6 +7,7 @@ public class PlayerHealth : MonoBehaviour
 
     [Header("Invincible")]
     [SerializeField] private float invincibleTime = 0.5f;
+    [SerializeField] private DamagePopupSpawner damagePopupSpawner;
 
     private int currentHp;
     private bool isInvincible;
@@ -37,6 +38,7 @@ public class PlayerHealth : MonoBehaviour
         currentHp = Mathf.Clamp(currentHp, 0, maxHp);
 
         Debug.Log($"Player took {damage} damage. HP left: {currentHp}");
+        damagePopupSpawner.ShowDamage(damage);
 
         if (playerCombat != null)
         {
