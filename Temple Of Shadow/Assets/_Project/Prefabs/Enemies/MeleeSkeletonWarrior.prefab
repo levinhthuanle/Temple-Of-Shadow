@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 479151319519889853}
   - component: {fileID: 7076238302099052756}
   m_Layer: 7
-  m_Name: SkeletonWarrior
+  m_Name: MeleeSkeletonWarrior
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
