@@ -10,6 +10,9 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float jumpForce = 7f;
     [SerializeField] private Transform visual;
     [SerializeField] private Transform attackRoot;
+    [SerializeField] private int maxJumpCount = 2;
+
+    private int jumpCount;
 
     [Header("Ground Check")]
     [SerializeField] private Transform groundCheck;
@@ -57,9 +60,16 @@ public class PlayerController : MonoBehaviour
 
     private void HandleJump()
     {
-        if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
+
+
+        if ((Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.W)) && jumpCount < maxJumpCount)
         {
-            rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce);
+            rb.linearVelocity = new Vector2(
+                rb.linearVelocity.x,
+                jumpForce
+            );
+
+            jumpCount++;
         }
     }
 
@@ -81,11 +91,18 @@ public class PlayerController : MonoBehaviour
 
     private void CheckGround()
     {
+        bool wasGrounded = isGrounded;
+
         isGrounded = Physics2D.OverlapCircle(
             groundCheck.position,
             groundCheckRadius,
             groundLayer
         );
+
+        if (!wasGrounded && isGrounded)
+        {
+            jumpCount = 0;
+        }
     }
 
     private void UpdateAnimator()
