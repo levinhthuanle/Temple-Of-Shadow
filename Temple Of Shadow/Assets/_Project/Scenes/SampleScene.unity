@@ -521,14 +521,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
-    - target: {fileID: 3113322990576672616, guid: 62a4c1d4a2fcfab418ffda2dff990ca6, type: 3}
-      propertyPath: m_TagString
-      value: Player
-      objectReference: {fileID: 0}
     - target: {fileID: 5872716731744673949, guid: 62a4c1d4a2fcfab418ffda2dff990ca6, type: 3}
       propertyPath: coinUI
       value: 
       objectReference: {fileID: 1652104934}
+    - target: {fileID: 7543742510219390899, guid: 62a4c1d4a2fcfab418ffda2dff990ca6, type: 3}
+      propertyPath: jumpForce
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 7543742510219390899, guid: 62a4c1d4a2fcfab418ffda2dff990ca6, type: 3}
+      propertyPath: moveSpeed
+      value: 10
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

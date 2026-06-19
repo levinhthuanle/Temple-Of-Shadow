@@ -507,10 +507,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63ee4cfe0553a484ba998a98eeb4434a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerController
-  moveSpeed: 8
-  jumpForce: 15
+  moveSpeed: 10
+  jumpForce: 20
   visual: {fileID: 698380583130939589}
   attackRoot: {fileID: 3665110675165038249}
+  maxJumpCount: 2
   groundCheck: {fileID: 9017260152426987661}
   groundCheckRadius: 0.15
   groundLayer:
