@@ -12,10 +12,6 @@ public class PlayerCombat : MonoBehaviour
     [SerializeField] private float slashRadius = 0.6f;
     [SerializeField] private float kickRadius = 0.5f;
     [SerializeField] private LayerMask enemyLayer;
-
-    [Header("Damage")]
-    [SerializeField] private int slashDamage = 0;
-    [SerializeField] private int kickDamage = 0;
     private float attackInterval = 1f;
 
     [Header("Throw")]
@@ -102,14 +98,14 @@ public class PlayerCombat : MonoBehaviour
     // Gọi bằng Animation Event trong animation Slashing
     public void SlashHit()
     {
-        HitEnemies(slashRadius, GetFinalDamage(slashDamage));
+        HitEnemies(slashRadius, GetCurrentDamage());
     }
 
     // Gọi bằng Animation Event trong animation Kicking
     public void KickHit()
     {
         Debug.Log("KickHit CALLED");
-        HitEnemies(kickRadius, GetFinalDamage(kickDamage));
+        HitEnemies(kickRadius, GetCurrentDamage());
     }
 
     // Gọi bằng Animation Event trong animation Throwing
@@ -219,9 +215,9 @@ public class PlayerCombat : MonoBehaviour
         attackInterval = Mathf.Max(0.01f, playerStats.AttackInterval);
     }
 
-    private int GetFinalDamage(int skillDamage)
+    private int GetCurrentDamage()
     {
-        return (playerStats != null ? playerStats.Damage : 0) + skillDamage;
+        return playerStats != null ? playerStats.Damage : 0;
     }
 
     private void OnDrawGizmos()

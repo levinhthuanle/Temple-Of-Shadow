@@ -17,6 +17,6 @@ MonoBehaviour:
   damage: 3
   armor: 4
   moveSpeed: 9
-  attackSpeed: 3
+  attackSpeed: 10
   jumpForce: 15
   portrait: {fileID: 0}
