@@ -14,6 +14,9 @@ public class Coin : MonoBehaviour
             wallet.AddGold(value);
         }
 
+        // Played through the persistent SoundManager so it still sounds after this coin is destroyed.
+        SoundManager.Instance?.PlaySFX("coin_pickup");
+
         Destroy(gameObject);
     }
 }

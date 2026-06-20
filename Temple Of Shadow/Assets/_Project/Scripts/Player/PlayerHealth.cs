@@ -58,6 +58,7 @@ public class PlayerHealth : MonoBehaviour
     private void HurtPlayer()
     {
         isInvincible = true;
+        SoundManager.Instance?.PlaySFX("hurt");
 
         if (animator != null)
         {
@@ -83,6 +84,7 @@ public class PlayerHealth : MonoBehaviour
         isDead = true;
 
         Debug.Log("Player died");
+        SoundManager.Instance?.PlaySFX("player_death");
 
         if (playerController != null)
         {
