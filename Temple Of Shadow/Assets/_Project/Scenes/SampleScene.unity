@@ -1234,6 +1234,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2651084384613231115, guid: 62a4c1d4a2fcfab418ffda2dff990ca6, type: 3}
+      propertyPath: kickDamage
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2651084384613231115, guid: 62a4c1d4a2fcfab418ffda2dff990ca6, type: 3}
+      propertyPath: slashDamage
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3113322990576672616, guid: 62a4c1d4a2fcfab418ffda2dff990ca6, type: 3}
       propertyPath: m_Name
       value: Player
@@ -2889,6 +2897,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: '::'
   characterData: {fileID: 11400000, guid: fb56be25b2a8d3c47a9dc6f120e874f9, type: 2}
+  playerBonusStats: {fileID: 0}
 --- !u!114 &1622341212
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2901,7 +2910,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 18239ad59a3389d44a57f09d6b7992e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
-  bonusHP: 0
+  bonusHP: 10
   bonusDamage: 0
   bonusArmor: 1
   bonusMoveSpeed: 0

@@ -4,7 +4,6 @@ using UnityEngine;
 public class PlayerHealth : MonoBehaviour
 {
     private PlayerStats playerStats;
-    private PlayerBonus playerBonusStats;
     [SerializeField] private int maxHp = 10;
     [SerializeField] private int armor = 0;
 
@@ -15,6 +14,7 @@ public class PlayerHealth : MonoBehaviour
     private int currentHp;
     private bool isInvincible;
     private bool isDead;
+    private bool hasAppliedStats;
 
     private Animator animator;
     private PlayerController playerController;
@@ -29,11 +29,45 @@ public class PlayerHealth : MonoBehaviour
         playerController = GetComponent<PlayerController>();
         playerCombat = GetComponent<PlayerCombat>();
 
-        playerBonusStats = GetComponent<PlayerBonus>();
         playerStats = GetComponent<PlayerStats>();
-        maxHp = playerStats.MaxHP + playerBonusStats.bonusHP;
-        currentHp = maxHp;
-        armor = playerStats.Armor + playerBonusStats.bonusArmor;
+    }
+
+    private void OnEnable()
+    {
+        if (playerStats != null)
+        {
+            playerStats.StatsChanged += ApplyStats;
+        }
+
+        ApplyStats();
+    }
+
+    private void OnDisable()
+    {
+        if (playerStats != null)
+        {
+            playerStats.StatsChanged -= ApplyStats;
+        }
+    }
+
+    private void ApplyStats()
+    {
+        if (playerStats == null)
+        {
+            return;
+        }
+
+        maxHp = playerStats.MaxHP;
+        armor = playerStats.Armor;
+
+        if (!hasAppliedStats)
+        {
+            currentHp = maxHp;
+            hasAppliedStats = true;
+            return;
+        }
+
+        currentHp = Mathf.Clamp(currentHp, 0, maxHp);
     }
 
     public void TakeDamage(int damage)
