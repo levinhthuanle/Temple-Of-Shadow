@@ -6,8 +6,9 @@ public class PlayerController : MonoBehaviour
     private Animator animator;
 
     [Header("Movement")]
-    [SerializeField] private float moveSpeed = 3.5f;
-    [SerializeField] private float jumpForce = 7f;
+    private PlayerStats stats;
+    private float moveSpeed = 3.5f;
+    private float jumpForce = 7f;
     [SerializeField] private Transform visual;
     [SerializeField] private Transform attackRoot;
     [SerializeField] private int maxJumpCount = 2;
@@ -35,6 +36,11 @@ public class PlayerController : MonoBehaviour
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
+        
+        stats = GetComponent<PlayerStats>();
+        moveSpeed = stats.MoveSpeed;
+        jumpForce = stats.JumpForce;
+
         animator = GetComponentInChildren<Animator>();
     }
 

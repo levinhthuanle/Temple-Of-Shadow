@@ -1,9 +1,11 @@
+using Unity.VisualScripting.Antlr3.Runtime.Misc;
 using UnityEngine;
 
 public class PlayerCombat : MonoBehaviour
 {
     private Animator animator;
     private PlayerController playerController;
+    private PlayerStats playerStats;
 
     [Header("Attack Point")]
     [SerializeField] private Transform attackPoint;
@@ -29,7 +31,16 @@ public class PlayerCombat : MonoBehaviour
     private void Awake()
     {
         animator = GetComponentInChildren<Animator>();
+        
         playerController = GetComponent<PlayerController>();
+
+        playerStats = GetComponent<PlayerStats>();
+        slashDamage = GetFinalDamage(slashDamage);
+        kickDamage = GetFinalDamage(kickDamage);
+
+
+
+
     }
 
     private void Update()
@@ -90,23 +101,15 @@ public class PlayerCombat : MonoBehaviour
         HitEnemies(kickRadius, kickDamage);
     }
 
+    private int GetFinalDamage(int skillDamage)
+    {
+        return playerStats.Damage + skillDamage;
+    }
+
     // Gọi bằng Animation Event trong animation Throwing
     public void ThrowProjectile()
     {
-        //if (projectilePrefab == null || throwPoint == null) return;
 
-        //GameObject projectile = Instantiate(
-        //    projectilePrefab,
-        //    throwPoint.position,
-        //    Quaternion.identity
-        //);
-
-        //Projectile projectileScript = projectile.GetComponent<Projectile>();
-
-        //if (projectileScript != null)
-        //{
-        //    projectileScript.Setup(playerController.FacingDirection);
-        //}
         Debug.Log("ThrowProjectile CALLED");
 
         if (projectilePrefab == null)

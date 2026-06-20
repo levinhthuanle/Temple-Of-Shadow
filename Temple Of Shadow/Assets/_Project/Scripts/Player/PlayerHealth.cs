@@ -3,6 +3,7 @@ using UnityEngine;
 
 public class PlayerHealth : MonoBehaviour
 {
+    private PlayerStats playerStats;
     [SerializeField] private int maxHp = 10;
 
     [Header("Invincible")]
@@ -22,11 +23,13 @@ public class PlayerHealth : MonoBehaviour
 
     private void Awake()
     {
-        currentHp = maxHp;
-
         animator = GetComponentInChildren<Animator>();
         playerController = GetComponent<PlayerController>();
         playerCombat = GetComponent<PlayerCombat>();
+
+        playerStats = GetComponent<PlayerStats>();
+        maxHp = playerStats.MaxHP;
+        currentHp = maxHp;
     }
 
     public void TakeDamage(int damage)
