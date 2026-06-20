@@ -4,9 +4,10 @@ public class PlayerController : MonoBehaviour
 {
     private Rigidbody2D rb;
     private Animator animator;
+    private PlayerStats stats;
+    private PlayerBonus playerBonusStats;
 
     [Header("Movement")]
-    private PlayerStats stats;
     private float moveSpeed = 3.5f;
     private float jumpForce = 7f;
     [SerializeField] private Transform visual;
@@ -38,8 +39,10 @@ public class PlayerController : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         
         stats = GetComponent<PlayerStats>();
-        moveSpeed = stats.MoveSpeed;
-        jumpForce = stats.JumpForce;
+        playerBonusStats = GetComponent<PlayerBonus>();
+        moveSpeed = stats.MoveSpeed + playerBonusStats.bonusMoveSpeed;
+        jumpForce = stats.JumpForce + playerBonusStats.bonusJumpForce;
+        maxJumpCount += playerBonusStats.bonusJumpCount;
 
         animator = GetComponentInChildren<Animator>();
     }

@@ -12,11 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 392e4a5f7116c1140b87e466a9e47b82, type: 3}
   m_Name: Warrior
   m_EditorClassIdentifier: Assembly-CSharp::CharacterData
-  characterName: 
-  maxHp: 0
-  damage: 0
-  armor: 0
-  moveSpeed: 0
-  attackSpeed: 0
-  jumpForce: 0
+  characterName: Warrior
+  maxHp: 10
+  damage: 4
+  armor: 4
+  moveSpeed: 9
+  attackSpeed: 3
+  jumpForce: 15
   portrait: {fileID: 0}

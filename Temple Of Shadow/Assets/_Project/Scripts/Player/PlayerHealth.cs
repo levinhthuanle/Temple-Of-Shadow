@@ -4,7 +4,9 @@ using UnityEngine;
 public class PlayerHealth : MonoBehaviour
 {
     private PlayerStats playerStats;
+    private PlayerBonus playerBonusStats;
     [SerializeField] private int maxHp = 10;
+    [SerializeField] private int armor = 0;
 
     [Header("Invincible")]
     [SerializeField] private float invincibleTime = 0.5f;
@@ -27,9 +29,11 @@ public class PlayerHealth : MonoBehaviour
         playerController = GetComponent<PlayerController>();
         playerCombat = GetComponent<PlayerCombat>();
 
+        playerBonusStats = GetComponent<PlayerBonus>();
         playerStats = GetComponent<PlayerStats>();
-        maxHp = playerStats.MaxHP;
+        maxHp = playerStats.MaxHP + playerBonusStats.bonusHP;
         currentHp = maxHp;
+        armor = playerStats.Armor + playerBonusStats.bonusArmor;
     }
 
     public void TakeDamage(int damage)
@@ -37,7 +41,7 @@ public class PlayerHealth : MonoBehaviour
         if (isDead) return;
         if (isInvincible) return;
 
-        currentHp -= damage;
+        currentHp -= Mathf.Max(1, damage - armor);
         currentHp = Mathf.Clamp(currentHp, 0, maxHp);
 
         Debug.Log($"Player took {damage} damage. HP left: {currentHp}");

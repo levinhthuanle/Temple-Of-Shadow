@@ -6,6 +6,7 @@ public class PlayerCombat : MonoBehaviour
     private Animator animator;
     private PlayerController playerController;
     private PlayerStats playerStats;
+    private PlayerBonus playerBonusStats;
 
     [Header("Attack Point")]
     [SerializeField] private Transform attackPoint;
@@ -14,8 +15,8 @@ public class PlayerCombat : MonoBehaviour
     [SerializeField] private LayerMask enemyLayer;
 
     [Header("Damage")]
-    [SerializeField] private int slashDamage = 2;
-    [SerializeField] private int kickDamage = 1;
+    [SerializeField] private int slashDamage = 0;
+    [SerializeField] private int kickDamage = 0;
 
     [Header("Throw")]
     [SerializeField] private Transform throwPoint;
@@ -35,6 +36,7 @@ public class PlayerCombat : MonoBehaviour
         playerController = GetComponent<PlayerController>();
 
         playerStats = GetComponent<PlayerStats>();
+        playerBonusStats = GetComponent<PlayerBonus>();
         slashDamage = GetFinalDamage(slashDamage);
         kickDamage = GetFinalDamage(kickDamage);
 
@@ -103,7 +105,7 @@ public class PlayerCombat : MonoBehaviour
 
     private int GetFinalDamage(int skillDamage)
     {
-        return playerStats.Damage + skillDamage;
+        return playerStats.Damage + skillDamage + playerBonusStats.bonusDamage;
     }
 
     // Gọi bằng Animation Event trong animation Throwing
