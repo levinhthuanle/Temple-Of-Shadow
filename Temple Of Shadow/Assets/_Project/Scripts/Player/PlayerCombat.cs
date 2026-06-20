@@ -58,6 +58,7 @@ public class PlayerCombat : MonoBehaviour
         isAttacking = true;
         playerController.SetCanMove(false);
         animator.SetTrigger(Slash);
+        SoundManager.Instance?.PlaySFX("attack");
     }
 
     private void DoThrow()
@@ -65,6 +66,7 @@ public class PlayerCombat : MonoBehaviour
         isAttacking = true;
         playerController.SetCanMove(false);
         animator.SetTrigger(Throw);
+        SoundManager.Instance?.PlaySFX("attack");
     }
 
     private void DoKick()
@@ -72,6 +74,7 @@ public class PlayerCombat : MonoBehaviour
         isAttacking = true;
         playerController.SetCanMove(false);
         animator.SetTrigger(Kick);
+        SoundManager.Instance?.PlaySFX("attack");
     }
 
     // Gọi bằng Animation Event trong animation Slashing

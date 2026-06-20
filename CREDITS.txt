@@ -1,0 +1,50 @@
+=====================================================================
+ Temple Of Shadow — Asset Credits & Attribution
+=====================================================================
+This file lists third-party assets used in the project and their
+attribution requirements. Some packs REQUIRE credit (see notes).
+Fill in the bracketed placeholders before submitting/releasing.
+
+---------------------------------------------------------------------
+AUDIO — Sound Effects (SFX)
+---------------------------------------------------------------------
+
+1) RPG Essentials SFX
+   - Author:        [author name]
+   - Source / URL:  [link to the pack]
+   - License:       [license — e.g. CC0 / CC-BY / custom]
+   - Credit needed: [yes/no — fill from the pack's license]
+   - Used for:      enemy_death, jump, UI confirm, etc.
+
+2) JDSherbert — Ultimate UI SFX Pack
+   - Author:        JDSherbert
+   - Source / URL:  [link to the pack]
+   - License:       [license]
+   - Credit needed: YES — JDSherbert's license requires attribution.
+                    Make sure this credit appears in-game and/or in the
+                    project report.
+   - Used for:      click_button / UI sounds (cancel, confirm, ...)
+
+3) Jump SFX (Ambroggio)
+   - Author:        Ambroggio
+   - Source / URL:  [link to the pack]
+   - License:       [license]
+   - Credit needed: [yes/no]
+   - Used for:      jump (Masc Jump, Retro Jump 1/2, Fem Jump, ...)
+
+4) Super Dialogue Audio Pack
+   - Author:        [author name]
+   - Source / URL:  [link to the pack]
+   - License:       [license]
+   - Credit needed: [yes/no]
+   - Used for:      damage / death / dialogue cues
+
+---------------------------------------------------------------------
+NOTES
+---------------------------------------------------------------------
+- Add a new block here whenever a new pack is introduced.
+- Keep this file in sync with what is actually mapped in the
+  SoundManager Inspector (sfxEntries / bgmEntries).
+- Double-check each pack's license page for the exact required
+  wording of the credit (especially CC-BY and JDSherbert).
+=====================================================================

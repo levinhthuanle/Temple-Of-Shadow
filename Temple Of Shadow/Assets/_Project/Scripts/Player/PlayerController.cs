@@ -70,6 +70,7 @@ public class PlayerController : MonoBehaviour
             );
 
             jumpCount++;
+            SoundManager.Instance?.PlaySFX("jump");
         }
     }
 

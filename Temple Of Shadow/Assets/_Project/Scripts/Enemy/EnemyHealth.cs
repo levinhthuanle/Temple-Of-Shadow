@@ -56,6 +56,7 @@ public class EnemyHealth : MonoBehaviour
 
 
         animator.SetTrigger(Hurt);
+        SoundManager.Instance?.PlaySFX("enemy_hurt");
 
         if (enemyAI != null)
         {
@@ -82,6 +83,7 @@ public class EnemyHealth : MonoBehaviour
 
         animator.SetBool(IsDead, true);
         animator.SetTrigger(Die);
+        SoundManager.Instance?.PlaySFX("enemy_death");
 
         if (enemyAI != null)
             enemyAI.enabled = false;
