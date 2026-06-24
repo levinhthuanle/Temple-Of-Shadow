@@ -4,13 +4,15 @@ public class PlayerController : MonoBehaviour
 {
     private Rigidbody2D rb;
     private Animator animator;
+    private PlayerStats stats;
 
     [Header("Movement")]
-    [SerializeField] private float moveSpeed = 3.5f;
-    [SerializeField] private float jumpForce = 7f;
+    private float moveSpeed = 3.5f;
+    private float jumpForce = 7f;
+    [SerializeField] private int baseMaxJumpCount = 2;
+    private int maxJumpCount;
     [SerializeField] private Transform visual;
     [SerializeField] private Transform attackRoot;
-    [SerializeField] private int maxJumpCount = 2;
 
     private int jumpCount;
 
@@ -35,7 +37,28 @@ public class PlayerController : MonoBehaviour
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
+        
+        stats = GetComponent<PlayerStats>();
+
         animator = GetComponentInChildren<Animator>();
+    }
+
+    private void OnEnable()
+    {
+        if (stats != null)
+        {
+            stats.StatsChanged += ApplyStats;
+        }
+
+        ApplyStats();
+    }
+
+    private void OnDisable()
+    {
+        if (stats != null)
+        {
+            stats.StatsChanged -= ApplyStats;
+        }
     }
 
     private void Update()
@@ -103,6 +126,23 @@ public class PlayerController : MonoBehaviour
         if (!wasGrounded && isGrounded)
         {
             jumpCount = 0;
+        }
+    }
+
+    private void ApplyStats()
+    {
+        if (stats == null)
+        {
+            return;
+        }
+
+        moveSpeed = stats.MoveSpeed;
+        jumpForce = stats.JumpForce;
+        maxJumpCount = baseMaxJumpCount + stats.BonusJumpCount;
+
+        if (jumpCount > maxJumpCount)
+        {
+            jumpCount = maxJumpCount;
         }
     }
 

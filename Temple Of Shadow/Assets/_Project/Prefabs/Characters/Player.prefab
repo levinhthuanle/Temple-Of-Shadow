@@ -401,11 +401,12 @@ GameObject:
   - component: {fileID: 426112243901634407}
   - component: {fileID: 7543742510219390899}
   - component: {fileID: 9031877558702412971}
-  - component: {fileID: 835180073733623660}
   - component: {fileID: 2651084384613231115}
   - component: {fileID: 665188781201564756}
   - component: {fileID: 7585067033467903904}
   - component: {fileID: 5872716731744673949}
+  - component: {fileID: 6796617410950364636}
+  - component: {fileID: 8847165073121337651}
   m_Layer: 8
   m_Name: Player
   m_TagString: Player
@@ -507,11 +508,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63ee4cfe0553a484ba998a98eeb4434a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerController
-  moveSpeed: 10
-  jumpForce: 20
+  baseMaxJumpCount: 2
   visual: {fileID: 698380583130939589}
   attackRoot: {fileID: 3665110675165038249}
-  maxJumpCount: 2
   groundCheck: {fileID: 9017260152426987661}
   groundCheckRadius: 0.15
   groundLayer:
@@ -531,19 +530,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 83fb2eb963e7c7542b4f0d8a6ce88b86, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerAnimation
---- !u!114 &835180073733623660
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3113322990576672616}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 30a7837b019d4654c8f2eba26cedafe7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PlayerCharacter
-  characterData: {fileID: 0}
 --- !u!114 &2651084384613231115
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -562,8 +548,8 @@ MonoBehaviour:
   enemyLayer:
     serializedVersion: 2
     m_Bits: 128
-  slashDamage: 2
-  kickDamage: 1
+  slashDamage: 0
+  kickDamage: 0
   throwPoint: {fileID: 8665230650802800114}
   projectilePrefab: {fileID: 2612282458062596872, guid: 989c6e517158ac44eab4062fa3f0a4ac, type: 3}
 --- !u!114 &665188781201564756
@@ -579,6 +565,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerHealth
   maxHp: 10
+  armor: 0
   invincibleTime: 0.5
   damagePopupSpawner: {fileID: 7585067033467903904}
 --- !u!114 &7585067033467903904
@@ -608,6 +595,39 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: '::'
   coinUI: {fileID: 0}
+--- !u!114 &6796617410950364636
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3113322990576672616}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bb8dfbd8dfa27c34c8549d5fbda46289, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: '::'
+  characterData: {fileID: 11400000, guid: fb56be25b2a8d3c47a9dc6f120e874f9, type: 2}
+  playerBonusStats: {fileID: 0}
+--- !u!114 &8847165073121337651
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3113322990576672616}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 18239ad59a3389d44a57f09d6b7992e7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: '::'
+  bonusHP: 10
+  bonusDamage: 0
+  bonusArmor: 1
+  bonusMoveSpeed: 0
+  bonusAttackSpeed: 0
+  bonusJumpForce: 0
+  bonusJumpCount: 2
 --- !u!1 &3710758923329447445
 GameObject:
   m_ObjectHideFlags: 0

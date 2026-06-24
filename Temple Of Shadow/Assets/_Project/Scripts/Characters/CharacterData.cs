@@ -1,20 +1,24 @@
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "NewCharacterData", menuName = "Temple Of Shadow/Character Data")]
+[CreateAssetMenu(menuName = "Character/Character Data")]
 public class CharacterData : ScriptableObject
 {
-    [Header("Basic Info")]
+    [Header("Info")]
     public string characterName;
-    public CharacterClassType classType;
-    public Sprite icon;
-    public RuntimeAnimatorController animatorController;
 
-    [Header("Movement")]
-    public float moveSpeed = 5f;
-    public float jumpForce = 8f;
+    [Header("Base Stats")]
+    public int maxHp;
 
-    [Header("Stats")]
-    public int maxHealth = 100;
-    public int attackDamage = 10;
+    public int damage;
+
+    public int armor;
+
+    public float moveSpeed;
+
+    public float attackSpeed;
+
+    public float jumpForce;
+
+    [Header("UI")]
+    public Sprite portrait;
 }
-

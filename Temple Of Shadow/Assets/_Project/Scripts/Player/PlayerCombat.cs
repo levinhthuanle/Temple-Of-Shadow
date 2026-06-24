@@ -4,22 +4,22 @@ public class PlayerCombat : MonoBehaviour
 {
     private Animator animator;
     private PlayerController playerController;
+    private PlayerStats playerStats;
 
     [Header("Attack Point")]
     [SerializeField] private Transform attackPoint;
+
     [SerializeField] private float slashRadius = 0.6f;
     [SerializeField] private float kickRadius = 0.5f;
     [SerializeField] private LayerMask enemyLayer;
-
-    [Header("Damage")]
-    [SerializeField] private int slashDamage = 2;
-    [SerializeField] private int kickDamage = 1;
+    private float attackInterval = 1f;
 
     [Header("Throw")]
     [SerializeField] private Transform throwPoint;
     [SerializeField] private GameObject projectilePrefab;
 
     private bool isAttacking;
+    private float nextAttackTime;
 
     private static readonly int Slash = Animator.StringToHash("slash");
     private static readonly int Throw = Animator.StringToHash("throw");
@@ -29,13 +29,34 @@ public class PlayerCombat : MonoBehaviour
     private void Awake()
     {
         animator = GetComponentInChildren<Animator>();
+        
         playerController = GetComponent<PlayerController>();
+
+        playerStats = GetComponent<PlayerStats>();
+    }
+
+    private void OnEnable()
+    {
+        if (playerStats != null)
+        {
+            playerStats.StatsChanged += ApplyStats;
+        }
+
+        ApplyStats();
+    }
+
+    private void OnDisable()
+    {
+        if (playerStats != null)
+        {
+            playerStats.StatsChanged -= ApplyStats;
+        }
     }
 
     private void Update()
     {
         // Chặn tấn công nếu đang bị thương (CanMove = false) hoặc đã đang tấn công
-        if (isAttacking || !playerController.CanMove) return;
+        if (playerController == null || isAttacking || !playerController.CanMove || Time.time < nextAttackTime) return;
 
         if (Input.GetKeyDown(KeyCode.J))
         {
@@ -55,24 +76,21 @@ public class PlayerCombat : MonoBehaviour
 
     private void DoSlash()
     {
-        isAttacking = true;
-        playerController.SetCanMove(false);
+        BeginAttack();
         animator.SetTrigger(Slash);
         SoundManager.Instance?.PlaySFX("attack");
     }
 
     private void DoThrow()
     {
-        isAttacking = true;
-        playerController.SetCanMove(false);
+        BeginAttack();
         animator.SetTrigger(Throw);
         SoundManager.Instance?.PlaySFX("attack");
     }
 
     private void DoKick()
     {
-        isAttacking = true;
-        playerController.SetCanMove(false);
+        BeginAttack();
         animator.SetTrigger(Kick);
         SoundManager.Instance?.PlaySFX("attack");
     }
@@ -80,33 +98,20 @@ public class PlayerCombat : MonoBehaviour
     // Gọi bằng Animation Event trong animation Slashing
     public void SlashHit()
     {
-        HitEnemies(slashRadius, slashDamage);
+        HitEnemies(slashRadius, GetCurrentDamage());
     }
 
     // Gọi bằng Animation Event trong animation Kicking
     public void KickHit()
     {
         Debug.Log("KickHit CALLED");
-        HitEnemies(kickRadius, kickDamage);
+        HitEnemies(kickRadius, GetCurrentDamage());
     }
 
     // Gọi bằng Animation Event trong animation Throwing
     public void ThrowProjectile()
     {
-        //if (projectilePrefab == null || throwPoint == null) return;
 
-        //GameObject projectile = Instantiate(
-        //    projectilePrefab,
-        //    throwPoint.position,
-        //    Quaternion.identity
-        //);
-
-        //Projectile projectileScript = projectile.GetComponent<Projectile>();
-
-        //if (projectileScript != null)
-        //{
-        //    projectileScript.Setup(playerController.FacingDirection);
-        //}
         Debug.Log("ThrowProjectile CALLED");
 
         if (projectilePrefab == null)
@@ -143,15 +148,19 @@ public class PlayerCombat : MonoBehaviour
     // Gọi bằng Animation Event ở frame cuối mỗi animation attack
     public void FinishAttack()
     {
-        Debug.Log("FinishAttack CALLED");
         isAttacking = false;
-        playerController.SetCanMove(true);
+
+        if (playerController != null)
+        {
+            playerController.SetCanMove(true);
+        }
     }
 
     // Dùng để reset trạng thái đánh khi bị ngắt (như bị nhận sát thương)
     public void ResetCombatState()
     {
         isAttacking = false;
+        nextAttackTime = 0f;
 
         if (animator != null)
         {
@@ -163,6 +172,11 @@ public class PlayerCombat : MonoBehaviour
 
     private void HitEnemies(float radius, int damage)
     {
+        if (attackPoint == null)
+        {
+            return;
+        }
+
         Collider2D[] enemies = Physics2D.OverlapCircleAll(
             attackPoint.position,
             radius,
@@ -178,6 +192,32 @@ public class PlayerCombat : MonoBehaviour
                 health.TakeDamage(damage);
             }
         }
+    }
+
+    private void BeginAttack()
+    {
+        isAttacking = true;
+        nextAttackTime = Time.time + attackInterval;
+
+        if (playerController != null)
+        {
+            playerController.SetCanMove(false);
+        }
+    }
+
+    private void ApplyStats()
+    {
+        if (playerStats == null)
+        {
+            return;
+        }
+
+        attackInterval = Mathf.Max(0.01f, playerStats.AttackInterval);
+    }
+
+    private int GetCurrentDamage()
+    {
+        return playerStats != null ? playerStats.Damage : 0;
     }
 
     private void OnDrawGizmos()

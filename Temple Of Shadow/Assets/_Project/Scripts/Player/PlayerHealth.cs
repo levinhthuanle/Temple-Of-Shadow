@@ -3,7 +3,9 @@ using UnityEngine;
 
 public class PlayerHealth : MonoBehaviour
 {
+    private PlayerStats playerStats;
     [SerializeField] private int maxHp = 10;
+    [SerializeField] private int armor = 0;
 
     [Header("Invincible")]
     [SerializeField] private float invincibleTime = 0.5f;
@@ -12,6 +14,7 @@ public class PlayerHealth : MonoBehaviour
     private int currentHp;
     private bool isInvincible;
     private bool isDead;
+    private bool hasAppliedStats;
 
     private Animator animator;
     private PlayerController playerController;
@@ -22,11 +25,49 @@ public class PlayerHealth : MonoBehaviour
 
     private void Awake()
     {
-        currentHp = maxHp;
-
         animator = GetComponentInChildren<Animator>();
         playerController = GetComponent<PlayerController>();
         playerCombat = GetComponent<PlayerCombat>();
+
+        playerStats = GetComponent<PlayerStats>();
+    }
+
+    private void OnEnable()
+    {
+        if (playerStats != null)
+        {
+            playerStats.StatsChanged += ApplyStats;
+        }
+
+        ApplyStats();
+    }
+
+    private void OnDisable()
+    {
+        if (playerStats != null)
+        {
+            playerStats.StatsChanged -= ApplyStats;
+        }
+    }
+
+    private void ApplyStats()
+    {
+        if (playerStats == null)
+        {
+            return;
+        }
+
+        maxHp = playerStats.MaxHP;
+        armor = playerStats.Armor;
+
+        if (!hasAppliedStats)
+        {
+            currentHp = maxHp;
+            hasAppliedStats = true;
+            return;
+        }
+
+        currentHp = Mathf.Clamp(currentHp, 0, maxHp);
     }
 
     public void TakeDamage(int damage)
@@ -34,7 +75,7 @@ public class PlayerHealth : MonoBehaviour
         if (isDead) return;
         if (isInvincible) return;
 
-        currentHp -= damage;
+        currentHp -= Mathf.Max(1, damage - armor);
         currentHp = Mathf.Clamp(currentHp, 0, maxHp);
 
         Debug.Log($"Player took {damage} damage. HP left: {currentHp}");
