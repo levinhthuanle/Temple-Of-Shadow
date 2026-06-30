@@ -69,6 +69,12 @@ public class PlayerController : MonoBehaviour
         HandleJump();
         HandleFlip();
         UpdateAnimator();
+
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            Debug.Log("Max Health:" + stats.MaxHP);
+        }
+    
     }
 
     private void FixedUpdate()

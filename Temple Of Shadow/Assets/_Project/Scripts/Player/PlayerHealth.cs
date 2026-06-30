@@ -4,7 +4,7 @@ using UnityEngine;
 public class PlayerHealth : MonoBehaviour
 {
     private PlayerStats playerStats;
-    [SerializeField] private int maxHp = 10;
+    [SerializeField] private int maxHp = 0;
     [SerializeField] private int armor = 0;
 
     [Header("Invincible")]
