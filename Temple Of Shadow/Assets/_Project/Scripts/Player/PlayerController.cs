@@ -5,6 +5,7 @@ public class PlayerController : MonoBehaviour
     private Rigidbody2D rb;
     private Animator animator;
     private PlayerStats stats;
+    private PlayerHealth health;
 
     [Header("Movement")]
     private float moveSpeed = 3.5f;
@@ -39,6 +40,7 @@ public class PlayerController : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         
         stats = GetComponent<PlayerStats>();
+        health = GetComponent<PlayerHealth>();
 
         animator = GetComponentInChildren<Animator>();
     }
@@ -72,7 +74,7 @@ public class PlayerController : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.R))
         {
-            Debug.Log("Max Health:" + stats.MaxHP);
+            LogCurrentStats();
         }
     
     }
@@ -183,5 +185,32 @@ public class PlayerController : MonoBehaviour
     public void SetJumpForce(float newJumpForce)
     {
         jumpForce = newJumpForce;
+    }
+
+    private void LogCurrentStats()
+    {
+        if (stats == null)
+        {
+            Debug.LogWarning("Cannot log player stats because PlayerStats is missing.");
+            return;
+        }
+
+        string characterName = stats.CharacterData != null ? stats.CharacterData.characterName : "None";
+        int currentHp = health != null ? health.GetCurrentHp() : 0;
+        int maxHp = health != null ? health.GetMaxHp() : stats.MaxHP;
+
+        Debug.Log(
+            "Current Player Stats\n" +
+            $"Character: {characterName}\n" +
+            $"HP: {currentHp}/{maxHp}\n" +
+            $"MaxHP: {stats.MaxHP}\n" +
+            $"Damage: {stats.Damage}\n" +
+            $"Armor: {stats.Armor}\n" +
+            $"MoveSpeed: {stats.MoveSpeed}\n" +
+            $"AttackSpeed: {stats.AttackSpeed}\n" +
+            $"AttackInterval: {stats.AttackInterval}\n" +
+            $"JumpForce: {stats.JumpForce}\n" +
+            $"BonusJumpCount: {stats.BonusJumpCount}"
+        );
     }
 }
