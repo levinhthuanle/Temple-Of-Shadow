@@ -14,6 +14,8 @@ public class EquipmentManager : MonoBehaviour
     private EquipmentData cachedAccessory;
     private EquipmentData cachedProjectile;
 
+    [SerializeField] private EquipmentData testSword;
+
     private void Start()
     {
         RecalculateBonuses();
@@ -21,12 +23,26 @@ public class EquipmentManager : MonoBehaviour
 
     private void Update()
     {
-        if (!HasEquipmentChanged())
+        //if (!HasEquipmentChanged())
+        //{
+        //    return;
+        //}
+
+        if (Input.GetKeyDown(KeyCode.Q))
         {
-            return;
+            Equip(testSword);
+            Debug.Log("Equipped Sword");
         }
 
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            Unequip(ItemType.Sword);
+            Debug.Log("Unequipped Sword");
+        }
+
+
         RecalculateBonuses();
+
     }
 
     public void Equip(EquipmentData equipment)
@@ -139,5 +155,29 @@ public class EquipmentManager : MonoBehaviour
         cachedArmor = equippedArmor;
         cachedAccessory = equippedAccessory;
         cachedProjectile = equippedProjectile;
+    }
+
+    public void Unequip(ItemType itemType)
+    {
+        switch (itemType)
+        {
+            case ItemType.Sword:
+                equippedSword = null;
+                break;
+
+            case ItemType.Armor:
+                equippedArmor = null;
+                break;
+
+            case ItemType.Accessory:
+                equippedAccessory = null;
+                break;
+
+            case ItemType.Projectile:
+                equippedProjectile = null;
+                break;
+        }
+
+        RecalculateBonuses();
     }
 }

@@ -1173,14 +1173,6 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2651084384613231115, guid: 62a4c1d4a2fcfab418ffda2dff990ca6, type: 3}
-      propertyPath: kickDamage
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2651084384613231115, guid: 62a4c1d4a2fcfab418ffda2dff990ca6, type: 3}
-      propertyPath: slashDamage
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2651084384613231115, guid: 62a4c1d4a2fcfab418ffda2dff990ca6, type: 3}
       propertyPath: projectilePrefab
       value: 
       objectReference: {fileID: 8113401880967799739, guid: 8a25a29fd3ebf174c9431351eca0b64d, type: 3}
@@ -4206,9 +4198,17 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 4018102139192216009, guid: 81679489241431649a0aab8bcf00389f, type: 3}
+      propertyPath: testSword
+      value: 
+      objectReference: {fileID: 11400000, guid: 1f9f47c189b8da440a2b90d6a78c2071, type: 2}
+    - target: {fileID: 4018102139192216009, guid: 81679489241431649a0aab8bcf00389f, type: 3}
       propertyPath: playerBonus
       value: 
       objectReference: {fileID: 1622341202}
+    - target: {fileID: 4018102139192216009, guid: 81679489241431649a0aab8bcf00389f, type: 3}
+      propertyPath: equippedArmor
+      value: 
+      objectReference: {fileID: 11400000, guid: 0a4296d784edd6445a85a58560b0875c, type: 2}
     - target: {fileID: 9061971884004296697, guid: 81679489241431649a0aab8bcf00389f, type: 3}
       propertyPath: m_LocalPosition.x
       value: 9.5749

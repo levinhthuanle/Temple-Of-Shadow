@@ -10,13 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 151f1e7fbb451b549935a86a49eafe36, type: 3}
-  m_Name: SteelBlade
+  m_Name: Armor
   m_EditorClassIdentifier: Assembly-CSharp::EquipmentData
   itemName: SteelBlade
   description: A little bit strong
   icon: {fileID: 21300000, guid: b04cc61e1683e8e45a7af4666f1b95ac, type: 3}
   itemType: 0
-  maxHP: 40
+  maxHP: 400
   damage: 5
   armor: 0
   moveSpeed: 0
