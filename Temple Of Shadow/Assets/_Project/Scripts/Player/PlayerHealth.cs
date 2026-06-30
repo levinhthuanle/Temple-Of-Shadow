@@ -1,10 +1,13 @@
+using System;
 using System.Collections;
 using UnityEngine;
 
 public class PlayerHealth : MonoBehaviour
 {
+    public event Action<int, int> HealthChanged;
+
     private PlayerStats playerStats;
-    [SerializeField] private int maxHp = 10;
+    [SerializeField] private int maxHp = 0;
     [SerializeField] private int armor = 0;
 
     [Header("Invincible")]
@@ -15,6 +18,7 @@ public class PlayerHealth : MonoBehaviour
     private bool isInvincible;
     private bool isDead;
     private bool hasAppliedStats;
+    private bool hasFinishedInitialStats;
 
     private Animator animator;
     private PlayerController playerController;
@@ -40,6 +44,7 @@ public class PlayerHealth : MonoBehaviour
         }
 
         ApplyStats();
+        StartCoroutine(FinishInitialStatsRoutine());
     }
 
     private void OnDisable()
@@ -60,14 +65,24 @@ public class PlayerHealth : MonoBehaviour
         maxHp = playerStats.MaxHP;
         armor = playerStats.Armor;
 
-        if (!hasAppliedStats)
+        if (!hasAppliedStats || !hasFinishedInitialStats)
         {
             currentHp = maxHp;
             hasAppliedStats = true;
+            HealthChanged?.Invoke(currentHp, maxHp);
             return;
         }
 
         currentHp = Mathf.Clamp(currentHp, 0, maxHp);
+        HealthChanged?.Invoke(currentHp, maxHp);
+    }
+
+    private IEnumerator FinishInitialStatsRoutine()
+    {
+        yield return null;
+
+        hasFinishedInitialStats = true;
+        ApplyStats();
     }
 
     public void TakeDamage(int damage)
@@ -80,6 +95,7 @@ public class PlayerHealth : MonoBehaviour
 
         Debug.Log($"Player took {damage} damage. HP left: {currentHp}");
         damagePopupSpawner.ShowDamage(damage);
+        HealthChanged?.Invoke(currentHp, maxHp);
 
         if (playerCombat != null)
         {
@@ -166,6 +182,7 @@ public class PlayerHealth : MonoBehaviour
 
         currentHp += amount;
         currentHp = Mathf.Clamp(currentHp, 0, maxHp);
+        HealthChanged?.Invoke(currentHp, maxHp);
     }
 
     public int GetCurrentHp()
