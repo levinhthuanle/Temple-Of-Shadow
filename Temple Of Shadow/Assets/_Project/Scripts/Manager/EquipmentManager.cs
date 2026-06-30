@@ -28,17 +28,7 @@ public class EquipmentManager : MonoBehaviour
         //    return;
         //}
 
-        if (Input.GetKeyDown(KeyCode.Q))
-        {
-            Equip(testSword);
-            Debug.Log("Equipped Sword");
-        }
 
-        if (Input.GetKeyDown(KeyCode.E))
-        {
-            Unequip(ItemType.Sword);
-            Debug.Log("Unequipped Sword");
-        }
 
 
         RecalculateBonuses();
@@ -116,8 +106,6 @@ public class EquipmentManager : MonoBehaviour
         ApplyEquipment(equippedArmor);
         ApplyEquipment(equippedAccessory);
         ApplyEquipment(equippedProjectile);
-
-        Debug.Log("Bonus Damage: " + playerBonus.bonusDamage);
         CacheEquipment();
 
         PlayerStats playerStats = playerBonus.GetComponent<PlayerStats>();
