@@ -10,7 +10,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1577502023061052, guid: 438423df18ba0f64ab984b82da4eefee, type: 3}
       propertyPath: m_Name
-      value: Fallen_Angels
+      value: Error
       objectReference: {fileID: 0}
     - target: {fileID: 4377795655298628, guid: 438423df18ba0f64ab984b82da4eefee, type: 3}
       propertyPath: m_LocalPosition.x
