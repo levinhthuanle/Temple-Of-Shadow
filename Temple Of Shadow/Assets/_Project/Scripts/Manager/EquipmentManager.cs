@@ -18,21 +18,18 @@ public class EquipmentManager : MonoBehaviour
 
     private void Start()
     {
+        ResolvePlayerBonus();
         RecalculateBonuses();
     }
 
     private void Update()
     {
-        //if (!HasEquipmentChanged())
-        //{
-        //    return;
-        //}
-
-
-
+        if (!HasEquipmentChanged())
+        {
+            return;
+        }
 
         RecalculateBonuses();
-
     }
 
     public void Equip(EquipmentData equipment)
@@ -90,8 +87,13 @@ public class EquipmentManager : MonoBehaviour
 
     public void RecalculateBonuses()
     {
+        ResolvePlayerBonus();
+
         if (playerBonus == null)
+        {
+            Debug.LogWarning("[EquipmentManager] Missing PlayerBonus. Assign the player bonus target in the Inspector.");
             return;
+        }
 
         playerBonus.bonusHP = 0;
         playerBonus.bonusDamage = 0;
@@ -143,6 +145,14 @@ public class EquipmentManager : MonoBehaviour
         cachedArmor = equippedArmor;
         cachedAccessory = equippedAccessory;
         cachedProjectile = equippedProjectile;
+    }
+
+    private void ResolvePlayerBonus()
+    {
+        if (playerBonus == null)
+        {
+            playerBonus = FindAnyObjectByType<PlayerBonus>();
+        }
     }
 
     public void Unequip(ItemType itemType)

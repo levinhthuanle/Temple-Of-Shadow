@@ -9,6 +9,7 @@ public class InventoryUI : MonoBehaviour
 
     private bool isOpen;
     private InventoryManager subscribedInventoryManager;
+    private StatsPanelUI statsPanelUI;
 
     private void Awake()
     {
@@ -107,6 +108,8 @@ public class InventoryUI : MonoBehaviour
         {
             BindSlotsFromPanel();
         }
+
+        ResolveStatsPanel();
     }
 
     private void BindSlotsFromPanel()
@@ -169,6 +172,32 @@ public class InventoryUI : MonoBehaviour
         }
 
         return int.TryParse(objectName.Substring(4), out slotNumber);
+    }
+
+    private void ResolveStatsPanel()
+    {
+        if (statsPanelUI != null || inventoryPanel == null)
+        {
+            return;
+        }
+
+        Transform[] children = inventoryPanel.GetComponentsInChildren<Transform>(true);
+        foreach (Transform child in children)
+        {
+            if (child.name != "StatsPanel")
+            {
+                continue;
+            }
+
+            statsPanelUI = child.GetComponent<StatsPanelUI>();
+            if (statsPanelUI == null)
+            {
+                statsPanelUI = child.gameObject.AddComponent<StatsPanelUI>();
+            }
+
+            statsPanelUI.Refresh();
+            return;
+        }
     }
 
     private void SubscribeToInventoryManager()

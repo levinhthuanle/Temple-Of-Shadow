@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 35782b72c3c9c6340a745858728bc5d8, type: 3}
   m_Name: Potion
   m_EditorClassIdentifier: Assembly-CSharp::ItemData
-  itemName: 
-  stackable: 0
+  itemName: HP Potion
+  stackable: 1
   description: 
-  icon: {fileID: 0}
-  itemType: 0
+  icon: {fileID: 9108365968018652678, guid: 2788322398f5bba408ee7fec1820b1d3, type: 3}
+  itemType: 4
