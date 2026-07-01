@@ -6,17 +6,48 @@ public class InventorySlotUI : MonoBehaviour
 {
     public Image icon;
     public TextMeshProUGUI amountText;
+    private ItemData currentItem;
+    private InventoryUI inventoryUI;
+    private Button button;
 
     private void Awake()
     {
         EnsureReferences();
         SetItem(null, 0);
+
+        button = GetComponent<Button>();
+
+        if (button != null)
+        {
+            button.onClick.AddListener(OnClick);
+        }
+
+    }
+
+    private void OnClick()
+    {
+        if (currentItem == null)
+            return;
+
+        inventoryUI.OnItemClicked(currentItem);
     }
 
     private void Reset()
     {
         EnsureReferences();
     }
+
+    public void Initialize(
+    ItemData item,
+    int amount,
+    InventoryUI ui)
+    {
+        currentItem = item;
+        inventoryUI = ui;
+
+        SetItem(item, amount);
+    }
+
 
     public void EnsureReferences()
     {
