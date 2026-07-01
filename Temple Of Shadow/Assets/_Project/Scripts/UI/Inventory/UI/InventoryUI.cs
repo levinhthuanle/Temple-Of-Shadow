@@ -11,6 +11,8 @@ public class InventoryUI : MonoBehaviour
     private InventoryManager subscribedInventoryManager;
     private StatsPanelUI statsPanelUI;
 
+    public EquipmentManager equipmentManager;
+
     private void Awake()
     {
         ResolveReferences();
@@ -72,9 +74,10 @@ public class InventoryUI : MonoBehaviour
                 InventorySlot slotData =
                     inventoryManager.inventorySlots[i];
 
-                slots[i].SetItem(
+                slots[i].Initialize(
                     slotData.itemData,
-                    slotData.amount
+                    slotData.amount,
+                    this
                 );
             }
             else
@@ -100,6 +103,11 @@ public class InventoryUI : MonoBehaviour
         if (inventoryManager == null)
         {
             inventoryManager = FindAnyObjectByType<InventoryManager>();
+        }
+
+        if (equipmentManager == null)
+        {
+            equipmentManager = FindAnyObjectByType<EquipmentManager>();
         }
 
         SubscribeToInventoryManager();
@@ -214,5 +222,23 @@ public class InventoryUI : MonoBehaviour
 
         subscribedInventoryManager = inventoryManager;
         subscribedInventoryManager.InventoryChanged += Refresh;
+    }
+
+    public void OnItemClicked(ItemData item)
+    {
+        if (item is EquipmentData equipment)
+        {
+            ResolveReferences();
+
+            if (equipmentManager == null)
+            {
+                Debug.LogWarning("[InventoryUI] Missing EquipmentManager. Add EquipmentManager to the scene or assign it in the Inspector.");
+                return;
+            }
+
+            equipmentManager.Equip(equipment);
+
+            Refresh();
+        }
     }
 }

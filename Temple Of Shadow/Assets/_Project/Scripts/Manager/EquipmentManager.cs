@@ -14,12 +14,17 @@ public class EquipmentManager : MonoBehaviour
     private EquipmentData cachedAccessory;
     private EquipmentData cachedProjectile;
 
+    public EquipmentUI equipmentUI;
+
     [SerializeField] private EquipmentData testSword;
 
     private void Start()
     {
+        ResolveEquipmentUI();
         ResolvePlayerBonus();
         RecalculateBonuses();
+
+        RefreshEquipmentUI();
     }
 
     private void Update()
@@ -59,6 +64,7 @@ public class EquipmentManager : MonoBehaviour
         }
 
         RecalculateBonuses();
+        RefreshEquipmentUI();
     }
 
     public void EquipSword(EquipmentData equipment)
@@ -155,6 +161,27 @@ public class EquipmentManager : MonoBehaviour
         }
     }
 
+    private void ResolveEquipmentUI()
+    {
+        if (equipmentUI == null)
+        {
+            equipmentUI = FindAnyObjectByType<EquipmentUI>();
+        }
+    }
+
+    private void RefreshEquipmentUI()
+    {
+        ResolveEquipmentUI();
+
+        if (equipmentUI == null)
+        {
+            Debug.LogWarning("[EquipmentManager] Missing EquipmentUI. Add EquipmentUI to the scene or assign it in the Inspector.");
+            return;
+        }
+
+        equipmentUI.Refresh();
+    }
+
     public void Unequip(ItemType itemType)
     {
         switch (itemType)
@@ -177,5 +204,6 @@ public class EquipmentManager : MonoBehaviour
         }
 
         RecalculateBonuses();
+        RefreshEquipmentUI();
     }
 }
