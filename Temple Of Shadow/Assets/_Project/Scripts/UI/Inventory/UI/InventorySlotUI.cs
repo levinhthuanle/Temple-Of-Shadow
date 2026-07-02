@@ -26,7 +26,7 @@ public class InventorySlotUI : MonoBehaviour
 
     private void OnClick()
     {
-        if (currentItem == null)
+        if (currentItem == null || inventoryUI == null)
             return;
 
         inventoryUI.OnItemClicked(currentItem);
@@ -71,6 +71,7 @@ public class InventorySlotUI : MonoBehaviour
     public void SetItem(ItemData item, int amount)
     {
         EnsureReferences();
+        currentItem = item;
 
         if (item == null)
         {

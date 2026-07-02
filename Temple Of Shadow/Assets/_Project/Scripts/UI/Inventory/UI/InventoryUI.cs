@@ -236,7 +236,38 @@ public class InventoryUI : MonoBehaviour
                 return;
             }
 
-            equipmentManager.Equip(equipment);
+            if (inventoryManager == null)
+            {
+                Debug.LogWarning("[InventoryUI] Missing InventoryManager. Add InventoryManager to the scene or assign it in the Inspector.");
+                return;
+            }
+
+            if (!equipmentManager.CanEquip(equipment.itemType))
+            {
+                Debug.LogWarning($"[InventoryUI] Cannot equip item type {equipment.itemType}.");
+                return;
+            }
+
+            // If the clicked equipment is the same instance already equipped, do nothing.
+            EquipmentData currentlyEquipped = equipmentManager.GetEquippedEquipment(equipment.itemType);
+            if (currentlyEquipped == equipment)
+            {
+                Debug.Log($"[InventoryUI] {equipment.itemName} is already equipped.");
+                return;
+            }
+
+            if (!inventoryManager.RemoveItem(equipment))
+            {
+                Debug.LogWarning($"[InventoryUI] Cannot equip {equipment.itemName} because it was not found in the inventory.");
+                Refresh();
+                return;
+            }
+
+            EquipmentData previousEquipment = equipmentManager.Equip(equipment);
+            if (previousEquipment != null && previousEquipment != equipment)
+            {
+                inventoryManager.AddItem(previousEquipment);
+            }
 
             Refresh();
         }
