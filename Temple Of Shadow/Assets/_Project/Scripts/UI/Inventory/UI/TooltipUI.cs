@@ -72,14 +72,17 @@ public class TooltipUI : MonoBehaviour
 
         Vector2 mousePosition = Input.mousePosition;
 
+        Canvas.ForceUpdateCanvases();
+        Vector2 tooltipSize = rectTransform.rect.size;
+        Vector2 leftOffset = new Vector2(-(tooltipSize.x + Mathf.Abs(screenOffset.x)), screenOffset.y);
+
         if (rootCanvas != null && rootCanvas.renderMode != RenderMode.ScreenSpaceOverlay)
         {
             RectTransform canvasRect = rootCanvas.transform as RectTransform;
             if (canvasRect != null && RectTransformUtility.ScreenPointToLocalPointInRectangle(canvasRect, mousePosition, uiCamera, out Vector2 localPoint))
             {
-                Vector2 offset = screenOffset / Mathf.Max(rootCanvas.scaleFactor, 0.0001f);
+                Vector2 offset = leftOffset / Mathf.Max(rootCanvas.scaleFactor, 0.0001f);
                 Vector2 desiredPosition = localPoint + offset;
-                Vector2 tooltipSize = rectTransform.rect.size;
                 Rect canvasBounds = canvasRect.rect;
 
                 float minX = canvasBounds.xMin + (tooltipSize.x * rectTransform.pivot.x);
@@ -96,9 +99,9 @@ public class TooltipUI : MonoBehaviour
         }
 
         Vector2 screenSize = new Vector2(Screen.width, Screen.height);
-        Vector2 tooltipScreenSize = rectTransform.rect.size;
+    Vector2 tooltipScreenSize = tooltipSize;
         Vector2 pivot = rectTransform.pivot;
-        Vector2 targetPosition = mousePosition + screenOffset;
+    Vector2 targetPosition = mousePosition + leftOffset;
 
         float minScreenX = tooltipScreenSize.x * pivot.x;
         float maxScreenX = screenSize.x - (tooltipScreenSize.x * (1f - pivot.x));
