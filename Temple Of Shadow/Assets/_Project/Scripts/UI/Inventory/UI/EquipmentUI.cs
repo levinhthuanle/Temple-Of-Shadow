@@ -10,9 +10,15 @@ public class EquipmentUI : MonoBehaviour
     public Image accessoryIcon;
     public Image projectileIcon;
 
+    private EquipmentIconUI swordHoverUI;
+    private EquipmentIconUI armorHoverUI;
+    private EquipmentIconUI accessoryHoverUI;
+    private EquipmentIconUI projectileHoverUI;
+
     private void Awake()
     {
         ResolveReferences();
+        ResolveHoverComponents();
     }
 
     public void Refresh()
@@ -27,19 +33,23 @@ public class EquipmentUI : MonoBehaviour
 
         UpdateSlot(
             swordIcon,
-            equipmentManager.equippedSword);
+            equipmentManager.equippedSword,
+            swordHoverUI);
 
         UpdateSlot(
             armorIcon,
-            equipmentManager.equippedArmor);
+            equipmentManager.equippedArmor,
+            armorHoverUI);
 
         UpdateSlot(
             accessoryIcon,
-            equipmentManager.equippedAccessory);
+            equipmentManager.equippedAccessory,
+            accessoryHoverUI);
 
         UpdateSlot(
             projectileIcon,
-            equipmentManager.equippedProjectile);
+            equipmentManager.equippedProjectile,
+            projectileHoverUI);
     }
 
     private void ResolveReferences()
@@ -50,9 +60,18 @@ public class EquipmentUI : MonoBehaviour
         }
     }
 
+    private void ResolveHoverComponents()
+    {
+        swordHoverUI = EnsureHoverComponent(swordIcon, swordHoverUI);
+        armorHoverUI = EnsureHoverComponent(armorIcon, armorHoverUI);
+        accessoryHoverUI = EnsureHoverComponent(accessoryIcon, accessoryHoverUI);
+        projectileHoverUI = EnsureHoverComponent(projectileIcon, projectileHoverUI);
+    }
+
     private void UpdateSlot(
         Image image,
-        EquipmentData equipment)
+        EquipmentData equipment,
+        EquipmentIconUI hoverUI)
     {
         if (image == null)
         {
@@ -67,5 +86,31 @@ public class EquipmentUI : MonoBehaviour
 
         image.enabled = true;
         image.sprite = equipment.icon;
+
+        if (hoverUI != null)
+        {
+            hoverUI.SetEquipment(equipment);
+        }
+    }
+
+    private EquipmentIconUI EnsureHoverComponent(Image image, EquipmentIconUI existing)
+    {
+        if (image == null)
+        {
+            return null;
+        }
+
+        if (existing != null)
+        {
+            return existing;
+        }
+
+        EquipmentIconUI hoverUI = image.GetComponent<EquipmentIconUI>();
+        if (hoverUI == null)
+        {
+            hoverUI = image.gameObject.AddComponent<EquipmentIconUI>();
+        }
+
+        return hoverUI;
     }
 }

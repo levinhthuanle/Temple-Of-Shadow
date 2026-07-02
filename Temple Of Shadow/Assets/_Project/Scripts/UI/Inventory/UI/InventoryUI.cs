@@ -13,6 +13,8 @@ public class InventoryUI : MonoBehaviour
 
     public EquipmentManager equipmentManager;
 
+    public TooltipUI tooltipUI;
+
     private void Awake()
     {
         ResolveReferences();
@@ -32,6 +34,11 @@ public class InventoryUI : MonoBehaviour
         {
             subscribedInventoryManager.InventoryChanged -= Refresh;
             subscribedInventoryManager = null;
+        }
+
+        if (tooltipUI != null)
+        {
+            tooltipUI.Hide();
         }
     }
 
@@ -108,6 +115,11 @@ public class InventoryUI : MonoBehaviour
         if (equipmentManager == null)
         {
             equipmentManager = FindAnyObjectByType<EquipmentManager>();
+        }
+
+        if (tooltipUI == null)
+        {
+            tooltipUI = FindAnyObjectByType<TooltipUI>(FindObjectsInactive.Include);
         }
 
         SubscribeToInventoryManager();
@@ -236,9 +248,64 @@ public class InventoryUI : MonoBehaviour
                 return;
             }
 
-            equipmentManager.Equip(equipment);
+            if (inventoryManager == null)
+            {
+                Debug.LogWarning("[InventoryUI] Missing InventoryManager. Add InventoryManager to the scene or assign it in the Inspector.");
+                return;
+            }
+
+            if (!equipmentManager.CanEquip(equipment.itemType))
+            {
+                Debug.LogWarning($"[InventoryUI] Cannot equip item type {equipment.itemType}.");
+                return;
+            }
+
+            // If the clicked equipment is the same instance already equipped, do nothing.
+            EquipmentData currentlyEquipped = equipmentManager.GetEquippedEquipment(equipment.itemType);
+            if (currentlyEquipped == equipment)
+            {
+                Debug.Log($"[InventoryUI] {equipment.itemName} is already equipped.");
+                return;
+            }
+
+            if (!inventoryManager.RemoveItem(equipment))
+            {
+                Debug.LogWarning($"[InventoryUI] Cannot equip {equipment.itemName} because it was not found in the inventory.");
+                Refresh();
+                return;
+            }
+
+            EquipmentData previousEquipment = equipmentManager.Equip(equipment);
+            if (previousEquipment != null && previousEquipment != equipment)
+            {
+                inventoryManager.AddItem(previousEquipment);
+            }
 
             Refresh();
         }
+    }
+
+    public void OnItemHovered(ItemData item)
+    {
+        ResolveReferences();
+
+        if (tooltipUI == null || item == null)
+        {
+            return;
+        }
+
+        tooltipUI.Show(item);
+    }
+
+    public void OnItemHoverExit(ItemData item)
+    {
+        ResolveReferences();
+
+        if (tooltipUI == null)
+        {
+            return;
+        }
+
+        tooltipUI.Hide();
     }
 }

@@ -37,11 +37,24 @@ public class EquipmentManager : MonoBehaviour
         RecalculateBonuses();
     }
 
-    public void Equip(EquipmentData equipment)
+    public EquipmentData Equip(EquipmentData equipment)
     {
         if (equipment == null)
         {
-            return;
+            return null;
+        }
+
+        if (!CanEquip(equipment.itemType))
+        {
+            Debug.LogWarning($"Cannot equip item type {equipment.itemType} as equipment.");
+            return null;
+        }
+
+        EquipmentData previousEquipment = GetEquippedEquipment(equipment.itemType);
+
+        if (previousEquipment == equipment)
+        {
+            return previousEquipment;
         }
 
         switch (equipment.itemType)
@@ -58,13 +71,11 @@ public class EquipmentManager : MonoBehaviour
             case ItemType.Projectile:
                 equippedProjectile = equipment;
                 break;
-            default:
-                Debug.LogWarning($"Cannot equip item type {equipment.itemType} as equipment.");
-                return;
         }
 
         RecalculateBonuses();
         RefreshEquipmentUI();
+        return previousEquipment;
     }
 
     public void EquipSword(EquipmentData equipment)
@@ -180,6 +191,37 @@ public class EquipmentManager : MonoBehaviour
         }
 
         equipmentUI.Refresh();
+    }
+
+    public bool CanEquip(ItemType itemType)
+    {
+        switch (itemType)
+        {
+            case ItemType.Sword:
+            case ItemType.Armor:
+            case ItemType.Accessory:
+            case ItemType.Projectile:
+                return true;
+            default:
+                return false;
+        }
+    }
+
+    public EquipmentData GetEquippedEquipment(ItemType itemType)
+    {
+        switch (itemType)
+        {
+            case ItemType.Sword:
+                return equippedSword;
+            case ItemType.Armor:
+                return equippedArmor;
+            case ItemType.Accessory:
+                return equippedAccessory;
+            case ItemType.Projectile:
+                return equippedProjectile;
+            default:
+                return null;
+        }
     }
 
     public void Unequip(ItemType itemType)

@@ -66,6 +66,32 @@ public class InventoryManager : MonoBehaviour
         
     }
 
+    public bool RemoveItem(ItemData item)
+    {
+        if (item == null)
+            return false;
+
+        for (int i = 0; i < inventorySlots.Count; i++)
+        {
+            InventorySlot slot = inventorySlots[i];
+            if (slot.itemData != item)
+            {
+                continue;
+            }
+
+            slot.amount--;
+            if (slot.amount <= 0)
+            {
+                inventorySlots.RemoveAt(i);
+            }
+
+            InventoryChanged?.Invoke();
+            return true;
+        }
+
+        return false;
+    }
+
     public void PrintInventory()
     {
         Debug.Log("====== INVENTORY ======");
