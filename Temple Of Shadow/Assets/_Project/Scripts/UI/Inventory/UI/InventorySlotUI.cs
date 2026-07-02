@@ -1,8 +1,9 @@
 using TMPro;
+using UnityEngine.EventSystems;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class InventorySlotUI : MonoBehaviour
+public class InventorySlotUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
     public Image icon;
     public TextMeshProUGUI amountText;
@@ -30,6 +31,26 @@ public class InventorySlotUI : MonoBehaviour
             return;
 
         inventoryUI.OnItemClicked(currentItem);
+    }
+
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        if (currentItem == null || inventoryUI == null)
+        {
+            return;
+        }
+
+        inventoryUI.OnItemHovered(currentItem);
+    }
+
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        if (inventoryUI == null)
+        {
+            return;
+        }
+
+        inventoryUI.OnItemHoverExit(currentItem);
     }
 
     private void Reset()

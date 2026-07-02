@@ -13,6 +13,8 @@ public class InventoryUI : MonoBehaviour
 
     public EquipmentManager equipmentManager;
 
+    public TooltipUI tooltipUI;
+
     private void Awake()
     {
         ResolveReferences();
@@ -32,6 +34,11 @@ public class InventoryUI : MonoBehaviour
         {
             subscribedInventoryManager.InventoryChanged -= Refresh;
             subscribedInventoryManager = null;
+        }
+
+        if (tooltipUI != null)
+        {
+            tooltipUI.Hide();
         }
     }
 
@@ -108,6 +115,11 @@ public class InventoryUI : MonoBehaviour
         if (equipmentManager == null)
         {
             equipmentManager = FindAnyObjectByType<EquipmentManager>();
+        }
+
+        if (tooltipUI == null)
+        {
+            tooltipUI = FindAnyObjectByType<TooltipUI>(FindObjectsInactive.Include);
         }
 
         SubscribeToInventoryManager();
@@ -271,5 +283,29 @@ public class InventoryUI : MonoBehaviour
 
             Refresh();
         }
+    }
+
+    public void OnItemHovered(ItemData item)
+    {
+        ResolveReferences();
+
+        if (tooltipUI == null || item == null)
+        {
+            return;
+        }
+
+        tooltipUI.Show(item);
+    }
+
+    public void OnItemHoverExit(ItemData item)
+    {
+        ResolveReferences();
+
+        if (tooltipUI == null)
+        {
+            return;
+        }
+
+        tooltipUI.Hide();
     }
 }
