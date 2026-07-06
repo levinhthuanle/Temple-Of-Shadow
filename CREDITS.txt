@@ -40,6 +40,22 @@ AUDIO — Sound Effects (SFX)
    - Used for:      damage / death / dialogue cues
 
 ---------------------------------------------------------------------
+ART — Enemy Sprites (Spriter)
+---------------------------------------------------------------------
+
+5) CraftPix Free 2D Monster Sprites (pack craftpix-341189)
+   - Author:        CraftPix.net
+   - Source / URL:  https://craftpix.net/  (Free 2D Monster Sprites)
+   - License:       CraftPix Free License
+   - Credit needed: YES — CraftPix free assets require attribution to
+                    craftpix.net (and may not be redistributed as stock).
+                    Confirm the exact wording on the pack's license page.
+   - Used for:      Enemy visuals — monster 1 -> HybridBoss,
+                    monster 2 -> Bomber, monster 9 -> FlyingBat
+                    (imported via Spriter2UnityDX under
+                    Assets/_Project/Imported/{Boss,Bomber,Bat}Monster/).
+
+---------------------------------------------------------------------
 NOTES
 ---------------------------------------------------------------------
 - Add a new block here whenever a new pack is introduced.
