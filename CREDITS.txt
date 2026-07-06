@@ -50,6 +50,14 @@ ART — Enemy Sprites (Spriter)
    - Credit needed: YES — CraftPix free assets require attribution to
                     craftpix.net (and may not be redistributed as stock).
                     Confirm the exact wording on the pack's license page.
+
+6) CraftPix Free Slime Mobs Pixel Art Top-Down Sprite Pack (craftpix-788364)
+   - Author:        CraftPix.net
+   - Source / URL:  https://craftpix.net/  (Free Slime Mobs Pixel Art)
+   - License:       CraftPix Free License (attribution required)
+   - Used for:      Bomber enemy visual — "Slime3" (flaming slime); PNG
+                    sheets sliced natively into Idle/Run/Hurt/Attack clips
+                    at Assets/_Project/Imported/BomberSlime/.
    - Used for:      Enemy visuals — monster 1 -> HybridBoss,
                     monster 2 -> Bomber, monster 9 -> FlyingBat
                     (imported via Spriter2UnityDX under
