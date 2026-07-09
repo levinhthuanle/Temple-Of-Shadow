@@ -1,0 +1,251 @@
+using UnityEngine;
+
+public class EquipmentManager : MonoBehaviour
+{
+    public EquipmentData equippedSword;
+    public EquipmentData equippedArmor;
+    public EquipmentData equippedAccessory;
+    public EquipmentData equippedProjectile;
+
+    public PlayerBonus playerBonus;
+
+    private EquipmentData cachedSword;
+    private EquipmentData cachedArmor;
+    private EquipmentData cachedAccessory;
+    private EquipmentData cachedProjectile;
+
+    public EquipmentUI equipmentUI;
+
+    [SerializeField] private EquipmentData testSword;
+
+    private void Start()
+    {
+        ResolveEquipmentUI();
+        ResolvePlayerBonus();
+        RecalculateBonuses();
+
+        RefreshEquipmentUI();
+    }
+
+    private void Update()
+    {
+        if (!HasEquipmentChanged())
+        {
+            return;
+        }
+
+        RecalculateBonuses();
+    }
+
+    public EquipmentData Equip(EquipmentData equipment)
+    {
+        if (equipment == null)
+        {
+            return null;
+        }
+
+        if (!CanEquip(equipment.itemType))
+        {
+            Debug.LogWarning($"Cannot equip item type {equipment.itemType} as equipment.");
+            return null;
+        }
+
+        EquipmentData previousEquipment = GetEquippedEquipment(equipment.itemType);
+
+        if (previousEquipment == equipment)
+        {
+            return previousEquipment;
+        }
+
+        switch (equipment.itemType)
+        {
+            case ItemType.Sword:
+                equippedSword = equipment;
+                break;
+            case ItemType.Armor:
+                equippedArmor = equipment;
+                break;
+            case ItemType.Accessory:
+                equippedAccessory = equipment;
+                break;
+            case ItemType.Projectile:
+                equippedProjectile = equipment;
+                break;
+        }
+
+        RecalculateBonuses();
+        RefreshEquipmentUI();
+        return previousEquipment;
+    }
+
+    public void EquipSword(EquipmentData equipment)
+    {
+        equippedSword = equipment;
+        RecalculateBonuses();
+    }
+
+    public void EquipArmor(EquipmentData equipment)
+    {
+        equippedArmor = equipment;
+        RecalculateBonuses();
+    }
+
+    public void EquipAccessory(EquipmentData equipment)
+    {
+        equippedAccessory = equipment;
+        RecalculateBonuses();
+    }
+
+    public void EquipProjectile(EquipmentData equipment)
+    {
+        equippedProjectile = equipment;
+        RecalculateBonuses();
+    }
+
+    public void RecalculateBonuses()
+    {
+        ResolvePlayerBonus();
+
+        if (playerBonus == null)
+        {
+            Debug.LogWarning("[EquipmentManager] Missing PlayerBonus. Assign the player bonus target in the Inspector.");
+            return;
+        }
+
+        playerBonus.bonusHP = 0;
+        playerBonus.bonusDamage = 0;
+        playerBonus.bonusArmor = 0;
+
+        playerBonus.bonusMoveSpeed = 0;
+        playerBonus.bonusAttackSpeed = 0;
+        playerBonus.bonusJumpForce = 0;
+        playerBonus.bonusJumpCount = 0;
+
+        ApplyEquipment(equippedSword);
+        ApplyEquipment(equippedArmor);
+        ApplyEquipment(equippedAccessory);
+        ApplyEquipment(equippedProjectile);
+        CacheEquipment();
+
+        PlayerStats playerStats = playerBonus.GetComponent<PlayerStats>();
+        if (playerStats != null)
+        {
+            playerStats.RefreshStats();
+        }
+    }
+
+    private void ApplyEquipment(EquipmentData equipment)
+    {
+        if (equipment == null)
+            return;
+
+        playerBonus.bonusHP += equipment.maxHP;
+        playerBonus.bonusDamage += equipment.damage;
+        playerBonus.bonusArmor += equipment.armor;
+
+        playerBonus.bonusMoveSpeed += equipment.moveSpeed;
+        playerBonus.bonusAttackSpeed += equipment.attackSpeed;
+        playerBonus.bonusJumpForce += equipment.jumpForce;
+    }
+
+    private bool HasEquipmentChanged()
+    {
+        return cachedSword != equippedSword
+            || cachedArmor != equippedArmor
+            || cachedAccessory != equippedAccessory
+            || cachedProjectile != equippedProjectile;
+    }
+
+    private void CacheEquipment()
+    {
+        cachedSword = equippedSword;
+        cachedArmor = equippedArmor;
+        cachedAccessory = equippedAccessory;
+        cachedProjectile = equippedProjectile;
+    }
+
+    private void ResolvePlayerBonus()
+    {
+        if (playerBonus == null)
+        {
+            playerBonus = FindAnyObjectByType<PlayerBonus>();
+        }
+    }
+
+    private void ResolveEquipmentUI()
+    {
+        if (equipmentUI == null)
+        {
+            equipmentUI = FindAnyObjectByType<EquipmentUI>();
+        }
+    }
+
+    private void RefreshEquipmentUI()
+    {
+        ResolveEquipmentUI();
+
+        if (equipmentUI == null)
+        {
+            Debug.LogWarning("[EquipmentManager] Missing EquipmentUI. Add EquipmentUI to the scene or assign it in the Inspector.");
+            return;
+        }
+
+        equipmentUI.Refresh();
+    }
+
+    public bool CanEquip(ItemType itemType)
+    {
+        switch (itemType)
+        {
+            case ItemType.Sword:
+            case ItemType.Armor:
+            case ItemType.Accessory:
+            case ItemType.Projectile:
+                return true;
+            default:
+                return false;
+        }
+    }
+
+    public EquipmentData GetEquippedEquipment(ItemType itemType)
+    {
+        switch (itemType)
+        {
+            case ItemType.Sword:
+                return equippedSword;
+            case ItemType.Armor:
+                return equippedArmor;
+            case ItemType.Accessory:
+                return equippedAccessory;
+            case ItemType.Projectile:
+                return equippedProjectile;
+            default:
+                return null;
+        }
+    }
+
+    public void Unequip(ItemType itemType)
+    {
+        switch (itemType)
+        {
+            case ItemType.Sword:
+                equippedSword = null;
+                break;
+
+            case ItemType.Armor:
+                equippedArmor = null;
+                break;
+
+            case ItemType.Accessory:
+                equippedAccessory = null;
+                break;
+
+            case ItemType.Projectile:
+                equippedProjectile = null;
+                break;
+        }
+
+        RecalculateBonuses();
+        RefreshEquipmentUI();
+    }
+}

@@ -40,6 +40,30 @@ AUDIO — Sound Effects (SFX)
    - Used for:      damage / death / dialogue cues
 
 ---------------------------------------------------------------------
+ART — Enemy Sprites (Spriter)
+---------------------------------------------------------------------
+
+5) CraftPix Free 2D Monster Sprites (pack craftpix-341189)
+   - Author:        CraftPix.net
+   - Source / URL:  https://craftpix.net/  (Free 2D Monster Sprites)
+   - License:       CraftPix Free License
+   - Credit needed: YES — CraftPix free assets require attribution to
+                    craftpix.net (and may not be redistributed as stock).
+                    Confirm the exact wording on the pack's license page.
+
+6) CraftPix Free Slime Mobs Pixel Art Top-Down Sprite Pack (craftpix-788364)
+   - Author:        CraftPix.net
+   - Source / URL:  https://craftpix.net/  (Free Slime Mobs Pixel Art)
+   - License:       CraftPix Free License (attribution required)
+   - Used for:      Bomber enemy visual — "Slime3" (flaming slime); PNG
+                    sheets sliced natively into Idle/Run/Hurt/Attack clips
+                    at Assets/_Project/Imported/BomberSlime/.
+   - Used for:      Enemy visuals — monster 1 -> HybridBoss,
+                    monster 2 -> Bomber, monster 9 -> FlyingBat
+                    (imported via Spriter2UnityDX under
+                    Assets/_Project/Imported/{Boss,Bomber,Bat}Monster/).
+
+---------------------------------------------------------------------
 NOTES
 ---------------------------------------------------------------------
 - Add a new block here whenever a new pack is introduced.

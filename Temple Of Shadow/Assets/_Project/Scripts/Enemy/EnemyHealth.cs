@@ -104,4 +104,15 @@ public class EnemyHealth : MonoBehaviour
     {
         return isDeadOrNot;
     }
+
+    // Cùng convention với PlayerHealth — cho phép Boss đọc HP để đổi phase.
+    public int GetCurrentHp()
+    {
+        return currentHp;
+    }
+
+    public int GetMaxHp()
+    {
+        return maxHp;
+    }
 }

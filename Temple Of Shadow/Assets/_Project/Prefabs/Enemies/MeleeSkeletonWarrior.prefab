@@ -231,7 +231,7 @@ MonoBehaviour:
   moveSpeed: 4
   visual: {fileID: 5410160267226023831}
   detectRange: 14.65
-  attackRange: 5.02
+  attackRange: 5.16
   attackRoot: {fileID: 6742205030785872776}
   playerLayer:
     serializedVersion: 2
@@ -255,7 +255,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: '::'
   attackPoint: {fileID: 534075928988062700}
-  attackRadius: 2.89
+  attackRadius: 2.94
   damage: 1
   attackCooldown: 1.2
   playerLayer:
@@ -607,15 +607,15 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 382708248813544327, guid: 5020bf43f4eac704ea27cb29c38be92c, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: -10.435207
+      value: -103.88514
       objectReference: {fileID: 0}
     - target: {fileID: 1431123430212229349, guid: 5020bf43f4eac704ea27cb29c38be92c, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: -155.23549
+      value: -164.96301
       objectReference: {fileID: 0}
     - target: {fileID: 3402236726791289656, guid: 5020bf43f4eac704ea27cb29c38be92c, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: -17.762127
+      value: -4.4054894
       objectReference: {fileID: 0}
     - target: {fileID: 3861341231914115416, guid: 5020bf43f4eac704ea27cb29c38be92c, type: 3}
       propertyPath: m_Name
@@ -663,23 +663,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4860997897057400842, guid: 5020bf43f4eac704ea27cb29c38be92c, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: 122.262215
+      value: 149.20842
       objectReference: {fileID: 0}
     - target: {fileID: 5345525238805319283, guid: 5020bf43f4eac704ea27cb29c38be92c, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: 2.9376624
+      value: 3.464823
       objectReference: {fileID: 0}
     - target: {fileID: 5579192304877830858, guid: 5020bf43f4eac704ea27cb29c38be92c, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: 79.43667
+      value: 92.79798
       objectReference: {fileID: 0}
     - target: {fileID: 6202929227198389006, guid: 5020bf43f4eac704ea27cb29c38be92c, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: -102.51943
+      value: -72.46826
       objectReference: {fileID: 0}
     - target: {fileID: 7211591947057830461, guid: 5020bf43f4eac704ea27cb29c38be92c, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: -13.526499
+      value: -7.781051
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

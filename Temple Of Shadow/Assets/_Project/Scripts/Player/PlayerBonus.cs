@@ -10,7 +10,7 @@ public class PlayerBonus : MonoBehaviour
     public float bonusMoveSpeed = 0f;
     public float bonusAttackSpeed = 0f;
     public float bonusJumpForce = 0f;
-    public int bonusJumpCount = 1;
+    public int bonusJumpCount = 0;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {

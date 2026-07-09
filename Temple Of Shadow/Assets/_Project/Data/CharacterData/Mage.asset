@@ -16,7 +16,7 @@ MonoBehaviour:
   maxHp: 5
   damage: 5
   armor: 5
-  moveSpeed: 30
+  moveSpeed: 10
   attackSpeed: 3
-  jumpForce: 30
+  jumpForce: 15
   portrait: {fileID: 0}

@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 35782b72c3c9c6340a745858728bc5d8, type: 3}
+  m_Name: GoldenKey
+  m_EditorClassIdentifier: Assembly-CSharp::ItemData
+  itemName: GoldenKEy
+  stackable: 1
+  description: It must be use for something important
+  icon: {fileID: -4178046375966092550, guid: df3ef19dc3da2b34b8d0665852e12ba6, type: 3}
+  itemType: 4

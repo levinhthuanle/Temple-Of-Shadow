@@ -1,0 +1,213 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1814112540799355468
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 9079301227794187753}
+  - component: {fileID: 4018102139192216009}
+  m_Layer: 0
+  m_Name: EquipmentManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &9079301227794187753
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1814112540799355468}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 9061971884004296697}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4018102139192216009
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1814112540799355468}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a890306ef3d38714a91461042c70ad4c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EquipmentManager
+  equippedSword: {fileID: 0}
+  equippedArmor: {fileID: 11400000, guid: 0a4296d784edd6445a85a58560b0875c, type: 2}
+  equippedAccessory: {fileID: 11400000, guid: 1b487c4a696cfd04a8f9073c94589506, type: 2}
+  equippedProjectile: {fileID: 0}
+  playerBonus: {fileID: 0}
+  equipmentUI: {fileID: 0}
+  testSword: {fileID: 11400000, guid: 1f9f47c189b8da440a2b90d6a78c2071, type: 2}
+--- !u!1 &2879562081753149787
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3728615364011597519}
+  - component: {fileID: 8159597581034726352}
+  m_Layer: 0
+  m_Name: SoundManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3728615364011597519
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2879562081753149787}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -9.5749, y: -5.38007, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 9061971884004296697}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8159597581034726352
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2879562081753149787}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2f67533248eb1c440b4e994c5c90aa39, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SoundManager
+  sfxEntries:
+  - key: jump
+    clips:
+    - {fileID: 8300000, guid: 65e1af1b9d7dcc74885733947f2cd032, type: 3}
+  - key: attack
+    clips:
+    - {fileID: 8300000, guid: 0b341568494a5da49b61b752a57b4e6a, type: 3}
+  - key: hurt
+    clips:
+    - {fileID: 8300000, guid: 2c00c0f8b8157d3438c06dbcdc107da0, type: 3}
+  - key: player_death
+    clips:
+    - {fileID: 8300000, guid: 6edb8524850cb4847ae6d64d738e6a45, type: 3}
+  - key: enemy_hurt
+    clips:
+    - {fileID: 8300000, guid: 3884e9bad73d58e4b95e20932a5f8cfc, type: 3}
+  - key: enemy_attack
+    clips:
+    - {fileID: 8300000, guid: 0b341568494a5da49b61b752a57b4e6a, type: 3}
+  - key: coin_pickup
+    clips:
+    - {fileID: 8300000, guid: 69fa81c37be032048985415138f0e36f, type: 3}
+  - key: click_button
+    clips:
+    - {fileID: 8300000, guid: 322b800e1c8accf4da4b3ecaf1c739d5, type: 3}
+  - key: enemy_death
+    clips:
+    - {fileID: 8300000, guid: 4c9b814bc2c84bf418c4c5da28581396, type: 3}
+  bgmEntries:
+  - key: bgm_dungeon
+    clips:
+    - {fileID: 8300000, guid: 74cc8c3bc3cf60f488968a120d8658dd, type: 3}
+  sfxVolume: 1
+  bgmVolume: 1
+  bgmFadeDuration: 0.5
+--- !u!1 &3676821509218171170
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5574902036083944455}
+  - component: {fileID: 6408602085422575730}
+  m_Layer: 0
+  m_Name: InventoryManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5574902036083944455
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3676821509218171170}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 9061971884004296697}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6408602085422575730
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3676821509218171170}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 907177d8341fbc248a82fa082291c3ef, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::InventoryManager
+  inventorySlots: []
+  testSword: {fileID: 11400000, guid: 33746b87f4ff5264a8e8cb9cc9c180ca, type: 2}
+  testPotion: {fileID: 11400000, guid: ef403317b8f3cba4cbef054f39d8544e, type: 2}
+--- !u!1 &9096712020890945135
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 9061971884004296697}
+  m_Layer: 0
+  m_Name: Manager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &9061971884004296697
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9096712020890945135}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 9.5749, y: 5.38007, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 9079301227794187753}
+  - {fileID: 3728615364011597519}
+  - {fileID: 5574902036083944455}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

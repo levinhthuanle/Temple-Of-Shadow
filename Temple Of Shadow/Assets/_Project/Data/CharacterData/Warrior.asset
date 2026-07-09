@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Warrior
   m_EditorClassIdentifier: Assembly-CSharp::CharacterData
   characterName: Warrior
-  maxHp: 10
+  maxHp: 20
   damage: 3
   armor: 4
   moveSpeed: 9
