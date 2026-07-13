@@ -40,7 +40,7 @@ public class Projectile : MonoBehaviour
         if (((1 << collision.gameObject.layer) & enemyLayer) == 0)
             return;
 
-        EnemyHealth enemy = collision.GetComponent<EnemyHealth>();
+        IDamageable enemy = collision.GetComponent<IDamageable>();
 
         if (enemy != null)
         {

@@ -18,5 +18,5 @@ MonoBehaviour:
   armor: 4
   moveSpeed: 9
   attackSpeed: 10
-  jumpForce: 15
+  jumpForce: 18
   portrait: {fileID: 0}

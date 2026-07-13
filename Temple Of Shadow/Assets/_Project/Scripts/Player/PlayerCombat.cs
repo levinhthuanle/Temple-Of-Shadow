@@ -185,7 +185,7 @@ public class PlayerCombat : MonoBehaviour
 
         foreach (Collider2D enemy in enemies)
         {
-            EnemyHealth health = enemy.GetComponent<EnemyHealth>();
+            IDamageable health = enemy.GetComponent<IDamageable>();
 
             if (health != null)
             {
