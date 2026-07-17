@@ -175,7 +175,7 @@ MonoBehaviour:
   lifeTime: 3
   enemyLayer:
     serializedVersion: 2
-    m_Bits: 128
+    m_Bits: 640
   spriteRenderer: {fileID: 0}
 --- !u!95 &5837768901476387671
 Animator:
