@@ -18,3 +18,4 @@ MonoBehaviour:
   description: 
   icon: {fileID: 9108365968018652678, guid: 2788322398f5bba408ee7fec1820b1d3, type: 3}
   itemType: 4
+  healAmount: 40

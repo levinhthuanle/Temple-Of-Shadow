@@ -5,30 +5,36 @@ using UnityEngine.UI;
 public class TooltipUI : MonoBehaviour
 {
     public TextMeshProUGUI nameText;
+    public TextMeshProUGUI typeText;
+    public TextMeshProUGUI effectText;
     public TextMeshProUGUI statsText;
     public TextMeshProUGUI descriptionText;
 
-    [SerializeField] private Vector2 screenOffset = new Vector2(-24f, -24f);
+    [SerializeField] private Vector2 screenOffset = new Vector2(18f, -18f);
+    [SerializeField] private float preferredWidth = 340f;
+    [SerializeField] private float iconSize = 54f;
 
     private RectTransform rectTransform;
+    private RectTransform headerRect;
+    private RectTransform headerTextRect;
     private Canvas rootCanvas;
     private CanvasGroup canvasGroup;
     private Camera uiCamera;
+    private Image backgroundImage;
+    private Image iconImage;
+    private Image dividerImage;
 
     private void Awake()
     {
-        rectTransform = GetComponent<RectTransform>();
-        rootCanvas = GetComponentInParent<Canvas>();
-        canvasGroup = GetComponent<CanvasGroup>();
-        if (canvasGroup == null)
-        {
-            canvasGroup = gameObject.AddComponent<CanvasGroup>();
-        }
-
-        canvasGroup.interactable = false;
-        canvasGroup.blocksRaycasts = false;
-        uiCamera = rootCanvas != null ? rootCanvas.worldCamera : null;
+        ResolveReferences();
+        ApplyStyle();
         Hide();
+    }
+
+    private void Reset()
+    {
+        ResolveReferences();
+        ApplyStyle();
     }
 
     private void Update()
@@ -43,24 +49,181 @@ public class TooltipUI : MonoBehaviour
 
     public void Show(ItemData item)
     {
+        Show(item, 1);
+    }
+
+    public void Show(ItemData item, int amount)
+    {
         if (item == null)
         {
             Hide();
             return;
         }
 
+        ResolveReferences();
+        ApplyStyle();
         gameObject.SetActive(true);
+        canvasGroup.alpha = 1f;
 
-        nameText.text = item.itemName;
-        descriptionText.text = item.description;
-        statsText.text = BuildStatsText(item);
+        iconImage.sprite = item.icon;
+        iconImage.enabled = item.icon != null;
+        iconImage.gameObject.SetActive(item.icon != null);
 
+        SetTextVisible(nameText, item.itemName);
+        SetTextVisible(typeText, BuildTypeText(item, amount));
+        SetTextVisible(effectText, BuildEffectText(item));
+        SetTextVisible(statsText, BuildStatsText(item));
+        SetTextVisible(descriptionText, item.description);
+
+        Canvas.ForceUpdateCanvases();
+        LayoutRebuilder.ForceRebuildLayoutImmediate(headerTextRect);
+        LayoutRebuilder.ForceRebuildLayoutImmediate(headerRect);
+        LayoutRebuilder.ForceRebuildLayoutImmediate(rectTransform);
         FollowMouse();
     }
 
     public void Hide()
     {
+        ResolveReferences();
+        canvasGroup.alpha = 0f;
         gameObject.SetActive(false);
+    }
+
+    private void ResolveReferences()
+    {
+        rectTransform ??= GetComponent<RectTransform>();
+        rootCanvas = GetComponentInParent<Canvas>();
+        canvasGroup ??= GetComponent<CanvasGroup>();
+        if (canvasGroup == null)
+        {
+            canvasGroup = gameObject.AddComponent<CanvasGroup>();
+        }
+
+        backgroundImage ??= InventoryUITheme.EnsureImage(gameObject);
+        uiCamera = rootCanvas != null ? rootCanvas.worldCamera : null;
+
+        headerRect = FindOrCreateRect(transform, "Header");
+        headerTextRect = FindOrCreateRect(headerRect, "HeaderText");
+        iconImage = FindOrCreateImage(headerRect, "Icon");
+        dividerImage = FindOrCreateImage(transform, "Divider");
+
+        nameText = ResolveText(nameText, "NameText", headerTextRect);
+        typeText = ResolveText(typeText, "TypeText", headerTextRect);
+        effectText = ResolveText(effectText, "EffectText", transform);
+        statsText = ResolveText(statsText, "StatsText", transform);
+        descriptionText = ResolveText(descriptionText, "DescriptionText", transform);
+
+        headerRect.SetSiblingIndex(0);
+        dividerImage.transform.SetSiblingIndex(1);
+        effectText.transform.SetSiblingIndex(2);
+        statsText.transform.SetSiblingIndex(3);
+        descriptionText.transform.SetSiblingIndex(4);
+    }
+
+    private void ApplyStyle()
+    {
+        if (rectTransform != null)
+        {
+            rectTransform.pivot = new Vector2(0f, 1f);
+        }
+
+        canvasGroup.interactable = false;
+        canvasGroup.blocksRaycasts = false;
+
+        backgroundImage.color = InventoryUITheme.PanelRaised;
+        backgroundImage.raycastTarget = false;
+
+        InventoryUITheme.EnsureOutline(gameObject, InventoryUITheme.Border, new Vector2(2f, -2f));
+        InventoryUITheme.EnsureShadow(gameObject, new Color(0f, 0f, 0f, 0.58f), new Vector2(9f, -9f));
+
+        LayoutElement layoutElement = InventoryUITheme.EnsureLayoutElement(gameObject);
+        layoutElement.preferredWidth = preferredWidth;
+        layoutElement.minWidth = 300f;
+        layoutElement.flexibleWidth = 0f;
+
+        VerticalLayoutGroup layoutGroup = GetComponent<VerticalLayoutGroup>();
+        if (layoutGroup == null)
+        {
+            layoutGroup = gameObject.AddComponent<VerticalLayoutGroup>();
+        }
+
+        layoutGroup.padding = new RectOffset(18, 18, 16, 16);
+        layoutGroup.spacing = 8f;
+        layoutGroup.childAlignment = TextAnchor.UpperLeft;
+        layoutGroup.childControlWidth = true;
+        layoutGroup.childControlHeight = true;
+        layoutGroup.childForceExpandWidth = true;
+        layoutGroup.childForceExpandHeight = false;
+
+        ContentSizeFitter fitter = GetComponent<ContentSizeFitter>();
+        if (fitter == null)
+        {
+            fitter = gameObject.AddComponent<ContentSizeFitter>();
+        }
+
+        fitter.horizontalFit = ContentSizeFitter.FitMode.PreferredSize;
+        fitter.verticalFit = ContentSizeFitter.FitMode.PreferredSize;
+
+        StyleHeader();
+        StyleText(nameText, 23f, InventoryUITheme.TextPrimary, FontStyles.Bold, TextWrappingModes.NoWrap);
+        StyleText(typeText, 14f, InventoryUITheme.TextMuted, FontStyles.Normal, TextWrappingModes.NoWrap);
+        StyleText(effectText, 15f, InventoryUITheme.ConsumableAccent, FontStyles.Bold, TextWrappingModes.Normal);
+        StyleText(statsText, 15f, InventoryUITheme.TextPrimary, FontStyles.Normal, TextWrappingModes.Normal);
+        StyleText(descriptionText, 14f, InventoryUITheme.TextMuted, FontStyles.Normal, TextWrappingModes.Normal);
+    }
+
+    private void StyleHeader()
+    {
+        HorizontalLayoutGroup headerLayout = headerRect.GetComponent<HorizontalLayoutGroup>();
+        if (headerLayout == null)
+        {
+            headerLayout = headerRect.gameObject.AddComponent<HorizontalLayoutGroup>();
+        }
+
+        headerLayout.spacing = 12f;
+        headerLayout.childAlignment = TextAnchor.MiddleLeft;
+        headerLayout.childControlWidth = true;
+        headerLayout.childControlHeight = true;
+        headerLayout.childForceExpandWidth = true;
+        headerLayout.childForceExpandHeight = false;
+
+        LayoutElement headerElement = InventoryUITheme.EnsureLayoutElement(headerRect.gameObject);
+        headerElement.minHeight = 58f;
+        headerElement.preferredHeight = 62f;
+
+        LayoutElement iconElement = InventoryUITheme.EnsureLayoutElement(iconImage.gameObject);
+        iconElement.minWidth = iconSize;
+        iconElement.minHeight = iconSize;
+        iconElement.preferredWidth = iconSize;
+        iconElement.preferredHeight = iconSize;
+        iconElement.flexibleWidth = 0f;
+
+        iconImage.color = Color.white;
+        iconImage.preserveAspect = true;
+        iconImage.raycastTarget = false;
+
+        VerticalLayoutGroup textLayout = headerTextRect.GetComponent<VerticalLayoutGroup>();
+        if (textLayout == null)
+        {
+            textLayout = headerTextRect.gameObject.AddComponent<VerticalLayoutGroup>();
+        }
+
+        textLayout.spacing = 2f;
+        textLayout.childAlignment = TextAnchor.MiddleLeft;
+        textLayout.childControlWidth = true;
+        textLayout.childControlHeight = true;
+        textLayout.childForceExpandWidth = true;
+        textLayout.childForceExpandHeight = false;
+
+        LayoutElement textElement = InventoryUITheme.EnsureLayoutElement(headerTextRect.gameObject);
+        textElement.minHeight = 54f;
+        textElement.flexibleWidth = 1f;
+
+        LayoutElement dividerElement = InventoryUITheme.EnsureLayoutElement(dividerImage.gameObject);
+        dividerElement.minHeight = 1f;
+        dividerElement.preferredHeight = 1f;
+        dividerImage.color = InventoryUITheme.BorderSoft;
+        dividerImage.raycastTarget = false;
     }
 
     private void FollowMouse()
@@ -70,48 +233,165 @@ public class TooltipUI : MonoBehaviour
             return;
         }
 
-        Vector2 mousePosition = Input.mousePosition;
-
         Canvas.ForceUpdateCanvases();
-        Vector2 tooltipSize = rectTransform.rect.size;
-        Vector2 leftOffset = new Vector2(-(tooltipSize.x + Mathf.Abs(screenOffset.x)), screenOffset.y);
+
+        float scaleFactor = rootCanvas != null ? Mathf.Max(rootCanvas.scaleFactor, 0.0001f) : 1f;
+        Vector2 tooltipSize = rectTransform.rect.size * scaleFactor;
+        Vector2 mousePosition = Input.mousePosition;
+        Vector2 targetPosition = mousePosition + screenOffset;
+
+        if (targetPosition.x + tooltipSize.x > Screen.width)
+        {
+            targetPosition.x = mousePosition.x - tooltipSize.x - Mathf.Abs(screenOffset.x);
+        }
+
+        if (targetPosition.y - tooltipSize.y < 0f)
+        {
+            targetPosition.y = mousePosition.y + tooltipSize.y + Mathf.Abs(screenOffset.y);
+        }
+
+        targetPosition.x = Mathf.Clamp(targetPosition.x, 8f, Mathf.Max(8f, Screen.width - tooltipSize.x - 8f));
+        targetPosition.y = Mathf.Clamp(targetPosition.y, tooltipSize.y + 8f, Mathf.Max(tooltipSize.y + 8f, Screen.height - 8f));
 
         if (rootCanvas != null && rootCanvas.renderMode != RenderMode.ScreenSpaceOverlay)
         {
             RectTransform canvasRect = rootCanvas.transform as RectTransform;
-            if (canvasRect != null && RectTransformUtility.ScreenPointToLocalPointInRectangle(canvasRect, mousePosition, uiCamera, out Vector2 localPoint))
+            if (canvasRect != null && RectTransformUtility.ScreenPointToLocalPointInRectangle(canvasRect, targetPosition, uiCamera, out Vector2 localPoint))
             {
-                Vector2 offset = leftOffset / Mathf.Max(rootCanvas.scaleFactor, 0.0001f);
-                Vector2 desiredPosition = localPoint + offset;
-                Rect canvasBounds = canvasRect.rect;
-
-                float minX = canvasBounds.xMin + (tooltipSize.x * rectTransform.pivot.x);
-                float maxX = canvasBounds.xMax - (tooltipSize.x * (1f - rectTransform.pivot.x));
-                float minY = canvasBounds.yMin + (tooltipSize.y * rectTransform.pivot.y);
-                float maxY = canvasBounds.yMax - (tooltipSize.y * (1f - rectTransform.pivot.y));
-
-                desiredPosition.x = Mathf.Clamp(desiredPosition.x, minX, maxX);
-                desiredPosition.y = Mathf.Clamp(desiredPosition.y, minY, maxY);
-
-                rectTransform.anchoredPosition = desiredPosition;
+                rectTransform.anchoredPosition = localPoint;
                 return;
             }
         }
 
-        Vector2 screenSize = new Vector2(Screen.width, Screen.height);
-    Vector2 tooltipScreenSize = tooltipSize;
-        Vector2 pivot = rectTransform.pivot;
-    Vector2 targetPosition = mousePosition + leftOffset;
-
-        float minScreenX = tooltipScreenSize.x * pivot.x;
-        float maxScreenX = screenSize.x - (tooltipScreenSize.x * (1f - pivot.x));
-        float minScreenY = tooltipScreenSize.y * pivot.y;
-        float maxScreenY = screenSize.y - (tooltipScreenSize.y * (1f - pivot.y));
-
-        targetPosition.x = Mathf.Clamp(targetPosition.x, minScreenX, maxScreenX);
-        targetPosition.y = Mathf.Clamp(targetPosition.y, minScreenY, maxScreenY);
-
         rectTransform.position = targetPosition;
+    }
+
+    private RectTransform FindOrCreateRect(Transform parent, string objectName)
+    {
+        Transform child = parent.Find(objectName);
+        if (child != null && child.TryGetComponent(out RectTransform existingRect))
+        {
+            return existingRect;
+        }
+
+        GameObject rectObject = new GameObject(objectName, typeof(RectTransform));
+        rectObject.transform.SetParent(parent, false);
+        return rectObject.GetComponent<RectTransform>();
+    }
+
+    private Image FindOrCreateImage(Transform parent, string objectName)
+    {
+        Transform child = parent.Find(objectName);
+        if (child != null && child.TryGetComponent(out Image existingImage))
+        {
+            return existingImage;
+        }
+
+        GameObject imageObject = new GameObject(objectName, typeof(RectTransform), typeof(CanvasRenderer), typeof(Image));
+        imageObject.transform.SetParent(parent, false);
+        Image image = imageObject.GetComponent<Image>();
+        image.raycastTarget = false;
+        return image;
+    }
+
+    private TextMeshProUGUI ResolveText(TextMeshProUGUI existingText, string objectName, Transform parent)
+    {
+        TextMeshProUGUI text = existingText;
+
+        if (text == null)
+        {
+            Transform child = parent.Find(objectName);
+            if (child != null)
+            {
+                text = child.GetComponent<TextMeshProUGUI>();
+            }
+        }
+
+        if (text == null)
+        {
+            Transform legacyChild = transform.Find(objectName);
+            if (legacyChild != null)
+            {
+                text = legacyChild.GetComponent<TextMeshProUGUI>();
+            }
+        }
+
+        if (text == null)
+        {
+            GameObject textObject = new GameObject(objectName, typeof(RectTransform), typeof(CanvasRenderer), typeof(TextMeshProUGUI));
+            textObject.transform.SetParent(parent, false);
+            text = textObject.GetComponent<TextMeshProUGUI>();
+        }
+        else if (text.transform.parent != parent)
+        {
+            text.transform.SetParent(parent, false);
+        }
+
+        text.name = objectName;
+        return text;
+    }
+
+    private void StyleText(TextMeshProUGUI text, float fontSize, Color color, FontStyles style, TextWrappingModes wrapping)
+    {
+        if (text == null)
+        {
+            return;
+        }
+
+        text.fontSize = fontSize;
+        text.color = color;
+        text.fontStyle = style;
+        text.alignment = TextAlignmentOptions.Left;
+        text.textWrappingMode = wrapping;
+        text.overflowMode = wrapping == TextWrappingModes.NoWrap
+            ? TextOverflowModes.Ellipsis
+            : TextOverflowModes.Overflow;
+        text.richText = true;
+        text.raycastTarget = false;
+        InventoryUITheme.EnsureShadow(text.gameObject, new Color(0f, 0f, 0f, 0.56f), new Vector2(1f, -1f));
+    }
+
+    private void SetTextVisible(TextMeshProUGUI text, string value)
+    {
+        if (text == null)
+        {
+            return;
+        }
+
+        bool hasText = !string.IsNullOrWhiteSpace(value);
+        text.gameObject.SetActive(hasText);
+        text.text = hasText ? value : string.Empty;
+    }
+
+    private string BuildTypeText(ItemData item, int amount)
+    {
+        string typeName = item.itemType.ToString();
+
+        if (item is EquipmentData equipment)
+        {
+            typeName = $"{equipment.SlotType} Equipment";
+        }
+        else if (item.itemType == ItemType.Potion)
+        {
+            typeName = "Consumable";
+        }
+
+        if (amount > 1)
+        {
+            return $"{typeName}  x{amount}";
+        }
+
+        return typeName;
+    }
+
+    private string BuildEffectText(ItemData item)
+    {
+        if (item.itemType == ItemType.Potion)
+        {
+            return $"Restores {item.healAmount} HP";
+        }
+
+        return string.Empty;
     }
 
     private string BuildStatsText(ItemData item)
@@ -122,7 +402,7 @@ public class TooltipUI : MonoBehaviour
         }
 
         string stats = string.Empty;
-        AppendStat(ref stats, "HP", equipment.maxHP);
+        AppendStat(ref stats, "Max HP", equipment.maxHP);
         AppendStat(ref stats, "Damage", equipment.damage);
         AppendStat(ref stats, "Armor", equipment.armor);
         AppendStat(ref stats, "Move Speed", equipment.moveSpeed);
@@ -139,7 +419,7 @@ public class TooltipUI : MonoBehaviour
             return;
         }
 
-        AppendLine(ref stats, $"{label}: +{value}");
+        AppendLine(ref stats, $"{label}: <color=#{ColorUtility.ToHtmlStringRGB(InventoryUITheme.Positive)}>+{value}</color>");
     }
 
     private void AppendStat(ref string stats, string label, float value)
@@ -149,7 +429,7 @@ public class TooltipUI : MonoBehaviour
             return;
         }
 
-        AppendLine(ref stats, $"{label}: +{value:0.##}");
+        AppendLine(ref stats, $"{label}: <color=#{ColorUtility.ToHtmlStringRGB(InventoryUITheme.Positive)}>+{value:0.##}</color>");
     }
 
     private void AppendLine(ref string stats, string line)
@@ -161,6 +441,4 @@ public class TooltipUI : MonoBehaviour
 
         stats += line;
     }
-
-
 }

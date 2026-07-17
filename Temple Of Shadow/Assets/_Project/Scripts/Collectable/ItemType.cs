@@ -2,9 +2,10 @@ using UnityEngine;
 
 public enum ItemType
 {
-    Sword,
-    Armor,
-    Accessory,
-    Projectile,
-    Potion
+    Sword = 0,
+    Armor = 1,
+    Accessory = 2,
+    Projectile = 3,
+    Potion = 4,
+    Key = 5
 }

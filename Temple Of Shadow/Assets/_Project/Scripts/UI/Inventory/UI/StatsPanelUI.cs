@@ -1,5 +1,6 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class StatsPanelUI : MonoBehaviour
 {
@@ -20,12 +21,14 @@ public class StatsPanelUI : MonoBehaviour
     private void Awake()
     {
         ResolveReferences();
+        ApplyStyle();
         Refresh();
     }
 
     private void OnEnable()
     {
         ResolveReferences();
+        ApplyStyle();
         Subscribe();
         Refresh();
     }
@@ -48,12 +51,14 @@ public class StatsPanelUI : MonoBehaviour
         int currentHp = playerHealth != null ? playerHealth.GetCurrentHp() : playerStats.MaxHP;
         int maxHp = playerHealth != null ? playerHealth.GetMaxHp() : playerStats.MaxHP;
 
-        SetText(hpText, $"HP: {currentHp}/{maxHp}");
-        SetText(damageText, $"Damage: {playerStats.Damage}");
-        SetText(armorText, $"Armor: {playerStats.Armor}");
-        SetText(moveSpeedText, $"Speed: {FormatFloat(playerStats.MoveSpeed)}");
-        SetText(attackSpeedText, $"Attack Speed: {FormatFloat(playerStats.AttackSpeed)}");
-        SetText(jumpForceText, $"Jump Force: {FormatFloat(playerStats.JumpForce)}");
+        ApplyStyle();
+
+        SetText(hpText, BuildStatLine("HP", $"{currentHp}/{maxHp}"));
+        SetText(damageText, BuildStatLine("Damage", playerStats.Damage.ToString()));
+        SetText(armorText, BuildStatLine("Armor", playerStats.Armor.ToString()));
+        SetText(moveSpeedText, BuildStatLine("Move", FormatFloat(playerStats.MoveSpeed)));
+        SetText(attackSpeedText, BuildStatLine("Attack", FormatFloat(playerStats.AttackSpeed)));
+        SetText(jumpForceText, BuildStatLine("Jump", FormatFloat(playerStats.JumpForce)));
     }
 
     private void ResolveReferences()
@@ -70,17 +75,12 @@ public class StatsPanelUI : MonoBehaviour
                 : FindAnyObjectByType<PlayerHealth>();
         }
 
-        hpText ??= FindText("HPText");
-        damageText ??= FindText("DamageText");
-        armorText ??= FindText("ArmorText");
-        moveSpeedText ??= FindText("SpeedText");
-        attackSpeedText ??= FindText("AttackSpeedText");
-        jumpForceText ??= FindText("JumpForceText");
-
-        if (damageText == null)
-        {
-            damageText = CreateText("DamageText", 1);
-        }
+        hpText ??= FindText("HPText") ?? CreateText("HPText", 0);
+        damageText ??= FindText("DamageText") ?? CreateText("DamageText", 1);
+        armorText ??= FindText("ArmorText") ?? CreateText("ArmorText", 2);
+        moveSpeedText ??= FindText("SpeedText") ?? CreateText("SpeedText", 3);
+        attackSpeedText ??= FindText("AttackSpeedText") ?? CreateText("AttackSpeedText", 4);
+        jumpForceText ??= FindText("JumpForceText") ?? CreateText("JumpForceText", 5);
     }
 
     private TextMeshProUGUI FindText(string objectName)
@@ -177,7 +177,7 @@ public class StatsPanelUI : MonoBehaviour
 
     private void RefreshHealth(int currentHp, int maxHp)
     {
-        SetText(hpText, $"HP: {currentHp}/{maxHp}");
+        SetText(hpText, BuildStatLine("HP", $"{currentHp}/{maxHp}"));
     }
 
     private void SetText(TextMeshProUGUI text, string value)
@@ -191,5 +191,72 @@ public class StatsPanelUI : MonoBehaviour
     private string FormatFloat(float value)
     {
         return value.ToString("0.##");
+    }
+
+    private string BuildStatLine(string label, string value)
+    {
+        return $"<color=#{ColorUtility.ToHtmlStringRGB(InventoryUITheme.TextMuted)}>{label}</color>  <b>{value}</b>";
+    }
+
+    private void ApplyStyle()
+    {
+        Image image = GetComponent<Image>();
+        if (image != null)
+        {
+            image.color = InventoryUITheme.PanelSecondary;
+        }
+
+        InventoryUITheme.EnsureOutline(gameObject, InventoryUITheme.Border, new Vector2(2f, -2f));
+
+        StyleText(hpText, InventoryUITheme.TextPrimary);
+        StyleText(damageText, InventoryUITheme.TextPrimary);
+        StyleText(armorText, InventoryUITheme.TextPrimary);
+        StyleText(moveSpeedText, InventoryUITheme.TextMuted);
+        StyleText(attackSpeedText, InventoryUITheme.TextMuted);
+        StyleText(jumpForceText, InventoryUITheme.TextMuted);
+
+        PlaceText(hpText, 0);
+        PlaceText(damageText, 1);
+        PlaceText(armorText, 2);
+        PlaceText(moveSpeedText, 3);
+        PlaceText(attackSpeedText, 4);
+        PlaceText(jumpForceText, 5);
+    }
+
+    private void StyleText(TextMeshProUGUI text, Color color)
+    {
+        if (text == null)
+        {
+            return;
+        }
+
+        text.color = color;
+        text.fontSize = 24f;
+        text.fontSizeMin = 16f;
+        text.fontSizeMax = 24f;
+        text.enableAutoSizing = true;
+        text.richText = true;
+        text.textWrappingMode = TextWrappingModes.NoWrap;
+        text.overflowMode = TextOverflowModes.Ellipsis;
+        text.alignment = TextAlignmentOptions.MidlineLeft;
+        text.raycastTarget = false;
+        InventoryUITheme.EnsureShadow(text.gameObject, new Color(0f, 0f, 0f, 0.58f), new Vector2(1f, -1f));
+    }
+
+    private void PlaceText(TextMeshProUGUI text, int index)
+    {
+        if (text == null)
+        {
+            return;
+        }
+
+        RectTransform rect = text.rectTransform;
+        float yMax = 0.88f - index * 0.145f;
+        float yMin = yMax - 0.105f;
+        rect.anchorMin = new Vector2(0f, Mathf.Max(0.02f, yMin));
+        rect.anchorMax = new Vector2(1f, Mathf.Max(0.12f, yMax));
+        rect.offsetMin = new Vector2(24f, 0f);
+        rect.offsetMax = new Vector2(-18f, 0f);
+        rect.localScale = Vector3.one;
     }
 }

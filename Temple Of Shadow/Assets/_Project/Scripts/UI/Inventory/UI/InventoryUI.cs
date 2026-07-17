@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public class InventoryUI : MonoBehaviour
 {
@@ -17,14 +18,25 @@ public class InventoryUI : MonoBehaviour
 
     private void Awake()
     {
+        if (!gameObject.scene.IsValid())
+        {
+            return;
+        }
+
         ResolveReferences();
+        ApplyVisualStyle();
         Refresh();
     }
 
     private void OnEnable()
     {
-        ResolveReferences();
+        if (!gameObject.scene.IsValid())
+        {
+            return;
+        }
 
+        ResolveReferences();
+        ApplyVisualStyle();
         SubscribeToInventoryManager();
     }
 
@@ -44,6 +56,16 @@ public class InventoryUI : MonoBehaviour
 
     private void Update()
     {
+        if (!gameObject.scene.IsValid())
+        {
+            return;
+        }
+
+        if (inventoryPanel != null && inventoryPanel.activeInHierarchy)
+        {
+            ApplyVisualStyle();
+        }
+
         if (Input.GetKeyDown(KeyCode.I))
         {
             ToggleInventory();
@@ -55,12 +77,21 @@ public class InventoryUI : MonoBehaviour
     {
         isOpen = !isOpen;
 
-        inventoryPanel.SetActive(isOpen);
+        if (inventoryPanel != null)
+        {
+            inventoryPanel.SetActive(isOpen);
+        }
     }
 
     public void Refresh()
     {
+        if (!gameObject.scene.IsValid())
+        {
+            return;
+        }
+
         ResolveReferences();
+        ApplyVisualStyle();
 
         if (inventoryManager == null)
         {
@@ -93,11 +124,16 @@ public class InventoryUI : MonoBehaviour
             }
         }
 
-        Debug.Log($"[InventoryUI] Refreshed {inventoryManager.inventorySlots.Count} data slots into {slots.Length} UI slots.");
+        statsPanelUI?.Refresh();
     }
 
     private void ResolveReferences()
     {
+        if (!gameObject.scene.IsValid())
+        {
+            return;
+        }
+
         if (inventoryPanel == null)
         {
             Transform panelTransform = transform.Find("InventoryPanel");
@@ -130,6 +166,195 @@ public class InventoryUI : MonoBehaviour
         }
 
         ResolveStatsPanel();
+    }
+
+    private void ApplyVisualStyle()
+    {
+        if (inventoryPanel == null)
+        {
+            return;
+        }
+
+        RectTransform panelRect = inventoryPanel.GetComponent<RectTransform>();
+        if (panelRect != null)
+        {
+            panelRect.anchorMin = Vector2.zero;
+            panelRect.anchorMax = Vector2.one;
+            panelRect.offsetMin = Vector2.zero;
+            panelRect.offsetMax = Vector2.zero;
+        }
+
+        StylePanel(inventoryPanel, InventoryUITheme.Overlay, false);
+
+        Transform windowTransform = inventoryPanel.transform.Find("InventoryWindow");
+        if (windowTransform != null)
+        {
+            RemoveLegacyHeader(windowTransform);
+            StyleWindow(windowTransform);
+            StyleWindowLayout(windowTransform);
+        }
+
+        Transform[] children = inventoryPanel.GetComponentsInChildren<Transform>(true);
+        foreach (Transform child in children)
+        {
+            if (child == inventoryPanel.transform)
+            {
+                continue;
+            }
+
+            if (child.name.Contains("StatsPanel") || child.name.Contains("EquipmentPanel"))
+            {
+                StylePanel(child.gameObject, InventoryUITheme.PanelSecondary, true);
+            }
+            else if (child.name.Contains("InventoryGrid"))
+            {
+                StylePanel(child.gameObject, InventoryUITheme.PanelSecondary, true);
+            }
+        }
+
+        GridLayoutGroup grid = inventoryPanel.GetComponentInChildren<GridLayoutGroup>(true);
+        if (grid != null)
+        {
+            ConfigureInventoryGrid(grid);
+        }
+    }
+
+    private void StyleWindow(Transform windowTransform)
+    {
+        RectTransform rectTransform = windowTransform as RectTransform;
+        if (rectTransform != null)
+        {
+            rectTransform.anchorMin = new Vector2(0.5f, 0.5f);
+            rectTransform.anchorMax = new Vector2(0.5f, 0.5f);
+            rectTransform.pivot = new Vector2(0.5f, 0.5f);
+            rectTransform.anchoredPosition = Vector2.zero;
+            rectTransform.sizeDelta = new Vector2(1180f, 660f);
+        }
+
+        StylePanel(windowTransform.gameObject, InventoryUITheme.Panel, true);
+    }
+
+    private void StyleWindowLayout(Transform windowTransform)
+    {
+        RectTransform stats = FindChildRect(windowTransform, "StatsPanel");
+        RectTransform equipment = FindChildRect(windowTransform, "EquipmentPanel");
+        RectTransform grid = FindChildRect(windowTransform, "InventoryGrid");
+
+        SetPanelRect(stats, new Vector2(0f, 0f), new Vector2(0.245f, 1f), new Vector2(22f, 28f), new Vector2(-10f, -28f));
+        SetPanelRect(equipment, new Vector2(0.265f, 0f), new Vector2(0.515f, 1f), new Vector2(0f, 28f), new Vector2(-10f, -28f));
+        SetPanelRect(grid, new Vector2(0.535f, 0f), new Vector2(1f, 1f), new Vector2(0f, 28f), new Vector2(-22f, -28f));
+
+        if (grid != null && grid.GetComponent<RectMask2D>() == null)
+        {
+            grid.gameObject.AddComponent<RectMask2D>();
+        }
+    }
+
+    private RectTransform FindChildRect(Transform parent, string childName)
+    {
+        Transform child = parent.Find(childName);
+        if (child is RectTransform directRect)
+        {
+            return directRect;
+        }
+
+        RectTransform[] rects = parent.GetComponentsInChildren<RectTransform>(true);
+        foreach (RectTransform rect in rects)
+        {
+            if (rect.name == childName)
+            {
+                return rect;
+            }
+        }
+
+        return null;
+    }
+
+    private void SetPanelRect(RectTransform rect, Vector2 anchorMin, Vector2 anchorMax, Vector2 offsetMin, Vector2 offsetMax)
+    {
+        if (rect == null)
+        {
+            return;
+        }
+
+        rect.anchorMin = anchorMin;
+        rect.anchorMax = anchorMax;
+        rect.offsetMin = offsetMin;
+        rect.offsetMax = offsetMax;
+        rect.localScale = Vector3.one;
+    }
+
+    private void ConfigureInventoryGrid(GridLayoutGroup grid)
+    {
+        RectTransform gridRect = grid.GetComponent<RectTransform>();
+        int slotCount = Mathf.Max(
+            slots != null ? slots.Length : 0,
+            inventoryManager != null ? inventoryManager.MaxSlots : 0,
+            grid.transform.childCount);
+
+        slotCount = Mathf.Max(slotCount, 1);
+
+        Vector2 spacing = new Vector2(12f, 12f);
+        RectOffset padding = new RectOffset(18, 18, 18, 18);
+        float width = gridRect != null && gridRect.rect.width > 1f ? gridRect.rect.width : 500f;
+        float height = gridRect != null && gridRect.rect.height > 1f ? gridRect.rect.height : 580f;
+        float usableWidth = Mathf.Max(1f, width - padding.left - padding.right);
+        float usableHeight = Mathf.Max(1f, height - padding.top - padding.bottom);
+
+        int columns = Mathf.Clamp(Mathf.FloorToInt((usableWidth + spacing.x) / (94f + spacing.x)), 3, 5);
+        columns = Mathf.Clamp(columns, 1, slotCount);
+        int rows = Mathf.CeilToInt(slotCount / (float)columns);
+        float cellWidth = (usableWidth - spacing.x * (columns - 1)) / columns;
+        float cellHeight = (usableHeight - spacing.y * (rows - 1)) / rows;
+        float cell = Mathf.Clamp(Mathf.Floor(Mathf.Min(cellWidth, cellHeight)), 68f, 104f);
+
+        grid.cellSize = new Vector2(cell, cell);
+        grid.spacing = spacing;
+        grid.padding = padding;
+        grid.childAlignment = TextAnchor.UpperLeft;
+        grid.constraint = GridLayoutGroup.Constraint.FixedColumnCount;
+        grid.constraintCount = columns;
+    }
+
+    private void RemoveLegacyHeader(Transform windowTransform)
+    {
+        DestroyChildIfPresent(windowTransform, "InventoryTitle");
+        DestroyChildIfPresent(windowTransform, "InventorySubtitle");
+    }
+
+    private void DestroyChildIfPresent(Transform parent, string childName)
+    {
+        Transform child = parent.Find(childName);
+        if (child == null)
+        {
+            return;
+        }
+
+        if (Application.isPlaying)
+        {
+            Destroy(child.gameObject);
+        }
+        else
+        {
+            DestroyImmediate(child.gameObject);
+        }
+    }
+
+    private void StylePanel(GameObject panel, Color color, bool decorate)
+    {
+        Image image = panel.GetComponent<Image>();
+        if (image != null)
+        {
+            image.color = color;
+        }
+
+        if (!decorate)
+        {
+            return;
+        }
+
+        InventoryUITheme.EnsureOutline(panel, InventoryUITheme.Border, new Vector2(2f, -2f));
+        InventoryUITheme.EnsureShadow(panel, new Color(0f, 0f, 0f, 0.38f), new Vector2(7f, -7f));
     }
 
     private void BindSlotsFromPanel()
@@ -238,10 +463,15 @@ public class InventoryUI : MonoBehaviour
 
     public void OnItemClicked(ItemData item)
     {
+        ResolveReferences();
+
+        if (TryUseInventoryItem(item))
+        {
+            return;
+        }
+
         if (item is EquipmentData equipment)
         {
-            ResolveReferences();
-
             if (equipmentManager == null)
             {
                 Debug.LogWarning("[InventoryUI] Missing EquipmentManager. Add EquipmentManager to the scene or assign it in the Inspector.");
@@ -254,14 +484,14 @@ public class InventoryUI : MonoBehaviour
                 return;
             }
 
-            if (!equipmentManager.CanEquip(equipment.itemType))
+            if (!equipmentManager.CanEquip(equipment.SlotType))
             {
-                Debug.LogWarning($"[InventoryUI] Cannot equip item type {equipment.itemType}.");
+                Debug.LogWarning($"[InventoryUI] Cannot equip item slot {equipment.SlotType}.");
                 return;
             }
 
             // If the clicked equipment is the same instance already equipped, do nothing.
-            EquipmentData currentlyEquipped = equipmentManager.GetEquippedEquipment(equipment.itemType);
+            EquipmentData currentlyEquipped = equipmentManager.GetEquippedEquipment(equipment.SlotType);
             if (currentlyEquipped == equipment)
             {
                 Debug.Log($"[InventoryUI] {equipment.itemName} is already equipped.");
@@ -285,7 +515,46 @@ public class InventoryUI : MonoBehaviour
         }
     }
 
-    public void OnItemHovered(ItemData item)
+    public void OnItemRightClicked(ItemData item)
+    {
+        ResolveReferences();
+
+        TryUseInventoryItem(item);
+    }
+
+    private bool TryUseInventoryItem(ItemData item)
+    {
+        if (item == null)
+        {
+            return false;
+        }
+
+        if (inventoryManager == null)
+        {
+            Debug.LogWarning("[InventoryUI] Missing InventoryManager. Add InventoryManager to the scene or assign it in the Inspector.");
+            return false;
+        }
+
+        if (!CanUseFromInventory(item))
+        {
+            return false;
+        }
+
+        if (inventoryManager.UseItem(item))
+        {
+            Refresh();
+            return true;
+        }
+
+        return false;
+    }
+
+    private bool CanUseFromInventory(ItemData item)
+    {
+        return item is ConsumableItemData || item.itemType == ItemType.Potion;
+    }
+
+    public void OnItemHovered(ItemData item, int amount = 1)
     {
         ResolveReferences();
 
@@ -294,7 +563,7 @@ public class InventoryUI : MonoBehaviour
             return;
         }
 
-        tooltipUI.Show(item);
+        tooltipUI.Show(item, amount);
     }
 
     public void OnItemHoverExit(ItemData item)

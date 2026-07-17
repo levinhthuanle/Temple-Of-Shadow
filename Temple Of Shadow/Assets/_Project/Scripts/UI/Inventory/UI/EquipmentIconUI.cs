@@ -14,6 +14,7 @@ public class EquipmentIconUI : MonoBehaviour, IPointerEnterHandler, IPointerExit
     {
         iconImage = GetComponent<Image>();
         ResolveTooltip();
+        ApplyStyle();
     }
 
     public void SetEquipment(EquipmentData equipment)
@@ -33,6 +34,7 @@ public class EquipmentIconUI : MonoBehaviour, IPointerEnterHandler, IPointerExit
         if (equipment == null)
         {
             iconImage.enabled = false;
+            ApplyStyle();
 
             if (tooltipUI != null)
             {
@@ -44,6 +46,7 @@ public class EquipmentIconUI : MonoBehaviour, IPointerEnterHandler, IPointerExit
 
         iconImage.enabled = true;
         iconImage.sprite = equipment.icon;
+        ApplyStyle();
 
         if (isHovering && tooltipUI != null)
         {
@@ -54,6 +57,7 @@ public class EquipmentIconUI : MonoBehaviour, IPointerEnterHandler, IPointerExit
     public void OnPointerEnter(PointerEventData eventData)
     {
         isHovering = true;
+        ApplyStyle();
 
         if (currentEquipment == null)
         {
@@ -71,6 +75,7 @@ public class EquipmentIconUI : MonoBehaviour, IPointerEnterHandler, IPointerExit
     public void OnPointerExit(PointerEventData eventData)
     {
         isHovering = false;
+        ApplyStyle();
 
         ResolveTooltip();
 
@@ -86,5 +91,24 @@ public class EquipmentIconUI : MonoBehaviour, IPointerEnterHandler, IPointerExit
         {
             tooltipUI = FindAnyObjectByType<TooltipUI>(FindObjectsInactive.Include);
         }
+    }
+
+    private void ApplyStyle()
+    {
+        if (iconImage == null)
+        {
+            iconImage = GetComponent<Image>();
+        }
+
+        if (iconImage != null)
+        {
+            iconImage.preserveAspect = true;
+            iconImage.raycastTarget = true;
+        }
+
+        InventoryUITheme.EnsureOutline(
+            gameObject,
+            isHovering && currentEquipment != null ? InventoryUITheme.Accent : InventoryUITheme.BorderSoft,
+            isHovering && currentEquipment != null ? new Vector2(2f, -2f) : new Vector2(1f, -1f));
     }
 }
