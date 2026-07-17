@@ -30,10 +30,10 @@ public class InventoryManager : MonoBehaviour
 
     }
 
-    public void AddItem(ItemData item)
+    public bool AddItem(ItemData item)
     {
         if (item == null)
-            return;
+            return false;
 
         if (item.stackable)
         {
@@ -43,7 +43,7 @@ public class InventoryManager : MonoBehaviour
                 {
                     slot.amount++;
                     InventoryChanged?.Invoke();
-                    return;
+                    return true;
 
                 }
             }
@@ -52,7 +52,7 @@ public class InventoryManager : MonoBehaviour
         if (inventorySlots.Count >= maxSlots)
         {
             Debug.Log("Inventory Full");
-            return;
+            return false;
         }
 
         InventorySlot newSlot = new InventorySlot();
@@ -62,8 +62,24 @@ public class InventoryManager : MonoBehaviour
 
         inventorySlots.Add(newSlot);
         InventoryChanged?.Invoke();
+        return true;
+    }
 
-        
+    public bool CanAddItem(ItemData item)
+    {
+        if (item == null)
+            return false;
+
+        if (item.stackable)
+        {
+            foreach (InventorySlot slot in inventorySlots)
+            {
+                if (slot.itemData == item)
+                    return true;
+            }
+        }
+
+        return inventorySlots.Count < maxSlots;
     }
 
     public bool RemoveItem(ItemData item)
