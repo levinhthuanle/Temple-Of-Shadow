@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: WoodenSword
   m_EditorClassIdentifier: Assembly-CSharp::ItemData
   itemName: Wooden Sword
+  buyPrice: 80
   description: A weak sword made of wood.
   icon: {fileID: 21300000, guid: 373498e9496e4d349ad947a327d03d55, type: 3}
   itemType: 0
