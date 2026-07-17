@@ -12,6 +12,8 @@ public static class MenuRuntimeBootstrap
 
     private static void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
+        Time.timeScale = 1f;
+
         if (scene.name == "CharacterSelect")
         {
             Canvas canvas = Object.FindFirstObjectByType<Canvas>();
@@ -29,7 +31,16 @@ public static class MenuRuntimeBootstrap
             return;
         }
 
-        GameObject bridgeObject = new("GameplayProfileBridge");
-        bridgeObject.AddComponent<GameplayProfileBridge>();
+        if (Object.FindFirstObjectByType<GameplayProfileBridge>() == null)
+        {
+            GameObject bridgeObject = new("GameplayProfileBridge");
+            bridgeObject.AddComponent<GameplayProfileBridge>();
+        }
+
+        if (Object.FindFirstObjectByType<PauseMenuController>() == null)
+        {
+            GameObject pauseObject = new("PauseMenuController");
+            pauseObject.AddComponent<PauseMenuController>();
+        }
     }
 }
