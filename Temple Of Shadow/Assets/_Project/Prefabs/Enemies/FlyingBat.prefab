@@ -381,11 +381,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d5cc562e5753984ab39a70846e8ed5c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FlyingEnemyAI
-  moveSpeed: 2.5
-  diveSpeed: 5
-  diveRange: 3
+  moveSpeed: 3.04
+  diveSpeed: 6.25
+  diveRange: 4.27
   visual: {fileID: 8271025352216038332}
-  detectRange: 6
+  detectRange: 13.2
   playerLayer:
     serializedVersion: 2
     m_Bits: 256

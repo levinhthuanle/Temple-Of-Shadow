@@ -44,7 +44,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a890306ef3d38714a91461042c70ad4c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EquipmentManager
-  equippedSword: {fileID: 0}
+  equippedSword: {fileID: 11400000, guid: a27821ad134b3fb4a84f7b55d6180a57, type: 2}
   equippedArmor: {fileID: 11400000, guid: 0a4296d784edd6445a85a58560b0875c, type: 2}
   equippedAccessory: {fileID: 11400000, guid: 1b487c4a696cfd04a8f9073c94589506, type: 2}
   equippedProjectile: {fileID: 0}
