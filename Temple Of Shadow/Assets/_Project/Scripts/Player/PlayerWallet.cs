@@ -17,7 +17,6 @@ public class PlayerWallet : MonoBehaviour
     private void Start()
     {
         ResolveCoinUI();
-        coinUI?.UpdateCoin(Gold);
         RefreshUI();
     }
 
@@ -29,7 +28,7 @@ public class PlayerWallet : MonoBehaviour
         Gold += amount;
 
         ResolveCoinUI();
-        coinUI?.UpdateCoin(Gold);
+        NotifyGoldChanged();
     }
 
     private void ResolveCoinUI()
@@ -38,8 +37,6 @@ public class PlayerWallet : MonoBehaviour
         {
             coinUI = FindAnyObjectByType<CoinUI>(FindObjectsInactive.Include);
         }
-    }
-        NotifyGoldChanged();
     }
 
     public bool CanAfford(int amount)

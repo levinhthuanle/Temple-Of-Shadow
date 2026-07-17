@@ -423,7 +423,6 @@ GameObject:
   - component: {fileID: 1170226241}
   - component: {fileID: 1170226240}
   - component: {fileID: 1170226239}
-  - component: {fileID: 1170226243}
   - component: {fileID: 1170226244}
   - component: {fileID: 1170226245}
   - component: {fileID: 1170226246}
@@ -517,21 +516,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
---- !u!114 &1170226243
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1170226238}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 907177d8341fbc248a82fa082291c3ef, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::InventoryManager
-  inventorySlots: []
-  testSword: {fileID: 0}
-  testPotion: {fileID: 0}
 --- !u!114 &1170226244
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -576,7 +560,7 @@ MonoBehaviour:
   database: {fileID: 1170226244}
   shopItemPrefab: {fileID: 0}
   content: {fileID: 0}
-  inventoryManager: {fileID: 1170226243}
+  inventoryManager: {fileID: 1351767603}
   playerWallet: {fileID: 0}
 --- !u!114 &1170226246
 MonoBehaviour:
@@ -595,6 +579,17 @@ MonoBehaviour:
   player: {fileID: 0}
   leftShopBoundary: -4
   rightShopBoundary: 4
+--- !u!114 &1351767603 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6408602085422575730, guid: 4afd8b4aca2cfb146b874ce0bb8658aa, type: 3}
+  m_PrefabInstance: {fileID: 1810667487}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 907177d8341fbc248a82fa082291c3ef, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::InventoryManager
 --- !u!1 &1521965394
 GameObject:
   m_ObjectHideFlags: 0

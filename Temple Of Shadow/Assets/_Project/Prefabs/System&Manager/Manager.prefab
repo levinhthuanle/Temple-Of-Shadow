@@ -50,7 +50,7 @@ MonoBehaviour:
   equippedProjectile: {fileID: 0}
   playerBonus: {fileID: 0}
   equipmentUI: {fileID: 0}
-  testSword: {fileID: 11400000, guid: 1f9f47c189b8da440a2b90d6a78c2071, type: 2}
+  testSword: {fileID: 0}
 --- !u!1 &2879562081753149787
 GameObject:
   m_ObjectHideFlags: 0
@@ -177,6 +177,7 @@ MonoBehaviour:
   inventorySlots: []
   testSword: {fileID: 11400000, guid: 33746b87f4ff5264a8e8cb9cc9c180ca, type: 2}
   testPotion: {fileID: 11400000, guid: ef403317b8f3cba4cbef054f39d8544e, type: 2}
+  itemUser: {fileID: 0}
 --- !u!1 &9096712020890945135
 GameObject:
   m_ObjectHideFlags: 0

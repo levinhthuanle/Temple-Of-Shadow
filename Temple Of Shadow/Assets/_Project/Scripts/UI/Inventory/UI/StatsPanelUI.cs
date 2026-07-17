@@ -200,6 +200,14 @@ public class StatsPanelUI : MonoBehaviour
 
     private void ApplyStyle()
     {
+        VerticalLayoutGroup layoutGroup = GetComponent<VerticalLayoutGroup>();
+        if (layoutGroup != null)
+        {
+            // Stat rows are positioned explicitly by PlaceText. Leaving this layout
+            // group enabled drives their RectTransforms to zero height at runtime.
+            layoutGroup.enabled = false;
+        }
+
         Image image = GetComponent<Image>();
         if (image != null)
         {

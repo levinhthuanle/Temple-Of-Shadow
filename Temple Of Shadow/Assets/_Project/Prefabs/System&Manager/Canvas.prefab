@@ -402,6 +402,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::InventorySlotUI
   icon: {fileID: 0}
   amountText: {fileID: 0}
+  backgroundImage: {fileID: 0}
+  amountBadge: {fileID: 0}
+  accentBar: {fileID: 0}
 --- !u!1 &1169726959512929822
 GameObject:
   m_ObjectHideFlags: 0
@@ -801,6 +804,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::InventorySlotUI
   icon: {fileID: 0}
   amountText: {fileID: 0}
+  backgroundImage: {fileID: 0}
+  amountBadge: {fileID: 0}
+  accentBar: {fileID: 0}
 --- !u!1 &1280650776582534773
 GameObject:
   m_ObjectHideFlags: 0
@@ -1454,6 +1460,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::InventorySlotUI
   icon: {fileID: 0}
   amountText: {fileID: 0}
+  backgroundImage: {fileID: 0}
+  amountBadge: {fileID: 0}
+  accentBar: {fileID: 0}
 --- !u!1 &1999285881620212915
 GameObject:
   m_ObjectHideFlags: 0
@@ -1546,9 +1555,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: '::'
   nameText: {fileID: 1063003184960512333}
+  typeText: {fileID: 0}
+  effectText: {fileID: 0}
   statsText: {fileID: 8698173925803418824}
   descriptionText: {fileID: 1652787731777847713}
   screenOffset: {x: 24, y: -24}
+  preferredWidth: 340
+  iconSize: 54
 --- !u!1 &2006141980435166439
 GameObject:
   m_ObjectHideFlags: 0
@@ -1790,6 +1803,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::InventorySlotUI
   icon: {fileID: 0}
   amountText: {fileID: 0}
+  backgroundImage: {fileID: 0}
+  amountBadge: {fileID: 0}
+  accentBar: {fileID: 0}
 --- !u!1 &2510664228245225979
 GameObject:
   m_ObjectHideFlags: 0
@@ -2384,6 +2400,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::InventorySlotUI
   icon: {fileID: 0}
   amountText: {fileID: 0}
+  backgroundImage: {fileID: 0}
+  amountBadge: {fileID: 0}
+  accentBar: {fileID: 0}
 --- !u!1 &3187894625868467467
 GameObject:
   m_ObjectHideFlags: 0
@@ -2991,6 +3010,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::InventorySlotUI
   icon: {fileID: 0}
   amountText: {fileID: 0}
+  backgroundImage: {fileID: 0}
+  amountBadge: {fileID: 0}
+  accentBar: {fileID: 0}
 --- !u!1 &4201488433942164488
 GameObject:
   m_ObjectHideFlags: 0
@@ -3127,6 +3149,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::InventorySlotUI
   icon: {fileID: 0}
   amountText: {fileID: 0}
+  backgroundImage: {fileID: 0}
+  amountBadge: {fileID: 0}
+  accentBar: {fileID: 0}
 --- !u!1 &4344597221965047213
 GameObject:
   m_ObjectHideFlags: 0
@@ -3475,6 +3500,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::InventorySlotUI
   icon: {fileID: 0}
   amountText: {fileID: 0}
+  backgroundImage: {fileID: 0}
+  amountBadge: {fileID: 0}
+  accentBar: {fileID: 0}
 --- !u!1 &5703612860949686384
 GameObject:
   m_ObjectHideFlags: 0
@@ -3837,6 +3865,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::InventorySlotUI
   icon: {fileID: 0}
   amountText: {fileID: 0}
+  backgroundImage: {fileID: 0}
+  amountBadge: {fileID: 0}
+  accentBar: {fileID: 0}
 --- !u!1 &6348140009463212083
 GameObject:
   m_ObjectHideFlags: 0
@@ -4896,6 +4927,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::InventorySlotUI
   icon: {fileID: 0}
   amountText: {fileID: 0}
+  backgroundImage: {fileID: 0}
+  amountBadge: {fileID: 0}
+  accentBar: {fileID: 0}
 --- !u!1 &7757228142574664265
 GameObject:
   m_ObjectHideFlags: 0
@@ -5032,6 +5066,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::InventorySlotUI
   icon: {fileID: 0}
   amountText: {fileID: 0}
+  backgroundImage: {fileID: 0}
+  amountBadge: {fileID: 0}
+  accentBar: {fileID: 0}
 --- !u!1 &8196604777926819565
 GameObject:
   m_ObjectHideFlags: 0
@@ -5380,6 +5417,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::InventorySlotUI
   icon: {fileID: 0}
   amountText: {fileID: 0}
+  backgroundImage: {fileID: 0}
+  amountBadge: {fileID: 0}
+  accentBar: {fileID: 0}
 --- !u!1 &8452606381960011082
 GameObject:
   m_ObjectHideFlags: 0
@@ -5516,6 +5556,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::InventorySlotUI
   icon: {fileID: 0}
   amountText: {fileID: 0}
+  backgroundImage: {fileID: 0}
+  amountBadge: {fileID: 0}
+  accentBar: {fileID: 0}
 --- !u!1 &8467824217077869321
 GameObject:
   m_ObjectHideFlags: 0
@@ -5864,6 +5907,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::InventorySlotUI
   icon: {fileID: 0}
   amountText: {fileID: 0}
+  backgroundImage: {fileID: 0}
+  amountBadge: {fileID: 0}
+  accentBar: {fileID: 0}
 --- !u!1 &8644478672101967404
 GameObject:
   m_ObjectHideFlags: 0
@@ -6362,6 +6408,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::InventorySlotUI
   icon: {fileID: 0}
   amountText: {fileID: 0}
+  backgroundImage: {fileID: 0}
+  amountBadge: {fileID: 0}
+  accentBar: {fileID: 0}
 --- !u!1 &9100810052907385842
 GameObject:
   m_ObjectHideFlags: 0
@@ -6498,3 +6547,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::InventorySlotUI
   icon: {fileID: 0}
   amountText: {fileID: 0}
+  backgroundImage: {fileID: 0}
+  amountBadge: {fileID: 0}
+  accentBar: {fileID: 0}
