@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 151f1e7fbb451b549935a86a49eafe36, type: 3}
+  m_Name: VerdantHeartRing
+  m_EditorClassIdentifier: Assembly-CSharp::EquipmentData
+  itemName: Verdant Heart Ring
+  stackable: 0
+  buyPrice: 420
+  description: A living emerald band that fortifies its bearer with deep-rooted vitality.
+  icon: {fileID: -5750353039905602045, guid: 931f992975060b1449d1e4322d3be803, type: 3}
+  itemType: 2
+  healAmount: 40
+  equipmentSlotType: 4
+  visualSprite: {fileID: -5750353039905602045, guid: 931f992975060b1449d1e4322d3be803, type: 3}
+  maxHP: 45
+  damage: 0
+  armor: 1
+  moveSpeed: 0
+  attackSpeed: 0
+  jumpForce: 0
