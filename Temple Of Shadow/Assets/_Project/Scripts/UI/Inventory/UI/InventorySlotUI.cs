@@ -3,7 +3,7 @@ using UnityEngine.EventSystems;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class InventorySlotUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
+public class InventorySlotUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
 {
     public Image icon;
     public TextMeshProUGUI amountText;
@@ -31,6 +31,21 @@ public class InventorySlotUI : MonoBehaviour, IPointerEnterHandler, IPointerExit
             return;
 
         inventoryUI.OnItemClicked(currentItem);
+    }
+
+    public void OnPointerClick(PointerEventData eventData)
+    {
+        if (eventData.button != PointerEventData.InputButton.Right)
+        {
+            return;
+        }
+
+        if (currentItem == null || inventoryUI == null)
+        {
+            return;
+        }
+
+        inventoryUI.OnItemRightClicked(currentItem);
     }
 
     public void OnPointerEnter(PointerEventData eventData)

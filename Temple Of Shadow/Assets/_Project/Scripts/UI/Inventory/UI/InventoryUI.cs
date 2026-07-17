@@ -238,10 +238,15 @@ public class InventoryUI : MonoBehaviour
 
     public void OnItemClicked(ItemData item)
     {
+        ResolveReferences();
+
+        if (TryUseInventoryItem(item))
+        {
+            return;
+        }
+
         if (item is EquipmentData equipment)
         {
-            ResolveReferences();
-
             if (equipmentManager == null)
             {
                 Debug.LogWarning("[InventoryUI] Missing EquipmentManager. Add EquipmentManager to the scene or assign it in the Inspector.");
@@ -254,14 +259,14 @@ public class InventoryUI : MonoBehaviour
                 return;
             }
 
-            if (!equipmentManager.CanEquip(equipment.itemType))
+            if (!equipmentManager.CanEquip(equipment.SlotType))
             {
-                Debug.LogWarning($"[InventoryUI] Cannot equip item type {equipment.itemType}.");
+                Debug.LogWarning($"[InventoryUI] Cannot equip item slot {equipment.SlotType}.");
                 return;
             }
 
             // If the clicked equipment is the same instance already equipped, do nothing.
-            EquipmentData currentlyEquipped = equipmentManager.GetEquippedEquipment(equipment.itemType);
+            EquipmentData currentlyEquipped = equipmentManager.GetEquippedEquipment(equipment.SlotType);
             if (currentlyEquipped == equipment)
             {
                 Debug.Log($"[InventoryUI] {equipment.itemName} is already equipped.");
@@ -283,6 +288,45 @@ public class InventoryUI : MonoBehaviour
 
             Refresh();
         }
+    }
+
+    public void OnItemRightClicked(ItemData item)
+    {
+        ResolveReferences();
+
+        TryUseInventoryItem(item);
+    }
+
+    private bool TryUseInventoryItem(ItemData item)
+    {
+        if (item == null)
+        {
+            return false;
+        }
+
+        if (inventoryManager == null)
+        {
+            Debug.LogWarning("[InventoryUI] Missing InventoryManager. Add InventoryManager to the scene or assign it in the Inspector.");
+            return false;
+        }
+
+        if (!CanUseFromInventory(item))
+        {
+            return false;
+        }
+
+        if (inventoryManager.UseItem(item))
+        {
+            Refresh();
+            return true;
+        }
+
+        return false;
+    }
+
+    private bool CanUseFromInventory(ItemData item)
+    {
+        return item is ConsumableItemData || item.itemType == ItemType.Potion;
     }
 
     public void OnItemHovered(ItemData item)

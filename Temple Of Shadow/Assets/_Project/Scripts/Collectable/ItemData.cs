@@ -14,11 +14,25 @@ public class ItemData : ScriptableObject
 
     public ItemType itemType;
 
+    [Header("Potion Settings")]
+    [Min(1)]
+    public int healAmount = 40;
+
     private void Awake()
     {
-        if (itemType == ItemType.Potion )
+        ApplyItemDefaults();
+    }
+
+    private void OnValidate()
+    {
+        ApplyItemDefaults();
+    }
+
+    protected void ApplyItemDefaults()
+    {
+        if (itemType == ItemType.Potion)
         {
-           stackable = true;
+            stackable = true;
         }
         else
         {

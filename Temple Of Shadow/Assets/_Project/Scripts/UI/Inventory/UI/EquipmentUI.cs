@@ -81,6 +81,12 @@ public class EquipmentUI : MonoBehaviour
         if (equipment == null)
         {
             image.enabled = false;
+
+            if (hoverUI != null)
+            {
+                hoverUI.SetEquipment(null);
+            }
+
             return;
         }
 
