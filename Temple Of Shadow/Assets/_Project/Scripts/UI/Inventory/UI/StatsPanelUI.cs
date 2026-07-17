@@ -1,5 +1,6 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class StatsPanelUI : MonoBehaviour
 {
@@ -20,12 +21,14 @@ public class StatsPanelUI : MonoBehaviour
     private void Awake()
     {
         ResolveReferences();
+        ApplyStyle();
         Refresh();
     }
 
     private void OnEnable()
     {
         ResolveReferences();
+        ApplyStyle();
         Subscribe();
         Refresh();
     }
@@ -48,12 +51,14 @@ public class StatsPanelUI : MonoBehaviour
         int currentHp = playerHealth != null ? playerHealth.GetCurrentHp() : playerStats.MaxHP;
         int maxHp = playerHealth != null ? playerHealth.GetMaxHp() : playerStats.MaxHP;
 
-        SetText(hpText, $"HP: {currentHp}/{maxHp}");
-        SetText(damageText, $"Damage: {playerStats.Damage}");
-        SetText(armorText, $"Armor: {playerStats.Armor}");
-        SetText(moveSpeedText, $"Speed: {FormatFloat(playerStats.MoveSpeed)}");
-        SetText(attackSpeedText, $"Attack Speed: {FormatFloat(playerStats.AttackSpeed)}");
-        SetText(jumpForceText, $"Jump Force: {FormatFloat(playerStats.JumpForce)}");
+        ApplyStyle();
+
+        SetText(hpText, BuildStatLine("HP", $"{currentHp}/{maxHp}"));
+        SetText(damageText, BuildStatLine("Damage", playerStats.Damage.ToString()));
+        SetText(armorText, BuildStatLine("Armor", playerStats.Armor.ToString()));
+        SetText(moveSpeedText, BuildStatLine("Move", FormatFloat(playerStats.MoveSpeed)));
+        SetText(attackSpeedText, BuildStatLine("Attack", FormatFloat(playerStats.AttackSpeed)));
+        SetText(jumpForceText, BuildStatLine("Jump", FormatFloat(playerStats.JumpForce)));
     }
 
     private void ResolveReferences()
@@ -177,7 +182,7 @@ public class StatsPanelUI : MonoBehaviour
 
     private void RefreshHealth(int currentHp, int maxHp)
     {
-        SetText(hpText, $"HP: {currentHp}/{maxHp}");
+        SetText(hpText, BuildStatLine("HP", $"{currentHp}/{maxHp}"));
     }
 
     private void SetText(TextMeshProUGUI text, string value)
@@ -191,5 +196,47 @@ public class StatsPanelUI : MonoBehaviour
     private string FormatFloat(float value)
     {
         return value.ToString("0.##");
+    }
+
+    private string BuildStatLine(string label, string value)
+    {
+        return $"<color=#{ColorUtility.ToHtmlStringRGB(InventoryUITheme.TextMuted)}>{label}</color>  <b>{value}</b>";
+    }
+
+    private void ApplyStyle()
+    {
+        Image image = GetComponent<Image>();
+        if (image != null)
+        {
+            image.color = InventoryUITheme.PanelSecondary;
+        }
+
+        InventoryUITheme.EnsureOutline(gameObject, InventoryUITheme.Border, new Vector2(2f, -2f));
+
+        StyleText(hpText, InventoryUITheme.TextPrimary);
+        StyleText(damageText, InventoryUITheme.TextPrimary);
+        StyleText(armorText, InventoryUITheme.TextPrimary);
+        StyleText(moveSpeedText, InventoryUITheme.TextMuted);
+        StyleText(attackSpeedText, InventoryUITheme.TextMuted);
+        StyleText(jumpForceText, InventoryUITheme.TextMuted);
+    }
+
+    private void StyleText(TextMeshProUGUI text, Color color)
+    {
+        if (text == null)
+        {
+            return;
+        }
+
+        text.color = color;
+        text.fontSize = 24f;
+        text.fontSizeMin = 16f;
+        text.fontSizeMax = 24f;
+        text.enableAutoSizing = true;
+        text.richText = true;
+        text.textWrappingMode = TextWrappingModes.NoWrap;
+        text.overflowMode = TextOverflowModes.Ellipsis;
+        text.alignment = TextAlignmentOptions.Left;
+        text.raycastTarget = false;
     }
 }

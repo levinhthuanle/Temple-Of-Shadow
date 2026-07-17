@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public class InventoryUI : MonoBehaviour
 {
@@ -17,14 +18,25 @@ public class InventoryUI : MonoBehaviour
 
     private void Awake()
     {
+        if (!gameObject.scene.IsValid())
+        {
+            return;
+        }
+
         ResolveReferences();
+        ApplyVisualStyle();
         Refresh();
     }
 
     private void OnEnable()
     {
-        ResolveReferences();
+        if (!gameObject.scene.IsValid())
+        {
+            return;
+        }
 
+        ResolveReferences();
+        ApplyVisualStyle();
         SubscribeToInventoryManager();
     }
 
@@ -44,6 +56,16 @@ public class InventoryUI : MonoBehaviour
 
     private void Update()
     {
+        if (!gameObject.scene.IsValid())
+        {
+            return;
+        }
+
+        if (inventoryPanel != null && inventoryPanel.activeInHierarchy)
+        {
+            ApplyVisualStyle();
+        }
+
         if (Input.GetKeyDown(KeyCode.I))
         {
             ToggleInventory();
@@ -55,12 +77,21 @@ public class InventoryUI : MonoBehaviour
     {
         isOpen = !isOpen;
 
-        inventoryPanel.SetActive(isOpen);
+        if (inventoryPanel != null)
+        {
+            inventoryPanel.SetActive(isOpen);
+        }
     }
 
     public void Refresh()
     {
+        if (!gameObject.scene.IsValid())
+        {
+            return;
+        }
+
         ResolveReferences();
+        ApplyVisualStyle();
 
         if (inventoryManager == null)
         {
@@ -93,11 +124,16 @@ public class InventoryUI : MonoBehaviour
             }
         }
 
-        Debug.Log($"[InventoryUI] Refreshed {inventoryManager.inventorySlots.Count} data slots into {slots.Length} UI slots.");
+        statsPanelUI?.Refresh();
     }
 
     private void ResolveReferences()
     {
+        if (!gameObject.scene.IsValid())
+        {
+            return;
+        }
+
         if (inventoryPanel == null)
         {
             Transform panelTransform = transform.Find("InventoryPanel");
@@ -130,6 +166,117 @@ public class InventoryUI : MonoBehaviour
         }
 
         ResolveStatsPanel();
+    }
+
+    private void ApplyVisualStyle()
+    {
+        if (inventoryPanel == null)
+        {
+            return;
+        }
+
+        RectTransform panelRect = inventoryPanel.GetComponent<RectTransform>();
+        if (panelRect != null)
+        {
+            panelRect.anchorMin = Vector2.zero;
+            panelRect.anchorMax = Vector2.one;
+            panelRect.offsetMin = Vector2.zero;
+            panelRect.offsetMax = Vector2.zero;
+        }
+
+        StylePanel(inventoryPanel, InventoryUITheme.Overlay, false);
+
+        Transform windowTransform = inventoryPanel.transform.Find("InventoryWindow");
+        if (windowTransform != null)
+        {
+            RemoveLegacyHeader(windowTransform);
+            StyleWindow(windowTransform);
+        }
+
+        Transform[] children = inventoryPanel.GetComponentsInChildren<Transform>(true);
+        foreach (Transform child in children)
+        {
+            if (child == inventoryPanel.transform)
+            {
+                continue;
+            }
+
+            if (child.name.Contains("StatsPanel") || child.name.Contains("EquipmentPanel"))
+            {
+                StylePanel(child.gameObject, InventoryUITheme.PanelSecondary, true);
+            }
+            else if (child.name.Contains("InventoryGrid"))
+            {
+                StylePanel(child.gameObject, InventoryUITheme.PanelSecondary, true);
+            }
+        }
+
+        GridLayoutGroup grid = inventoryPanel.GetComponentInChildren<GridLayoutGroup>(true);
+        if (grid != null)
+        {
+            grid.cellSize = new Vector2(92f, 92f);
+            grid.spacing = new Vector2(12f, 12f);
+            grid.padding = new RectOffset(16, 16, 16, 16);
+            grid.childAlignment = TextAnchor.UpperLeft;
+            grid.constraint = GridLayoutGroup.Constraint.FixedColumnCount;
+            grid.constraintCount = 4;
+        }
+    }
+
+    private void StyleWindow(Transform windowTransform)
+    {
+        RectTransform rectTransform = windowTransform as RectTransform;
+        if (rectTransform != null)
+        {
+            rectTransform.anchorMin = new Vector2(0.5f, 0.5f);
+            rectTransform.anchorMax = new Vector2(0.5f, 0.5f);
+            rectTransform.pivot = new Vector2(0.5f, 0.5f);
+            rectTransform.anchoredPosition = Vector2.zero;
+            rectTransform.sizeDelta = new Vector2(1120f, 620f);
+        }
+
+        StylePanel(windowTransform.gameObject, InventoryUITheme.Panel, true);
+    }
+
+    private void RemoveLegacyHeader(Transform windowTransform)
+    {
+        DestroyChildIfPresent(windowTransform, "InventoryTitle");
+        DestroyChildIfPresent(windowTransform, "InventorySubtitle");
+    }
+
+    private void DestroyChildIfPresent(Transform parent, string childName)
+    {
+        Transform child = parent.Find(childName);
+        if (child == null)
+        {
+            return;
+        }
+
+        if (Application.isPlaying)
+        {
+            Destroy(child.gameObject);
+        }
+        else
+        {
+            DestroyImmediate(child.gameObject);
+        }
+    }
+
+    private void StylePanel(GameObject panel, Color color, bool decorate)
+    {
+        Image image = panel.GetComponent<Image>();
+        if (image != null)
+        {
+            image.color = color;
+        }
+
+        if (!decorate)
+        {
+            return;
+        }
+
+        InventoryUITheme.EnsureOutline(panel, InventoryUITheme.Border, new Vector2(2f, -2f));
+        InventoryUITheme.EnsureShadow(panel, new Color(0f, 0f, 0f, 0.38f), new Vector2(7f, -7f));
     }
 
     private void BindSlotsFromPanel()
@@ -329,7 +476,7 @@ public class InventoryUI : MonoBehaviour
         return item is ConsumableItemData || item.itemType == ItemType.Potion;
     }
 
-    public void OnItemHovered(ItemData item)
+    public void OnItemHovered(ItemData item, int amount = 1)
     {
         ResolveReferences();
 
@@ -338,7 +485,7 @@ public class InventoryUI : MonoBehaviour
             return;
         }
 
-        tooltipUI.Show(item);
+        tooltipUI.Show(item, amount);
     }
 
     public void OnItemHoverExit(ItemData item)
