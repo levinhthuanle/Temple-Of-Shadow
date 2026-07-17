@@ -193,7 +193,7 @@ public class InventorySlotUI : MonoBehaviour, IPointerEnterHandler, IPointerExit
         layoutElement.preferredHeight = 92f;
 
         transform.localScale = isHovering && currentItem != null
-            ? new Vector3(1.035f, 1.035f, 1f)
+            ? new Vector3(1.02f, 1.02f, 1f)
             : Vector3.one;
 
         if (backgroundImage != null)

@@ -5,10 +5,15 @@ public class MainMenuUI : MonoBehaviour
 {
     public void StartGame()
     {
-        // Played through the persistent SoundManager so it survives the scene change.
         SoundManager.Instance?.PlaySFX("click_button");
-        SceneManager.LoadScene("SaveSlotSelect");
-        // forward to next screen
+        MainMenuController controller = FindFirstObjectByType<MainMenuController>();
+        if (controller != null)
+        {
+            controller.OpenMenu2();
+            return;
+        }
 
+        GameSession.SelectSlot(1);
+        SceneManager.LoadScene("CharacterSelect");
     }
 }

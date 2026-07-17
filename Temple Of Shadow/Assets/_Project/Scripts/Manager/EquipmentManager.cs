@@ -106,6 +106,19 @@ public class EquipmentManager : MonoBehaviour
         HandleEquipmentStateChanged();
     }
 
+    public void ApplyLoadout(
+        EquipmentData sword,
+        EquipmentData armor,
+        EquipmentData accessory,
+        EquipmentData projectile)
+    {
+        equippedSword = sword;
+        equippedArmor = armor;
+        equippedAccessory = accessory;
+        equippedProjectile = projectile;
+        HandleEquipmentStateChanged();
+    }
+
     public void RecalculateBonuses()
     {
         ResolvePlayerBonus();

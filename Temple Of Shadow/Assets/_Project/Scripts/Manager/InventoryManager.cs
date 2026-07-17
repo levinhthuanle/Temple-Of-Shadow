@@ -14,6 +14,8 @@ public class InventoryManager : MonoBehaviour
 
     private int maxSlots = 16;
 
+    public int MaxSlots => maxSlots;
+
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Q))
@@ -95,6 +97,30 @@ public class InventoryManager : MonoBehaviour
         }
 
         return false;
+    }
+
+    public void ReplaceInventory(IEnumerable<InventorySlot> newSlots)
+    {
+        inventorySlots.Clear();
+
+        if (newSlots != null)
+        {
+            foreach (InventorySlot slot in newSlots)
+            {
+                if (slot == null || slot.itemData == null || slot.amount <= 0 || inventorySlots.Count >= maxSlots)
+                {
+                    continue;
+                }
+
+                inventorySlots.Add(new InventorySlot
+                {
+                    itemData = slot.itemData,
+                    amount = slot.amount
+                });
+            }
+        }
+
+        InventoryChanged?.Invoke();
     }
 
     public bool UseItem(ItemData item)

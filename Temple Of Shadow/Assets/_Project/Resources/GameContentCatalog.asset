@@ -1,0 +1,76 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5138b6414e1f92a459731ac32b665ba1, type: 3}
+  m_Name: GameContentCatalog
+  m_EditorClassIdentifier: Assembly-CSharp::GameContentCatalog
+  characters:
+  - id: warrior
+    data: {fileID: 11400000, guid: fb56be25b2a8d3c47a9dc6f120e874f9, type: 2}
+    playerPrefab: {fileID: 3113322990576672616, guid: 62a4c1d4a2fcfab418ffda2dff990ca6, type: 3}
+    role: Vanguard
+    description: A balanced front-line fighter with fast attacks, reliable mobility,
+      and room to specialize through equipment.
+    available: 1
+    unavailableReason: 
+  - id: mage
+    data: {fileID: 11400000, guid: 48095bda38b5b9544b820e215bcc7b4e, type: 2}
+    playerPrefab: {fileID: 4981957629079151060, guid: 348c0a5f525fd884ead479c5e9980b7f, type: 3}
+    role: Arcane Striker
+    description: A swift high-damage adventurer who trades durability for mobility
+      and aggressive ranged pressure.
+    available: 1
+    unavailableReason: 
+  - id: knight
+    data: {fileID: 11400000, guid: 009c8e2ae7155a04a9da8d9356b1e107, type: 2}
+    playerPrefab: {fileID: 0}
+    role: Guardian
+    description: A heavily armored defender built to survive the deepest temple chambers.
+    available: 0
+    unavailableReason: Character prefab is not ready.
+  items:
+  - {fileID: 11400000, guid: 0a4296d784edd6445a85a58560b0875c, type: 2}
+  - {fileID: 11400000, guid: 1b487c4a696cfd04a8f9073c94589506, type: 2}
+  - {fileID: 11400000, guid: 1f746b8b0e7b9034290c4829de35be91, type: 2}
+  - {fileID: 11400000, guid: ef403317b8f3cba4cbef054f39d8544e, type: 2}
+  - {fileID: 11400000, guid: a27821ad134b3fb4a84f7b55d6180a57, type: 2}
+  - {fileID: 11400000, guid: 33746b87f4ff5264a8e8cb9cc9c180ca, type: 2}
+  - {fileID: 11400000, guid: 4a4d9f64a8e1c3f41b25046f61eaa8ea, type: 2}
+  startingInventory:
+  - item: {fileID: 11400000, guid: 33746b87f4ff5264a8e8cb9cc9c180ca, type: 2}
+    amount: 1
+  - item: {fileID: 11400000, guid: a27821ad134b3fb4a84f7b55d6180a57, type: 2}
+    amount: 1
+  - item: {fileID: 11400000, guid: ef403317b8f3cba4cbef054f39d8544e, type: 2}
+    amount: 3
+  - item: {fileID: 11400000, guid: 1f746b8b0e7b9034290c4829de35be91, type: 2}
+    amount: 1
+  startingEquipment:
+  - {fileID: 11400000, guid: 4a4d9f64a8e1c3f41b25046f61eaa8ea, type: 2}
+  - {fileID: 11400000, guid: 0a4296d784edd6445a85a58560b0875c, type: 2}
+  - {fileID: 11400000, guid: 1b487c4a696cfd04a8f9073c94589506, type: 2}
+  levels:
+  - id: level_1
+    displayName: Moonlit Gate
+    sceneName: Level1
+    difficulty: NORMAL
+    description: Enter the outer temple, break through its guardians, and gather
+      equipment for the chambers ahead.
+    thumbnail: {fileID: 4084804034247085487, guid: acb0bfc810e09b644813df309461aa13, type: 3}
+    unlockedByDefault: 1
+  - id: level_2
+    displayName: Fallen Sanctuary
+    sceneName: Level 2
+    difficulty: HARD
+    description: A deeper sanctuary filled with stronger enemies and tighter combat
+      spaces. Bring a complete loadout.
+    thumbnail: {fileID: -5583188786284258079, guid: 4ec132123176eb448a0977f3e93b8eec, type: 3}
+    unlockedByDefault: 1

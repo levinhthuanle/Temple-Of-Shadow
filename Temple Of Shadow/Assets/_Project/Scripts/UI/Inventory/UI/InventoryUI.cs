@@ -191,6 +191,7 @@ public class InventoryUI : MonoBehaviour
         {
             RemoveLegacyHeader(windowTransform);
             StyleWindow(windowTransform);
+            StyleWindowLayout(windowTransform);
         }
 
         Transform[] children = inventoryPanel.GetComponentsInChildren<Transform>(true);
@@ -214,12 +215,7 @@ public class InventoryUI : MonoBehaviour
         GridLayoutGroup grid = inventoryPanel.GetComponentInChildren<GridLayoutGroup>(true);
         if (grid != null)
         {
-            grid.cellSize = new Vector2(92f, 92f);
-            grid.spacing = new Vector2(12f, 12f);
-            grid.padding = new RectOffset(16, 16, 16, 16);
-            grid.childAlignment = TextAnchor.UpperLeft;
-            grid.constraint = GridLayoutGroup.Constraint.FixedColumnCount;
-            grid.constraintCount = 4;
+            ConfigureInventoryGrid(grid);
         }
     }
 
@@ -232,10 +228,92 @@ public class InventoryUI : MonoBehaviour
             rectTransform.anchorMax = new Vector2(0.5f, 0.5f);
             rectTransform.pivot = new Vector2(0.5f, 0.5f);
             rectTransform.anchoredPosition = Vector2.zero;
-            rectTransform.sizeDelta = new Vector2(1120f, 620f);
+            rectTransform.sizeDelta = new Vector2(1180f, 660f);
         }
 
         StylePanel(windowTransform.gameObject, InventoryUITheme.Panel, true);
+    }
+
+    private void StyleWindowLayout(Transform windowTransform)
+    {
+        RectTransform stats = FindChildRect(windowTransform, "StatsPanel");
+        RectTransform equipment = FindChildRect(windowTransform, "EquipmentPanel");
+        RectTransform grid = FindChildRect(windowTransform, "InventoryGrid");
+
+        SetPanelRect(stats, new Vector2(0f, 0f), new Vector2(0.245f, 1f), new Vector2(22f, 28f), new Vector2(-10f, -28f));
+        SetPanelRect(equipment, new Vector2(0.265f, 0f), new Vector2(0.515f, 1f), new Vector2(0f, 28f), new Vector2(-10f, -28f));
+        SetPanelRect(grid, new Vector2(0.535f, 0f), new Vector2(1f, 1f), new Vector2(0f, 28f), new Vector2(-22f, -28f));
+
+        if (grid != null && grid.GetComponent<RectMask2D>() == null)
+        {
+            grid.gameObject.AddComponent<RectMask2D>();
+        }
+    }
+
+    private RectTransform FindChildRect(Transform parent, string childName)
+    {
+        Transform child = parent.Find(childName);
+        if (child is RectTransform directRect)
+        {
+            return directRect;
+        }
+
+        RectTransform[] rects = parent.GetComponentsInChildren<RectTransform>(true);
+        foreach (RectTransform rect in rects)
+        {
+            if (rect.name == childName)
+            {
+                return rect;
+            }
+        }
+
+        return null;
+    }
+
+    private void SetPanelRect(RectTransform rect, Vector2 anchorMin, Vector2 anchorMax, Vector2 offsetMin, Vector2 offsetMax)
+    {
+        if (rect == null)
+        {
+            return;
+        }
+
+        rect.anchorMin = anchorMin;
+        rect.anchorMax = anchorMax;
+        rect.offsetMin = offsetMin;
+        rect.offsetMax = offsetMax;
+        rect.localScale = Vector3.one;
+    }
+
+    private void ConfigureInventoryGrid(GridLayoutGroup grid)
+    {
+        RectTransform gridRect = grid.GetComponent<RectTransform>();
+        int slotCount = Mathf.Max(
+            slots != null ? slots.Length : 0,
+            inventoryManager != null ? inventoryManager.MaxSlots : 0,
+            grid.transform.childCount);
+
+        slotCount = Mathf.Max(slotCount, 1);
+
+        Vector2 spacing = new Vector2(12f, 12f);
+        RectOffset padding = new RectOffset(18, 18, 18, 18);
+        float width = gridRect != null && gridRect.rect.width > 1f ? gridRect.rect.width : 500f;
+        float height = gridRect != null && gridRect.rect.height > 1f ? gridRect.rect.height : 580f;
+        float usableWidth = Mathf.Max(1f, width - padding.left - padding.right);
+        float usableHeight = Mathf.Max(1f, height - padding.top - padding.bottom);
+
+        int columns = Mathf.Clamp(Mathf.FloorToInt((usableWidth + spacing.x) / (94f + spacing.x)), 3, 5);
+        columns = Mathf.Clamp(columns, 1, slotCount);
+        int rows = Mathf.CeilToInt(slotCount / (float)columns);
+        float cellWidth = (usableWidth - spacing.x * (columns - 1)) / columns;
+        float cellHeight = (usableHeight - spacing.y * (rows - 1)) / rows;
+        float cell = Mathf.Clamp(Mathf.Floor(Mathf.Min(cellWidth, cellHeight)), 68f, 104f);
+
+        grid.cellSize = new Vector2(cell, cell);
+        grid.spacing = spacing;
+        grid.padding = padding;
+        grid.childAlignment = TextAnchor.UpperLeft;
+        grid.constraint = GridLayoutGroup.Constraint.FixedColumnCount;
+        grid.constraintCount = columns;
     }
 
     private void RemoveLegacyHeader(Transform windowTransform)

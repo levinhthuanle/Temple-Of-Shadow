@@ -75,17 +75,12 @@ public class StatsPanelUI : MonoBehaviour
                 : FindAnyObjectByType<PlayerHealth>();
         }
 
-        hpText ??= FindText("HPText");
-        damageText ??= FindText("DamageText");
-        armorText ??= FindText("ArmorText");
-        moveSpeedText ??= FindText("SpeedText");
-        attackSpeedText ??= FindText("AttackSpeedText");
-        jumpForceText ??= FindText("JumpForceText");
-
-        if (damageText == null)
-        {
-            damageText = CreateText("DamageText", 1);
-        }
+        hpText ??= FindText("HPText") ?? CreateText("HPText", 0);
+        damageText ??= FindText("DamageText") ?? CreateText("DamageText", 1);
+        armorText ??= FindText("ArmorText") ?? CreateText("ArmorText", 2);
+        moveSpeedText ??= FindText("SpeedText") ?? CreateText("SpeedText", 3);
+        attackSpeedText ??= FindText("AttackSpeedText") ?? CreateText("AttackSpeedText", 4);
+        jumpForceText ??= FindText("JumpForceText") ?? CreateText("JumpForceText", 5);
     }
 
     private TextMeshProUGUI FindText(string objectName)
@@ -219,6 +214,13 @@ public class StatsPanelUI : MonoBehaviour
         StyleText(moveSpeedText, InventoryUITheme.TextMuted);
         StyleText(attackSpeedText, InventoryUITheme.TextMuted);
         StyleText(jumpForceText, InventoryUITheme.TextMuted);
+
+        PlaceText(hpText, 0);
+        PlaceText(damageText, 1);
+        PlaceText(armorText, 2);
+        PlaceText(moveSpeedText, 3);
+        PlaceText(attackSpeedText, 4);
+        PlaceText(jumpForceText, 5);
     }
 
     private void StyleText(TextMeshProUGUI text, Color color)
@@ -236,7 +238,25 @@ public class StatsPanelUI : MonoBehaviour
         text.richText = true;
         text.textWrappingMode = TextWrappingModes.NoWrap;
         text.overflowMode = TextOverflowModes.Ellipsis;
-        text.alignment = TextAlignmentOptions.Left;
+        text.alignment = TextAlignmentOptions.MidlineLeft;
         text.raycastTarget = false;
+        InventoryUITheme.EnsureShadow(text.gameObject, new Color(0f, 0f, 0f, 0.58f), new Vector2(1f, -1f));
+    }
+
+    private void PlaceText(TextMeshProUGUI text, int index)
+    {
+        if (text == null)
+        {
+            return;
+        }
+
+        RectTransform rect = text.rectTransform;
+        float yMax = 0.88f - index * 0.145f;
+        float yMin = yMax - 0.105f;
+        rect.anchorMin = new Vector2(0f, Mathf.Max(0.02f, yMin));
+        rect.anchorMax = new Vector2(1f, Mathf.Max(0.12f, yMax));
+        rect.offsetMin = new Vector2(24f, 0f);
+        rect.offsetMax = new Vector2(-18f, 0f);
+        rect.localScale = Vector3.one;
     }
 }

@@ -348,6 +348,7 @@ public class TooltipUI : MonoBehaviour
             : TextOverflowModes.Overflow;
         text.richText = true;
         text.raycastTarget = false;
+        InventoryUITheme.EnsureShadow(text.gameObject, new Color(0f, 0f, 0f, 0.56f), new Vector2(1f, -1f));
     }
 
     private void SetTextVisible(TextMeshProUGUI text, string value)

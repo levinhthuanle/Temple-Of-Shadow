@@ -8,13 +8,23 @@ public class PlayerWallet : MonoBehaviour
 
     private void Start()
     {
-        coinUI.UpdateCoin(Gold);
+        ResolveCoinUI();
+        coinUI?.UpdateCoin(Gold);
     }
 
     public void AddGold(int amount)
     {
         Gold += amount;
 
-        coinUI.UpdateCoin(Gold);
+        ResolveCoinUI();
+        coinUI?.UpdateCoin(Gold);
+    }
+
+    private void ResolveCoinUI()
+    {
+        if (coinUI == null)
+        {
+            coinUI = FindAnyObjectByType<CoinUI>(FindObjectsInactive.Include);
+        }
     }
 }
