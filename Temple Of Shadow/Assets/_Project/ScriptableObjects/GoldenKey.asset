@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ItemData
   itemName: GoldenKEy
   stackable: 1
+  buyPrice: 75
   description: It must be use for something important
   icon: {fileID: -4178046375966092550, guid: df3ef19dc3da2b34b8d0665852e12ba6, type: 3}
   itemType: 5

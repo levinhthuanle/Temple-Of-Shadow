@@ -7,6 +7,9 @@ public class ItemData : ScriptableObject
     public string itemName;
     public bool stackable;
 
+    [Min(0)]
+    public int buyPrice;
+
     [TextArea]
     public string description;
 

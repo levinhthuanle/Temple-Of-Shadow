@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ItemData
   itemName: HP Potion
   stackable: 1
+  buyPrice: 40
   description: 
   icon: {fileID: 9108365968018652678, guid: 2788322398f5bba408ee7fec1820b1d3, type: 3}
   itemType: 4
