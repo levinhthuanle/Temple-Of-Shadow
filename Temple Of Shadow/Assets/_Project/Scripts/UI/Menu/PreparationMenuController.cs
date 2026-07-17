@@ -129,12 +129,16 @@ public class PreparationMenuController : MonoBehaviour
         SetRect(footer, Vector2.zero, new Vector2(1f, 0f), new Vector2(32f, 24f), new Vector2(-32f, 108f));
 
         footerText = CreateText(footer, string.Empty, 20f, FontStyles.Normal, TextAlignmentOptions.MidlineLeft);
-        SetRect(footerText.rectTransform, Vector2.zero, new Vector2(0.76f, 1f),
+        SetRect(footerText.rectTransform, Vector2.zero, new Vector2(0.52f, 1f),
             new Vector2(24f, 0f), new Vector2(-12f, 0f));
+
+        Button shopButton = CreateButton(footer, "SHOP", OpenShop);
+        SetRect(shopButton.GetComponent<RectTransform>(), new Vector2(0.52f, 0f), new Vector2(0.76f, 1f),
+            new Vector2(8f, 14f), new Vector2(-8f, -14f));
 
         beginButton = CreateButton(footer, "BEGIN EXPEDITION", BeginExpedition, true);
         SetRect(beginButton.GetComponent<RectTransform>(), new Vector2(0.76f, 0f), Vector2.one,
-            new Vector2(12f, 14f), new Vector2(-18f, -14f));
+            new Vector2(8f, 14f), new Vector2(-18f, -14f));
     }
 
     private void ShowTab(MenuTab tab)
@@ -1078,5 +1082,11 @@ public class PreparationMenuController : MonoBehaviour
         public float moveSpeed;
         public float attackSpeed;
         public float jumpForce;
+    }
+
+
+private void OpenShop()
+    {
+        SceneManager.LoadScene("Shop");
     }
 }

@@ -29,6 +29,7 @@ public class GameProfileData
     public List<string> unlockedLevelIds = new();
     public List<InventoryEntryData> inventory = new();
     public List<EquipmentEntryData> equipment = new();
+    public int gold;
 
     public int GetItemAmount(string itemId)
     {

@@ -31,6 +31,14 @@ public class PlayerWallet : MonoBehaviour
         NotifyGoldChanged();
     }
 
+public void SetGold(int amount)
+    {
+        Gold = Mathf.Max(0, amount);
+        ResolveCoinUI();
+        NotifyGoldChanged();
+    }
+
+
     private void ResolveCoinUI()
     {
         if (coinUI == null)

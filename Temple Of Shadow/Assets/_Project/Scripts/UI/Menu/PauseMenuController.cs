@@ -166,7 +166,7 @@ public class PauseMenuController : MonoBehaviour
         window.anchorMin = new Vector2(0.5f, 0.5f);
         window.anchorMax = new Vector2(0.5f, 0.5f);
         window.pivot = new Vector2(0.5f, 0.5f);
-        window.sizeDelta = new Vector2(520f, 650f);
+        window.sizeDelta = new Vector2(520f, 740f);
         window.anchoredPosition = Vector2.zero;
 
         Outline windowOutline = window.gameObject.AddComponent<Outline>();
@@ -194,6 +194,7 @@ public class PauseMenuController : MonoBehaviour
         CreateSpacer(window, 16f);
         resumeButton = CreateButton(window, "CONTINUE", ResumeGame, true);
         CreateButton(window, "RESTART LEVEL", RestartLevel);
+        CreateButton(window, "SHOP", OpenShop);
         CreateButton(window, "MAIN MENU", ReturnToMainMenu);
         CreateButton(window, "QUIT GAME", QuitGame);
         CreateSpacer(window, 8f);
@@ -307,5 +308,13 @@ public class PauseMenuController : MonoBehaviour
     private static void PlayClick()
     {
         SoundManager.Instance?.PlaySFX("click_button");
+    }
+
+
+public void OpenShop()
+    {
+        PlayClick();
+        RestoreGameState();
+        SceneManager.LoadScene("Shop");
     }
 }
