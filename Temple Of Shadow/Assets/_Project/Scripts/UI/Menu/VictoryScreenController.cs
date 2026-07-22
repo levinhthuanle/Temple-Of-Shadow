@@ -7,8 +7,6 @@ public class VictoryScreenController : MonoBehaviour
 
     private int rewardGold;
     private string levelName;
-    private string nextSceneName;
-    private bool hasNextLevel;
     private bool visible;
 
     public static void CompleteLevel(int reward, string goalLabel)
@@ -55,9 +53,6 @@ public class VictoryScreenController : MonoBehaviour
         {
             wallet.SetGold(profile.gold);
         }
-
-        hasNextLevel = next != null;
-        nextSceneName = next != null ? next.sceneName : string.Empty;
         Time.timeScale = 0f;
     }
 
@@ -79,7 +74,7 @@ public class VictoryScreenController : MonoBehaviour
         return null;
     }
 
-    private void OnGUI()
+private void OnGUI()
     {
         if (!visible)
         {
@@ -92,36 +87,30 @@ public class VictoryScreenController : MonoBehaviour
         Rect dim = new(0f, 0f, Screen.width / scale, Screen.height / scale);
         GUI.Box(dim, GUIContent.none);
 
-        Rect panel = new((1920f - 620f) * 0.5f, (1080f - 520f) * 0.5f, 620f, 520f);
-        GUI.Box(panel, "VICTORY");
+        Rect panel = new((1920f - 620f) * 0.5f, (1080f - 500f) * 0.5f, 620f, 500f);
+        GUI.Box(panel, "STAGE CLEARED");
 
-        GUIStyle title = new(GUI.skin.label) { alignment = TextAnchor.MiddleCenter, fontSize = 46, fontStyle = FontStyle.Bold };
-        GUIStyle subtitle = new(GUI.skin.label) { alignment = TextAnchor.MiddleCenter, fontSize = 24 };
+        GUIStyle title = new(GUI.skin.label) { alignment = TextAnchor.MiddleCenter, fontSize = 42, fontStyle = FontStyle.Bold };
+        GUIStyle subtitle = new(GUI.skin.label) { alignment = TextAnchor.MiddleCenter, fontSize = 23 };
         GUIStyle button = new(GUI.skin.button) { fontSize = 24, fontStyle = FontStyle.Bold };
 
-        GUI.Label(new Rect(panel.x + 30f, panel.y + 70f, panel.width - 60f, 70f), levelName.ToUpperInvariant() + " COMPLETE", title);
-        GUI.Label(new Rect(panel.x + 30f, panel.y + 145f, panel.width - 60f, 45f), $"+ {rewardGold} GOLD", subtitle);
-        GUI.Label(new Rect(panel.x + 30f, panel.y + 190f, panel.width - 60f, 35f), "Your progress has been saved.", subtitle);
+        GUI.Label(new Rect(panel.x + 30f, panel.y + 65f, panel.width - 60f, 65f), levelName.ToUpperInvariant() + " COMPLETE", title);
+        GUI.Label(new Rect(panel.x + 30f, panel.y + 132f, panel.width - 60f, 42f), "+ " + rewardGold + " GOLD", subtitle);
+        GUI.Label(new Rect(panel.x + 30f, panel.y + 176f, panel.width - 60f, 32f), "Your progress has been saved. Choose your next destination.", subtitle);
 
         float x = panel.x + 90f;
         float width = panel.width - 180f;
-        if (hasNextLevel && GUI.Button(new Rect(x, panel.y + 250f, width, 56f), "NEXT LEVEL", button))
-        {
-            ResumeAndLoad(nextSceneName);
-        }
-
-        float firstY = hasNextLevel ? panel.y + 320f : panel.y + 250f;
-        if (GUI.Button(new Rect(x, firstY, width, 56f), "VISIT SHOP", button))
-        {
-            ResumeAndLoad("Shop");
-        }
-
-        if (GUI.Button(new Rect(x, firstY + 68f, width, 56f), "PREPARE", button))
+        if (GUI.Button(new Rect(x, panel.y + 240f, width, 58f), "RETURN TO STAGE MAP", button))
         {
             ResumeAndLoad("CharacterSelect");
         }
 
-        if (GUI.Button(new Rect(x, firstY + 136f, width, 56f), "MAIN MENU", button))
+        if (GUI.Button(new Rect(x, panel.y + 310f, width, 58f), "VISIT SHOP", button))
+        {
+            ResumeAndLoad("Shop");
+        }
+
+        if (GUI.Button(new Rect(x, panel.y + 380f, width, 58f), "MAIN MENU", button))
         {
             ResumeAndLoad("MainMenu");
         }
