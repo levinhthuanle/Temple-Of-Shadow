@@ -285,7 +285,7 @@ Rigidbody2D:
     m_Bits: 0
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 4
 --- !u!70 &2871302267482620657
 CapsuleCollider2D:
@@ -405,7 +405,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::EnemyDrop
   coinPrefab: {fileID: 8055987561453798124, guid: 99689a70ca97a534987b4bea9a6f3288, type: 3}
   coinAmount: 6
-  dropRadius: 0.5
+  dropHeight: 0.5
+  spawnRadius: 0.15
+  horizontalSpeedRange: {x: 1.2, y: 2.4}
+  upwardSpeedRange: {x: 2.8, y: 4.2}
+  coinPhysicsMaterial: {fileID: 0}
+  dropSound: {fileID: 0}
 --- !u!1 &5035969197273031286
 GameObject:
   m_ObjectHideFlags: 0

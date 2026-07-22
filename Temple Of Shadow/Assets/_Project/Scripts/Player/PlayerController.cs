@@ -65,9 +65,16 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
-        xInput = Input.GetAxisRaw("Horizontal");
-
         CheckGround();
+
+        if (!canMove)
+        {
+            xInput = 0f;
+            UpdateAnimator();
+            return;
+        }
+
+        xInput = Input.GetAxisRaw("Horizontal");
         HandleJump();
         HandleFlip();
         UpdateAnimator();
