@@ -148,6 +148,24 @@ public class SoundManager : MonoBehaviour
         }
     }
 
+    // Play an SFX by direct AudioClip reference (no mapping needed).
+    public void PlaySFX(AudioClip clip)
+    {
+        if (clip != null)
+        {
+            sfxSource.PlayOneShot(clip, sfxVolume);
+        }
+    }
+
+    // Play an SFX by direct AudioClip reference with a per-call volume multiplier.
+    public void PlaySFX(AudioClip clip, float volume)
+    {
+        if (clip != null)
+        {
+            sfxSource.PlayOneShot(clip, Mathf.Clamp01(volume) * sfxVolume);
+        }
+    }
+
     // Look up a key and pick one clip (random if there are several).
     private AudioClip GetSfxClip(string key)
     {
