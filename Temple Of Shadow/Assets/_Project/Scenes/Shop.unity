@@ -423,7 +423,6 @@ GameObject:
   - component: {fileID: 1170226241}
   - component: {fileID: 1170226240}
   - component: {fileID: 1170226239}
-  - component: {fileID: 1170226243}
   - component: {fileID: 1170226244}
   - component: {fileID: 1170226245}
   - component: {fileID: 1170226246}
@@ -517,21 +516,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
---- !u!114 &1170226243
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1170226238}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 907177d8341fbc248a82fa082291c3ef, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::InventoryManager
-  inventorySlots: []
-  testSword: {fileID: 0}
-  testPotion: {fileID: 0}
 --- !u!114 &1170226244
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -552,12 +536,24 @@ MonoBehaviour:
   - {fileID: 11400000, guid: ef403317b8f3cba4cbef054f39d8544e, type: 2}
   - {fileID: 11400000, guid: a27821ad134b3fb4a84f7b55d6180a57, type: 2}
   - {fileID: 11400000, guid: 1f746b8b0e7b9034290c4829de35be91, type: 2}
+  - {fileID: 11400000, guid: 50ec014703498934fb8a48e458c3786c, type: 2}
+  - {fileID: 11400000, guid: 416d388018696cc4088b648cd44c4aab, type: 2}
+  - {fileID: 11400000, guid: 519528e2606c9a14c9874b3841401d48, type: 2}
+  - {fileID: 11400000, guid: f48e4f6d30d02104d9c45b30f17d8cee, type: 2}
+  - {fileID: 11400000, guid: c360252a204272f41954608b78b70e48, type: 2}
+  - {fileID: 11400000, guid: 839fa44a8412d4242adb01981475fe5a, type: 2}
   weaponsForSale:
   - {fileID: 11400000, guid: 4a4d9f64a8e1c3f41b25046f61eaa8ea, type: 2}
   - {fileID: 11400000, guid: 33746b87f4ff5264a8e8cb9cc9c180ca, type: 2}
   - {fileID: 11400000, guid: 0a4296d784edd6445a85a58560b0875c, type: 2}
   - {fileID: 11400000, guid: 1b487c4a696cfd04a8f9073c94589506, type: 2}
   - {fileID: 11400000, guid: a27821ad134b3fb4a84f7b55d6180a57, type: 2}
+  - {fileID: 11400000, guid: 50ec014703498934fb8a48e458c3786c, type: 2}
+  - {fileID: 11400000, guid: 416d388018696cc4088b648cd44c4aab, type: 2}
+  - {fileID: 11400000, guid: 519528e2606c9a14c9874b3841401d48, type: 2}
+  - {fileID: 11400000, guid: f48e4f6d30d02104d9c45b30f17d8cee, type: 2}
+  - {fileID: 11400000, guid: c360252a204272f41954608b78b70e48, type: 2}
+  - {fileID: 11400000, guid: 839fa44a8412d4242adb01981475fe5a, type: 2}
   utilityItemsForSale:
   - {fileID: 11400000, guid: ef403317b8f3cba4cbef054f39d8544e, type: 2}
   - {fileID: 11400000, guid: 1f746b8b0e7b9034290c4829de35be91, type: 2}
@@ -576,7 +572,7 @@ MonoBehaviour:
   database: {fileID: 1170226244}
   shopItemPrefab: {fileID: 0}
   content: {fileID: 0}
-  inventoryManager: {fileID: 1170226243}
+  inventoryManager: {fileID: 1351767603}
   playerWallet: {fileID: 0}
 --- !u!114 &1170226246
 MonoBehaviour:
@@ -595,6 +591,17 @@ MonoBehaviour:
   player: {fileID: 0}
   leftShopBoundary: -4
   rightShopBoundary: 4
+--- !u!114 &1351767603 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6408602085422575730, guid: 4afd8b4aca2cfb146b874ce0bb8658aa, type: 3}
+  m_PrefabInstance: {fileID: 1810667487}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 907177d8341fbc248a82fa082291c3ef, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::InventoryManager
 --- !u!1 &1521965394
 GameObject:
   m_ObjectHideFlags: 0

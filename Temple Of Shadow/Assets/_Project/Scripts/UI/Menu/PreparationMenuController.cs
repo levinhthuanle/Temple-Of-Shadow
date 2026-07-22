@@ -111,7 +111,7 @@ public class PreparationMenuController : MonoBehaviour
         SetRect(backButton.GetComponent<RectTransform>(), new Vector2(0f, 0f), new Vector2(0f, 1f),
             new Vector2(18f, 14f), new Vector2(158f, -14f));
 
-        TMP_Text title = CreateText(header, "PREPARE EXPEDITION", 30f, FontStyles.Bold, TextAlignmentOptions.Center);
+        TMP_Text title = CreateText(header, "ADVENTURE MAP", 30f, FontStyles.Bold, TextAlignmentOptions.Center);
         SetRect(title.rectTransform, new Vector2(0.25f, 0f), new Vector2(0.75f, 1f), Vector2.zero, Vector2.zero);
 
         TMP_Text slotLabel = CreateText(header, $"SAVE SLOT {profile.slotIndex}", 18f, FontStyles.Bold, TextAlignmentOptions.MidlineRight);
@@ -129,12 +129,16 @@ public class PreparationMenuController : MonoBehaviour
         SetRect(footer, Vector2.zero, new Vector2(1f, 0f), new Vector2(32f, 24f), new Vector2(-32f, 108f));
 
         footerText = CreateText(footer, string.Empty, 20f, FontStyles.Normal, TextAlignmentOptions.MidlineLeft);
-        SetRect(footerText.rectTransform, Vector2.zero, new Vector2(0.76f, 1f),
+        SetRect(footerText.rectTransform, Vector2.zero, new Vector2(0.52f, 1f),
             new Vector2(24f, 0f), new Vector2(-12f, 0f));
 
-        beginButton = CreateButton(footer, "BEGIN EXPEDITION", BeginExpedition, true);
+        Button shopButton = CreateButton(footer, "SHOP", OpenShop);
+        SetRect(shopButton.GetComponent<RectTransform>(), new Vector2(0.52f, 0f), new Vector2(0.76f, 1f),
+            new Vector2(8f, 14f), new Vector2(-8f, -14f));
+
+        beginButton = CreateButton(footer, "ENTER STAGE", BeginExpedition, true);
         SetRect(beginButton.GetComponent<RectTransform>(), new Vector2(0.76f, 0f), Vector2.one,
-            new Vector2(12f, 14f), new Vector2(-18f, -14f));
+            new Vector2(8f, 14f), new Vector2(-18f, -14f));
     }
 
     private void ShowTab(MenuTab tab)
@@ -176,9 +180,9 @@ public class PreparationMenuController : MonoBehaviour
         layout.childForceExpandWidth = true;
         layout.childForceExpandHeight = true;
 
-        CreateButton(tabBar, "CHARACTER", () => ShowTab(MenuTab.Character), currentTab == MenuTab.Character);
-        CreateButton(tabBar, "EQUIPMENT", () => ShowTab(MenuTab.Equipment), currentTab == MenuTab.Equipment);
-        CreateButton(tabBar, "STAGE", () => ShowTab(MenuTab.Stage), currentTab == MenuTab.Stage);
+        CreateButton(tabBar, "HERO", () => ShowTab(MenuTab.Character), currentTab == MenuTab.Character);
+        CreateButton(tabBar, "LOADOUT", () => ShowTab(MenuTab.Equipment), currentTab == MenuTab.Equipment);
+        CreateButton(tabBar, "STAGE MAP", () => ShowTab(MenuTab.Stage), currentTab == MenuTab.Stage);
     }
 
     private void BuildCharacterTab()
@@ -1078,5 +1082,11 @@ public class PreparationMenuController : MonoBehaviour
         public float moveSpeed;
         public float attackSpeed;
         public float jumpForce;
+    }
+
+
+private void OpenShop()
+    {
+        SceneManager.LoadScene("Shop");
     }
 }

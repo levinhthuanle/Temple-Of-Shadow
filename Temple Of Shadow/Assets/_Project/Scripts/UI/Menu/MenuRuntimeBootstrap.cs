@@ -12,6 +12,8 @@ public static class MenuRuntimeBootstrap
 
     private static void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
+        Time.timeScale = 1f;
+
         if (scene.name == "CharacterSelect")
         {
             Canvas canvas = Object.FindFirstObjectByType<Canvas>();
@@ -23,13 +25,37 @@ public static class MenuRuntimeBootstrap
             return;
         }
 
+        bool isShop = scene.name == "Shop";
         GameContentCatalog catalog = GameContentCatalog.Load();
-        if (catalog == null || catalog.GetLevelByScene(scene.name) == null)
+        bool isGameplayLevel = catalog != null && catalog.GetLevelByScene(scene.name) != null;
+
+        if (!isGameplayLevel && !isShop)
         {
             return;
         }
 
-        GameObject bridgeObject = new("GameplayProfileBridge");
-        bridgeObject.AddComponent<GameplayProfileBridge>();
+        if (Object.FindFirstObjectByType<GameplayProfileBridge>() == null)
+        {
+            GameObject bridgeObject = new("GameplayProfileBridge");
+            bridgeObject.AddComponent<GameplayProfileBridge>();
+        }
+
+        if (Object.FindFirstObjectByType<CurrencyProfileBridge>() == null)
+        {
+            GameObject currencyObject = new("CurrencyProfileBridge");
+            currencyObject.AddComponent<CurrencyProfileBridge>();
+        }
+
+        if (isGameplayLevel && Object.FindFirstObjectByType<PauseMenuController>() == null)
+        {
+            GameObject pauseObject = new("PauseMenuController");
+            pauseObject.AddComponent<PauseMenuController>();
+        }
+
+        if (isShop && Object.FindFirstObjectByType<ShopNavigationController>() == null)
+        {
+            GameObject shopNavigationObject = new("ShopNavigationController");
+            shopNavigationObject.AddComponent<ShopNavigationController>();
+        }
     }
 }
