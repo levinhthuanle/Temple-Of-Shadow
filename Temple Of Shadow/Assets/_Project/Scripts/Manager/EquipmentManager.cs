@@ -1,7 +1,10 @@
+using System;
 using UnityEngine;
 
 public class EquipmentManager : MonoBehaviour
 {
+    public event Action EquipmentChanged;
+
     public EquipmentData equippedSword;
     public EquipmentData equippedArmor;
     public EquipmentData equippedAccessory;
@@ -15,6 +18,7 @@ public class EquipmentManager : MonoBehaviour
     private EquipmentData cachedProjectile;
 
     public EquipmentUI equipmentUI;
+    private EquipmentVisualManager equipmentVisualManager;
 
     [SerializeField] private EquipmentData testSword;
 
@@ -22,9 +26,10 @@ public class EquipmentManager : MonoBehaviour
     {
         ResolveEquipmentUI();
         ResolvePlayerBonus();
+        ResolveEquipmentVisualManager();
         RecalculateBonuses();
-
         RefreshEquipmentUI();
+        EquipmentChanged?.Invoke();
     }
 
     private void Update()
@@ -34,7 +39,7 @@ public class EquipmentManager : MonoBehaviour
             return;
         }
 
-        RecalculateBonuses();
+        HandleEquipmentStateChanged();
     }
 
     public EquipmentData Equip(EquipmentData equipment)
@@ -44,62 +49,74 @@ public class EquipmentManager : MonoBehaviour
             return null;
         }
 
-        if (!CanEquip(equipment.itemType))
+        if (!CanEquip(equipment.SlotType))
         {
-            Debug.LogWarning($"Cannot equip item type {equipment.itemType} as equipment.");
+            Debug.LogWarning($"Cannot equip item slot {equipment.SlotType} as equipment.");
             return null;
         }
 
-        EquipmentData previousEquipment = GetEquippedEquipment(equipment.itemType);
+        EquipmentData previousEquipment = GetEquippedEquipment(equipment.SlotType);
 
         if (previousEquipment == equipment)
         {
             return previousEquipment;
         }
 
-        switch (equipment.itemType)
+        switch (equipment.SlotType)
         {
-            case ItemType.Sword:
+            case EquipmentSlotType.Sword:
                 equippedSword = equipment;
                 break;
-            case ItemType.Armor:
+            case EquipmentSlotType.Armor:
                 equippedArmor = equipment;
                 break;
-            case ItemType.Accessory:
+            case EquipmentSlotType.Accessory:
                 equippedAccessory = equipment;
                 break;
-            case ItemType.Projectile:
+            case EquipmentSlotType.Projectile:
                 equippedProjectile = equipment;
                 break;
         }
 
-        RecalculateBonuses();
-        RefreshEquipmentUI();
+        HandleEquipmentStateChanged();
         return previousEquipment;
     }
 
     public void EquipSword(EquipmentData equipment)
     {
         equippedSword = equipment;
-        RecalculateBonuses();
+        HandleEquipmentStateChanged();
     }
 
     public void EquipArmor(EquipmentData equipment)
     {
         equippedArmor = equipment;
-        RecalculateBonuses();
+        HandleEquipmentStateChanged();
     }
 
     public void EquipAccessory(EquipmentData equipment)
     {
         equippedAccessory = equipment;
-        RecalculateBonuses();
+        HandleEquipmentStateChanged();
     }
 
     public void EquipProjectile(EquipmentData equipment)
     {
         equippedProjectile = equipment;
-        RecalculateBonuses();
+        HandleEquipmentStateChanged();
+    }
+
+    public void ApplyLoadout(
+        EquipmentData sword,
+        EquipmentData armor,
+        EquipmentData accessory,
+        EquipmentData projectile)
+    {
+        equippedSword = sword;
+        equippedArmor = armor;
+        equippedAccessory = accessory;
+        equippedProjectile = projectile;
+        HandleEquipmentStateChanged();
     }
 
     public void RecalculateBonuses()
@@ -180,6 +197,35 @@ public class EquipmentManager : MonoBehaviour
         }
     }
 
+    private void ResolveEquipmentVisualManager()
+    {
+        if (equipmentVisualManager != null)
+        {
+            return;
+        }
+
+        equipmentVisualManager = FindAnyObjectByType<EquipmentVisualManager>();
+        if (equipmentVisualManager != null)
+        {
+            return;
+        }
+
+        GameObject player = GameObject.FindGameObjectWithTag("Player");
+        if (player == null && playerBonus != null)
+        {
+            player = playerBonus.gameObject;
+        }
+
+        if (player != null)
+        {
+            equipmentVisualManager = player.GetComponent<EquipmentVisualManager>();
+            if (equipmentVisualManager == null)
+            {
+                equipmentVisualManager = player.AddComponent<EquipmentVisualManager>();
+            }
+        }
+    }
+
     private void RefreshEquipmentUI()
     {
         ResolveEquipmentUI();
@@ -193,14 +239,33 @@ public class EquipmentManager : MonoBehaviour
         equipmentUI.Refresh();
     }
 
+    private void HandleEquipmentStateChanged()
+    {
+        RecalculateBonuses();
+        RefreshEquipmentUI();
+        ResolveEquipmentVisualManager();
+
+        if (equipmentVisualManager != null)
+        {
+            equipmentVisualManager.RefreshVisuals();
+        }
+
+        EquipmentChanged?.Invoke();
+    }
+
     public bool CanEquip(ItemType itemType)
     {
-        switch (itemType)
+        return CanEquip(EquipmentSlotTypeExtensions.FromItemType(itemType));
+    }
+
+    public bool CanEquip(EquipmentSlotType slotType)
+    {
+        switch (slotType)
         {
-            case ItemType.Sword:
-            case ItemType.Armor:
-            case ItemType.Accessory:
-            case ItemType.Projectile:
+            case EquipmentSlotType.Sword:
+            case EquipmentSlotType.Armor:
+            case EquipmentSlotType.Accessory:
+            case EquipmentSlotType.Projectile:
                 return true;
             default:
                 return false;
@@ -209,15 +274,20 @@ public class EquipmentManager : MonoBehaviour
 
     public EquipmentData GetEquippedEquipment(ItemType itemType)
     {
-        switch (itemType)
+        return GetEquippedEquipment(EquipmentSlotTypeExtensions.FromItemType(itemType));
+    }
+
+    public EquipmentData GetEquippedEquipment(EquipmentSlotType slotType)
+    {
+        switch (slotType)
         {
-            case ItemType.Sword:
+            case EquipmentSlotType.Sword:
                 return equippedSword;
-            case ItemType.Armor:
+            case EquipmentSlotType.Armor:
                 return equippedArmor;
-            case ItemType.Accessory:
+            case EquipmentSlotType.Accessory:
                 return equippedAccessory;
-            case ItemType.Projectile:
+            case EquipmentSlotType.Projectile:
                 return equippedProjectile;
             default:
                 return null;
@@ -226,26 +296,30 @@ public class EquipmentManager : MonoBehaviour
 
     public void Unequip(ItemType itemType)
     {
-        switch (itemType)
+        Unequip(EquipmentSlotTypeExtensions.FromItemType(itemType));
+    }
+
+    public void Unequip(EquipmentSlotType slotType)
+    {
+        switch (slotType)
         {
-            case ItemType.Sword:
+            case EquipmentSlotType.Sword:
                 equippedSword = null;
                 break;
 
-            case ItemType.Armor:
+            case EquipmentSlotType.Armor:
                 equippedArmor = null;
                 break;
 
-            case ItemType.Accessory:
+            case EquipmentSlotType.Accessory:
                 equippedAccessory = null;
                 break;
 
-            case ItemType.Projectile:
+            case EquipmentSlotType.Projectile:
                 equippedProjectile = null;
                 break;
         }
 
-        RecalculateBonuses();
-        RefreshEquipmentUI();
+        HandleEquipmentStateChanged();
     }
 }

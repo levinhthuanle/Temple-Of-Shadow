@@ -65,9 +65,8 @@ public class SoundManager : MonoBehaviour
     private Coroutine bgmFadeRoutine;   // active fade, so we can cancel/replace it
 
     // ------------------------------------------------------------------ Setup
-    private void Awake()
+private void Awake()
     {
-        // Standard singleton guard: keep the first one, destroy any duplicate.
         if (Instance != null && Instance != this)
         {
             Destroy(gameObject);
@@ -75,25 +74,52 @@ public class SoundManager : MonoBehaviour
         }
 
         Instance = this;
-        DontDestroyOnLoad(gameObject); // survive scene loads
 
-        // Auto-create the audio sources so no manual component setup is needed.
-        bgmSource = gameObject.AddComponent<AudioSource>();
-        bgmSource.playOnAwake = false;
-        bgmSource.loop = true;
-        bgmSource.volume = bgmVolume;
+        // SoundManager is nested inside the Manager prefab. Make it a root object
+        // before marking it persistent, otherwise scene loads can destroy its sources.
+        if (transform.parent != null)
+        {
+            transform.SetParent(null);
+        }
 
-        sfxSource = gameObject.AddComponent<AudioSource>();
-        sfxSource.playOnAwake = false;
-        sfxSource.volume = sfxVolume;
+        DontDestroyOnLoad(gameObject);
+        EnsureAudioSources();
 
-        // Build the fast lookup tables once.
         sfxMap = BuildMap(sfxEntries, "SFX");
         bgmMap = BuildMap(bgmEntries, "BGM");
 
-        PlayBGM("bgm_dungeon");   // <-- thêm dòng này để nhạc tự chạy khi game khởi động
-
+        PlayBGM("bgm_dungeon");
     }
+
+    private void EnsureAudioSources()
+    {
+        if (bgmSource == null)
+        {
+            bgmSource = gameObject.AddComponent<AudioSource>();
+            bgmSource.playOnAwake = false;
+            bgmSource.loop = true;
+        }
+
+        bgmSource.volume = bgmVolume;
+
+        if (sfxSource == null)
+        {
+            sfxSource = gameObject.AddComponent<AudioSource>();
+            sfxSource.playOnAwake = false;
+        }
+
+        sfxSource.volume = sfxVolume;
+    }
+
+
+private void OnDestroy()
+    {
+        if (Instance == this)
+        {
+            Instance = null;
+        }
+    }
+
 
     // Turn an Inspector list into a dictionary, warning about mistakes early.
     private Dictionary<string, AudioClip[]> BuildMap(List<SoundEntry> entries, string label)
@@ -131,6 +157,7 @@ public class SoundManager : MonoBehaviour
     // Play an SFX by key (uses default SFX volume).
     public void PlaySFX(string key)
     {
+        EnsureAudioSources();
         AudioClip clip = GetSfxClip(key);
         if (clip != null)
         {
@@ -141,6 +168,7 @@ public class SoundManager : MonoBehaviour
     // Play an SFX by key with a per-call volume multiplier.
     public void PlaySFX(string key, float volume)
     {
+        EnsureAudioSources();
         AudioClip clip = GetSfxClip(key);
         if (clip != null)
         {
@@ -187,6 +215,7 @@ public class SoundManager : MonoBehaviour
     // Play a background music track by key. Only one BGM plays at a time.
     public void PlayBGM(string key, bool loop = true)
     {
+        EnsureAudioSources();
         // Already playing this track — do nothing.
         if (key == currentBgmKey && bgmSource.isPlaying)
         {
@@ -216,6 +245,7 @@ public class SoundManager : MonoBehaviour
     // Start (or restart) the fade coroutine toward the given clip.
     private void StartFade(AudioClip nextClip, bool loop)
     {
+        EnsureAudioSources();
         if (bgmFadeRoutine != null)
         {
             StopCoroutine(bgmFadeRoutine);
@@ -271,12 +301,14 @@ public class SoundManager : MonoBehaviour
     // For a future Settings menu. Values are clamped to 0..1.
     public void SetSFXVolume(float volume)
     {
+        EnsureAudioSources();
         sfxVolume = Mathf.Clamp01(volume);
         sfxSource.volume = sfxVolume;
     }
 
     public void SetBGMVolume(float volume)
     {
+        EnsureAudioSources();
         bgmVolume = Mathf.Clamp01(volume);
 
         // Don't fight an in-progress fade; otherwise apply immediately.
