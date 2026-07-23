@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 1e103ed5f6de0444f975cf17e1091a78
+guid: 91b843c7f54523b4ba2aa833ad4f996c
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 6272775006962576256
-    second: AxeChainLong_0
+      213: 1951026667256900421
+    second: GeneratedSpikeTrap_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -37,7 +37,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 1
+    filterMode: 0
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -46,12 +46,12 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 2
+  spriteMode: 1
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 40
+  spritePixelsToUnits: 200
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -75,7 +75,7 @@ TextureImporter:
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 1
+    textureCompression: 0
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -100,13 +100,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: AxeChainLong_0
+      name: GeneratedSpikeTrap_0
       rect:
         serializedVersion: 2
-        x: 6
-        y: 4
-        width: 332
-        height: 537
+        x: 63
+        y: 82
+        width: 1590
+        height: 758
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -115,8 +115,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 08be3fd52af5d0750800000000000000
-      internalID: 6272775006962576256
+      spriteID: 54b6929ba60731b10800000000000000
+      internalID: 1951026667256900421
       vertices: []
       indices: 
       edges: []
@@ -125,7 +125,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: 5e97eb03825dee720800000000000000
     internalID: 0
     vertices: []
     indices: 
@@ -135,7 +135,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      AxeChainLong_0: 6272775006962576256
+      GeneratedSpikeTrap_0: 1951026667256900421
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
