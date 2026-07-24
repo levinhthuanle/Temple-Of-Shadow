@@ -56,7 +56,9 @@ public class EnemyHealth : MonoBehaviour, IDamageable
 
 
         animator.SetTrigger(Hurt);
-        SoundManager.Instance?.PlaySFX("enemy_hurt");
+        SoundManager.Instance?.PlaySFX("enemy_hit");
+        // Voice and impact play together; reduce the voice to preserve mix headroom.
+        SoundManager.Instance?.PlaySFX("enemy_hurt", 0.55f);
 
         if (enemyAI != null)
         {

@@ -47,7 +47,7 @@ public class RangeEnemyAttack : MonoBehaviour
             Quaternion.identity
         );
 
-        SoundManager.Instance?.PlaySFX("enemy_attack");
+        SoundManager.Instance?.PlaySFX("enemy_ranged_attack");
 
         EnemyProjectile enemyProjectile = projectile.GetComponent<EnemyProjectile>();
 

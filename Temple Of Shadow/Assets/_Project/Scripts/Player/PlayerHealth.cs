@@ -115,7 +115,9 @@ public class PlayerHealth : MonoBehaviour
     private void HurtPlayer()
     {
         isInvincible = true;
-        SoundManager.Instance?.PlaySFX("hurt");
+        SoundManager.Instance?.PlaySFX("player_hit");
+        // Voice and impact play together; keep the near-0 dBFS voice below the hit transient.
+        SoundManager.Instance?.PlaySFX("hurt", 0.55f);
 
         if (animator != null)
         {

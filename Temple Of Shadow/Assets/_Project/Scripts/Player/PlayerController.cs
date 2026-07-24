@@ -22,6 +22,12 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float groundCheckRadius = 0.15f;
     [SerializeField] private LayerMask groundLayer;
 
+    [Header("Movement SFX")]
+    [SerializeField] private float footstepInterval = 0.32f;
+    [SerializeField] private float footstepMinSpeed = 0.1f;
+    private float nextFootstepTime;
+    private bool groundStateInitialized;
+
     public float xInput;
     public bool isGrounded;
     public float yVelocity => rb.linearVelocity.y;
@@ -77,6 +83,7 @@ public class PlayerController : MonoBehaviour
         xInput = Input.GetAxisRaw("Horizontal");
         HandleJump();
         HandleFlip();
+        HandleFootsteps();
         UpdateAnimator();
 
         if (Input.GetKeyDown(KeyCode.R))
@@ -138,10 +145,29 @@ public class PlayerController : MonoBehaviour
             groundLayer
         );
 
-        if (!wasGrounded && isGrounded)
+        if (groundStateInitialized && !wasGrounded && isGrounded)
+        {
+            jumpCount = 0;
+            SoundManager.Instance?.PlaySFX("landing");
+        }
+
+        if (isGrounded)
         {
             jumpCount = 0;
         }
+
+        groundStateInitialized = true;
+    }
+
+    private void HandleFootsteps()
+    {
+        if (!isGrounded || Mathf.Abs(xInput) < footstepMinSpeed || Time.time < nextFootstepTime)
+        {
+            return;
+        }
+
+        nextFootstepTime = Time.time + footstepInterval;
+        SoundManager.Instance?.PlaySFX("footstep");
     }
 
     private void ApplyStats()

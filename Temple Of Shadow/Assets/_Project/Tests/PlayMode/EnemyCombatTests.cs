@@ -21,16 +21,19 @@ public class EnemyCombatTests
     const string BossPath   = "Assets/_Project/Prefabs/Enemies/HybridBoss.prefab";
     const string BatPath    = "Assets/_Project/Prefabs/Enemies/FlyingBat.prefab";
     const string PopupPath  = "Assets/_Project/Prefabs/Others/DamagePopup.prefab";
+    const string ManagerPath = "Assets/_Project/Prefabs/System&Manager/Manager.prefab";
 
     GameObject enemy;
     GameObject player;
     Component playerHealth;
+    Component soundManager;
 
     [TearDown]
     public void TearDown()
     {
         if (enemy != null) UnityEngine.Object.Destroy(enemy);
         if (player != null) UnityEngine.Object.Destroy(player);
+        if (soundManager != null) UnityEngine.Object.Destroy(soundManager.gameObject);
     }
 
     // ---------------- reflection helpers ----------------
@@ -59,8 +62,40 @@ public class EnemyCombatTests
 
     static object Call(object obj, string method, params object[] args)
     {
-        MethodInfo m = obj.GetType().GetMethod(method,
+        MethodInfo m = null;
+        MethodInfo[] methods = obj.GetType().GetMethods(
             BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
+
+        foreach (MethodInfo candidate in methods)
+        {
+            if (candidate.Name != method)
+            {
+                continue;
+            }
+
+            ParameterInfo[] parameters = candidate.GetParameters();
+            if (parameters.Length != args.Length)
+            {
+                continue;
+            }
+
+            bool matches = true;
+            for (int i = 0; i < parameters.Length; i++)
+            {
+                if (args[i] != null && !parameters[i].ParameterType.IsInstanceOfType(args[i]))
+                {
+                    matches = false;
+                    break;
+                }
+            }
+
+            if (matches)
+            {
+                m = candidate;
+                break;
+            }
+        }
+
         Assert.NotNull(m, $"Method '{method}' not found on {obj.GetType().Name}");
         return m.Invoke(obj, args);
     }
@@ -98,6 +133,8 @@ public class EnemyCombatTests
         // Real PlayerHealth (Awake sets currentHp = maxHp).
         playerHealth = go.AddComponent(GameType("PlayerHealth"));
         SetField(playerHealth, "damagePopupSpawner", spawner);
+        SetField(playerHealth, "maxHp", 20);
+        SetField(playerHealth, "currentHp", 20);
 
         player = go;
         return go;
@@ -126,6 +163,46 @@ public class EnemyCombatTests
     }
 
     // ---------------- tests ----------------
+    [UnityTest]
+    public IEnumerator SoundManager_AllMappedEvents_AreReadyToPlay()
+    {
+        string[] sfxKeys =
+        {
+            "jump", "footstep", "landing",
+            "player_slash", "player_kick", "player_throw", "player_hit", "hurt", "player_death",
+            "enemy_hit", "enemy_hurt", "enemy_death", "enemy_melee_attack", "enemy_ranged_attack",
+            "boss_melee_attack", "boss_ranged_attack", "bomber_explosion",
+            "coin_pickup", "item_pickup", "item_drop", "click_button", "pause", "unpause"
+        };
+        string[] bgmKeys =
+        {
+            "bgm_menu", "bgm_dungeon", "bgm_level2", "bgm_boss", "bgm_shop"
+        };
+
+        enemy = UnityEngine.Object.Instantiate(LoadPrefab(ManagerPath));
+        // SoundManager detaches itself from Manager during Awake so it can persist
+        // across scene loads. Find that detached runtime component after one frame.
+        yield return null;
+        soundManager = UnityEngine.Object.FindFirstObjectByType(GameType("SoundManager")) as Component;
+        Assert.NotNull(soundManager, "Manager prefab is missing SoundManager.");
+
+        foreach (string key in sfxKeys)
+        {
+            Assert.IsTrue((bool)Call(soundManager, "HasSFX", key), $"SFX key is not ready: {key}");
+        }
+
+        foreach (string key in bgmKeys)
+        {
+            Assert.IsTrue((bool)Call(soundManager, "HasBGM", key), $"BGM key is not ready: {key}");
+        }
+
+        // Exercise both playback paths. A missing clip/source would fail or log an exception.
+        Call(soundManager, "PlaySFX", "click_button");
+        Call(soundManager, "PlayBGM", "bgm_menu", true);
+        yield return null;
+        Call(soundManager, "StopBGM");
+    }
+
     [UnityTest]
     public IEnumerator Bomber_Explodes_And_Damages_Player()
     {

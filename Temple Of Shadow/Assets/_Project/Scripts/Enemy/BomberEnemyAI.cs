@@ -180,7 +180,7 @@ public class BomberEnemyAI : MonoBehaviour
             }
         }
 
-        SoundManager.Instance?.PlaySFX("enemy_death");
+        SoundManager.Instance?.PlaySFX("bomber_explosion");
 
         // Tự chịu sát thương chí mạng để tái dùng luồng chết chuẩn (anim + rơi coin + destroy).
         health.TakeDamage(9999);
