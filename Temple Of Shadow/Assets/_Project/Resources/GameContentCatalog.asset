@@ -74,3 +74,10 @@ MonoBehaviour:
       spaces. Bring a complete loadout.
     thumbnail: {fileID: -5583188786284258079, guid: 4ec132123176eb448a0977f3e93b8eec, type: 3}
     unlockedByDefault: 1
+  - id: level_3
+    displayName: Level 3
+    sceneName: Level 3
+    difficulty: HARD
+    description: Continue into the next temple chamber.
+    thumbnail: {fileID: -5583188786284258079, guid: 4ec132123176eb448a0977f3e93b8eec, type: 3}
+    unlockedByDefault: 1
