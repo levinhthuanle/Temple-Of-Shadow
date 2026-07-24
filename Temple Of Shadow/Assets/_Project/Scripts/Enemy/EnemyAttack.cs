@@ -35,7 +35,7 @@ public class EnemyAttack : MonoBehaviour
 
         enemyAI.SetCanMove(false);
         animator.SetTrigger(Attack);
-        SoundManager.Instance?.PlaySFX("enemy_attack");
+        SoundManager.Instance?.PlaySFX("enemy_melee_attack");
     }
 
     public void DealDamage()

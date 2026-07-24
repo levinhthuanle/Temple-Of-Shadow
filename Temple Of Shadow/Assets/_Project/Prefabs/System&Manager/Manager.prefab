@@ -98,38 +98,114 @@ MonoBehaviour:
   sfxEntries:
   - key: jump
     clips:
-    - {fileID: 8300000, guid: 65e1af1b9d7dcc74885733947f2cd032, type: 3}
-  - key: attack
+    - {fileID: 8300000, guid: adcfbcbfbd072da4b9d904341dbb7830, type: 3}
+  - key: footstep
     clips:
-    - {fileID: 8300000, guid: 0b341568494a5da49b61b752a57b4e6a, type: 3}
+    - {fileID: 8300000, guid: 37cf5d8ba56e3e24fa90c189be0afb2f, type: 3}
+    - {fileID: 8300000, guid: 45d92effcca47ce449cb387e1f194bb0, type: 3}
+    - {fileID: 8300000, guid: 8d2add3fe51e2284c855a910f12cd72c, type: 3}
+  - key: landing
+    clips:
+    - {fileID: 8300000, guid: ea908f0924a7df642afdcf3dc1dfdbba, type: 3}
+  - key: player_slash
+    clips:
+    - {fileID: 8300000, guid: b565538875a1ab0499f0335e88231166, type: 3}
+  - key: player_kick
+    clips:
+    - {fileID: 8300000, guid: 2729e0c17dbf712458d67a241a685aa7, type: 3}
+    - {fileID: 8300000, guid: d679b685137dc9e42a798f6e242dd098, type: 3}
+  - key: player_throw
+    clips:
+    - {fileID: 8300000, guid: 78324f8037d8b8747905c75205a461e9, type: 3}
+    - {fileID: 8300000, guid: 15598f59fb652d74a83753fd8cafc03a, type: 3}
+  - key: player_hit
+    clips:
+    - {fileID: 8300000, guid: bcf2cfb5e8d80004caaaad97000719c7, type: 3}
+    - {fileID: 8300000, guid: 2729e0c17dbf712458d67a241a685aa7, type: 3}
   - key: hurt
     clips:
     - {fileID: 8300000, guid: 2c00c0f8b8157d3438c06dbcdc107da0, type: 3}
+    - {fileID: 8300000, guid: 18ba8062d1068af49ae4103eef5a91df, type: 3}
+    - {fileID: 8300000, guid: ea8a1487ed5598441820a6d57a1c8773, type: 3}
   - key: player_death
     clips:
     - {fileID: 8300000, guid: 6edb8524850cb4847ae6d64d738e6a45, type: 3}
+  - key: enemy_hit
+    clips:
+    - {fileID: 8300000, guid: d679b685137dc9e42a798f6e242dd098, type: 3}
+    - {fileID: 8300000, guid: 2729e0c17dbf712458d67a241a685aa7, type: 3}
   - key: enemy_hurt
     clips:
-    - {fileID: 8300000, guid: 3884e9bad73d58e4b95e20932a5f8cfc, type: 3}
-  - key: enemy_attack
+    - {fileID: 8300000, guid: ccf1ffaecf3f5714c9ed94d7ad9269e8, type: 3}
+    - {fileID: 8300000, guid: 24c8bbf4ee0e2c54d9046f5e562ec66a, type: 3}
+    - {fileID: 8300000, guid: 4eaffbe85da9cd547985dfe67823a3d4, type: 3}
+    - {fileID: 8300000, guid: ad4bf6a86725e474fb680c2afe2a9249, type: 3}
+  - key: enemy_death
+    clips:
+    - {fileID: 8300000, guid: 68c5f24f98548d54084e4fe6905c41c3, type: 3}
+    - {fileID: 8300000, guid: 9f8b48b5d2acee74c97b40332054fb2f, type: 3}
+    - {fileID: 8300000, guid: 1a32f851a306ccd4596a9eb8c2342b10, type: 3}
+  - key: enemy_melee_attack
+    clips:
+    - {fileID: 8300000, guid: cc15f6d03106d1d489aadead462be42d, type: 3}
+    - {fileID: 8300000, guid: 23dfefbad74be3f45989be6e977cc0a2, type: 3}
+  - key: enemy_ranged_attack
     clips:
     - {fileID: 8300000, guid: 0b341568494a5da49b61b752a57b4e6a, type: 3}
+    - {fileID: 8300000, guid: 78324f8037d8b8747905c75205a461e9, type: 3}
+  - key: boss_melee_attack
+    clips:
+    - {fileID: 8300000, guid: b565538875a1ab0499f0335e88231166, type: 3}
+    - {fileID: 8300000, guid: cc15f6d03106d1d489aadead462be42d, type: 3}
+  - key: boss_ranged_attack
+    clips:
+    - {fileID: 8300000, guid: 4353ddd8fd8c02f4faa8e8a09e6c8ac9, type: 3}
+    - {fileID: 8300000, guid: 0b341568494a5da49b61b752a57b4e6a, type: 3}
+    - {fileID: 8300000, guid: 194c8861ac221e6429284c961d24bb3c, type: 3}
+  - key: bomber_explosion
+    clips:
+    - {fileID: 8300000, guid: 0b341568494a5da49b61b752a57b4e6a, type: 3}
+    - {fileID: 8300000, guid: 4353ddd8fd8c02f4faa8e8a09e6c8ac9, type: 3}
   - key: coin_pickup
     clips:
     - {fileID: 8300000, guid: 69fa81c37be032048985415138f0e36f, type: 3}
+  - key: item_pickup
+    clips:
+    - {fileID: 8300000, guid: dea716a0de5b37b4faad9ba22763e1c0, type: 3}
+    - {fileID: 8300000, guid: b94c7be0b729f5b4c9248524eb8e341d, type: 3}
+  - key: item_drop
+    clips:
+    - {fileID: 8300000, guid: 4c9b814bc2c84bf418c4c5da28581396, type: 3}
   - key: click_button
     clips:
     - {fileID: 8300000, guid: 322b800e1c8accf4da4b3ecaf1c739d5, type: 3}
-  - key: enemy_death
+  - key: pause
     clips:
-    - {fileID: 8300000, guid: 4c9b814bc2c84bf418c4c5da28581396, type: 3}
+    - {fileID: 8300000, guid: 86d36b05874c9404cb957373eeed592f, type: 3}
+  - key: unpause
+    clips:
+    - {fileID: 8300000, guid: b9881d44220c04546a6fb7b7c0c5afe2, type: 3}
   bgmEntries:
+  - key: bgm_menu
+    clips:
+    - {fileID: 8300000, guid: d7777798303c95240bdd57d42a2b38e0, type: 3}
   - key: bgm_dungeon
     clips:
-    - {fileID: 8300000, guid: 74cc8c3bc3cf60f488968a120d8658dd, type: 3}
-  sfxVolume: 1
-  bgmVolume: 1
+    - {fileID: 8300000, guid: a1d4af14a19956640a1629deecc26392, type: 3}
+  - key: bgm_level2
+    clips:
+    - {fileID: 8300000, guid: a859bd658f0ddfe48bfb8b6e3dda00bf, type: 3}
+  - key: bgm_boss
+    clips:
+    - {fileID: 8300000, guid: 243c82cda0bac0445b8dd8e22bbc2a9d, type: 3}
+  - key: bgm_shop
+    clips:
+    - {fileID: 8300000, guid: f03fbded1d6ff374287075fda74e6493, type: 3}
+  sfxVolume: 0.68
+  bgmVolume: 0.5
   bgmFadeDuration: 0.5
+  warmSfxCutoff: 8500
+  bgmCutoff: 12000
 --- !u!1 &3676821509218171170
 GameObject:
   m_ObjectHideFlags: 0

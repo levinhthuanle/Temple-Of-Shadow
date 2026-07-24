@@ -60,12 +60,13 @@ public class PauseMenuController : MonoBehaviour
 
     public void TogglePause()
     {
+        SoundManager.Instance?.PlaySFX(isPaused ? "unpause" : "pause");
         SetPaused(!isPaused);
     }
 
     public void ResumeGame()
     {
-        PlayClick();
+        SoundManager.Instance?.PlaySFX("unpause");
         SetPaused(false);
     }
 

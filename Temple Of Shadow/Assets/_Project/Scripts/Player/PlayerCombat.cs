@@ -78,21 +78,21 @@ public class PlayerCombat : MonoBehaviour
     {
         BeginAttack();
         animator.SetTrigger(Slash);
-        SoundManager.Instance?.PlaySFX("attack");
+        SoundManager.Instance?.PlaySFX("player_slash");
     }
 
     private void DoThrow()
     {
         BeginAttack();
         animator.SetTrigger(Throw);
-        SoundManager.Instance?.PlaySFX("attack");
+        SoundManager.Instance?.PlaySFX("player_throw");
     }
 
     private void DoKick()
     {
         BeginAttack();
         animator.SetTrigger(Kick);
-        SoundManager.Instance?.PlaySFX("attack");
+        SoundManager.Instance?.PlaySFX("player_kick");
     }
 
     // Gọi bằng Animation Event trong animation Slashing

@@ -26,9 +26,9 @@ public class EnemyDrop : MonoBehaviour
     public void DropCoins()
     {
         if (dropSound != null)
-        {
             SoundManager.Instance?.PlaySFX(dropSound);
-        }
+        else
+            SoundManager.Instance?.PlaySFX("item_drop");
 
         for (int i = 0; i < coinAmount; i++)
         {

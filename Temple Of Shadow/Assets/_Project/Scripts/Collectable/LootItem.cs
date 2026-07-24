@@ -36,9 +36,9 @@ public class LootItem : MonoBehaviour
 
         // Play pickup sound (one-shot, survives object destruction)
         if (pickupSound != null)
-        {
             SoundManager.Instance?.PlaySFX(pickupSound);
-        }
+        else
+            SoundManager.Instance?.PlaySFX("item_pickup");
 
         if (playPickupEffect)
         {

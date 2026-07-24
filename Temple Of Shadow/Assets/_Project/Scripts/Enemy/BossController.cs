@@ -189,7 +189,7 @@ public class BossController : MonoBehaviour
                 playerHealth.TakeDamage(meleeDamage);
         }
 
-        SoundManager.Instance?.PlaySFX("enemy_attack");
+        SoundManager.Instance?.PlaySFX("boss_melee_attack");
     }
 
     private void TryRanged(float cooldownMult)
@@ -219,7 +219,7 @@ public class BossController : MonoBehaviour
             if (enemyProjectile != null)
                 enemyProjectile.Setup(facingDirection);
 
-            SoundManager.Instance?.PlaySFX("enemy_attack");
+            SoundManager.Instance?.PlaySFX("boss_ranged_attack");
 
             yield return new WaitForSeconds(volleyInterval);
         }
