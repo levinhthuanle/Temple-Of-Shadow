@@ -5,8 +5,6 @@
 
 ![Project banner placeholder — add `docs/images/00-project-banner.png`](docs/images/00-project-banner.png)
 
-> **Screenshot placeholder:** Add a wide gameplay or key-art image at `docs/images/00-project-banner.png`. A recommended size is 1600 × 600 px.
-
 ---
 
 ## Table of Contents
@@ -34,20 +32,12 @@
 
 Replace every bracketed field with the official information of each group member before submission.
 
-| No. | Student Code | Full Name | Primary Contribution |
-| --- | --- | --- | --- |
-| 1 | [Student Code 1] | [Full Name 1] | [Role / contribution] |
-| 2 | [Student Code 2] | [Full Name 2] | [Role / contribution] |
-| 3 | [Student Code 3] | [Full Name 3] | [Role / contribution] |
-| 4 | [Student Code 4] | [Full Name 4] | [Role / contribution] |
-
-| Project Detail | Information |
-| --- | --- |
-| Course | [Course name] |
-| Lecturer | [Lecturer full name] |
-| Semester | [Semester / academic year] |
-| Submission Date | [DD Month YYYY] |
-| Repository | [GitHub repository URL] |
+| No. | Student ID | Full Name | 
+| --- | --- | --- |
+| 1 | 23125019 | Le Vinh Thuan | 
+| 2 | 23125009 | Nguyen Minh Khoa | 
+| 3 | 23125066 | Nguyen Hoang Phat | 
+| 4 | [Student Code 4] | Nguyen Van Hoang Nhat | 
 
 ---
 
@@ -226,7 +216,6 @@ Victory Screen
 | Use Health Potion | `H` | Uses the first available health potion. |
 | Pause / Resume | `Esc` | Opens or closes the pause menu. |
 
-> **Note:** Controls should be tested in the final build before submission. Update this table if the Input Manager configuration changes.
 
 ---
 
@@ -326,165 +315,41 @@ Temple Of Shadow/
 
 ## Screenshot Gallery
 
-Place screenshots in `docs/images/` using the suggested filenames below. The Markdown image slots will render automatically on GitHub after the files are added. Use PNG files for consistent quality.
 
 ### 1. Main Menu
 
 ![Main menu screenshot placeholder — add `docs/images/01-main-menu.png`](docs/images/01-main-menu.png)
 
-*Show the title, background, and primary menu options.*
+
 
 ### 2. Save Slot Selection
 
 ![Save-slot screen placeholder — add `docs/images/02-save-slot-select.png`](docs/images/02-save-slot-select.png)
 
-*Show the profile or save-slot selection interface.*
+
 
 ### 3. Character Selection
 
 ![Character-selection screen placeholder — add `docs/images/03-character-select.png`](docs/images/03-character-select.png)
 
-*Show the selectable character and relevant statistics or preview.*
-
 ### 4. Shop
 
 ![Shop screen placeholder — add `docs/images/04-shop.png`](docs/images/04-shop.png)
 
-*Show the shop interface, available equipment, items, and currency display.*
 
 ### 5. Inventory
 
 ![Inventory screen placeholder — add `docs/images/05-inventory.png`](docs/images/05-inventory.png)
 
-*Show the inventory slots, consumables, weapons, armour, or rings.*
 
-### 6. Equipment and Statistics
 
-![Equipment and statistics placeholder — add `docs/images/06-equipment-stats.png`](docs/images/06-equipment-stats.png)
-
-*Show equipped items and the resulting player-stat changes.*
-
-### 7. Level 1 Gameplay
-
-![Level 1 gameplay placeholder — add `docs/images/07-level-1-gameplay.png`](docs/images/07-level-1-gameplay.png)
-
-*Show movement, platforming, or an early enemy encounter.*
-
-### 8. Level 2 Gameplay
-
-![Level 2 gameplay placeholder — add `docs/images/08-level-2-gameplay.png`](docs/images/08-level-2-gameplay.png)
-
-*Show a more difficult platforming or combat section.*
-
-### 9. Level 3 Gameplay
-
-![Level 3 gameplay placeholder — add `docs/images/09-level-3-gameplay.png`](docs/images/09-level-3-gameplay.png)
-
-*Show the final temple environment or an advanced encounter.*
-
-### 10. Combat Demonstration
-
-![Combat screenshot placeholder — add `docs/images/10-combat.png`](docs/images/10-combat.png)
-
-*Show the player using a slash, projectile, or kick against an enemy.*
-
-### 11. Boss Encounter
+### 6. Boss Encounter
 
 ![Boss encounter placeholder — add `docs/images/11-boss.png`](docs/images/11-boss.png)
 
-*Show the final boss, enemy health bar, and player combat HUD.*
 
-### 12. Pause Menu
-
-![Pause menu placeholder — add `docs/images/12-pause-menu.png`](docs/images/12-pause-menu.png)
-
-*Show the pause-menu options during a level.*
-
-### 13. Victory Screen
-
-![Victory screen placeholder — add `docs/images/13-victory.png`](docs/images/13-victory.png)
-
-*Show the level-completion or victory screen.*
-
-### Screenshot Capture Recommendations
-
-| Screenshot Type | Recommended Resolution | What to Avoid |
-| --- | --- | --- |
-| Banner / cover image | 1600 × 600 px | Debug text, editor panels, or cursor. |
-| Menu and UI screenshots | 1920 × 1080 px | Cropped buttons or unreadable text. |
-| Gameplay screenshots | 1920 × 1080 px | Paused action unless showing a menu. |
-| Inventory and shop screenshots | 1920 × 1080 px | Empty inventory when populated content is available. |
-| Boss screenshot | 1920 × 1080 px | Screens where the boss or player is obscured. |
-
----
-
-## Team Contribution Record
-
-Complete this section so that the instructor can clearly see each member's contribution.
-
-| Member | Programming | Game Design | Art / Animation | UI / Audio | Testing / Documentation |
-| --- | --- | --- | --- | --- | --- |
-| [Full Name 1] | [Contribution] | [Contribution] | [Contribution] | [Contribution] | [Contribution] |
-| [Full Name 2] | [Contribution] | [Contribution] | [Contribution] | [Contribution] | [Contribution] |
-| [Full Name 3] | [Contribution] | [Contribution] | [Contribution] | [Contribution] | [Contribution] |
-| [Full Name 4] | [Contribution] | [Contribution] | [Contribution] | [Contribution] | [Contribution] |
-
-### Suggested Contribution Examples
-
-- Player movement, combat, health, and physics systems.
-- Enemy behaviour, boss behaviour, and level goals.
-- Level construction, environment layout, and gameplay balancing.
-- Main menu, shop, inventory, pause menu, and victory UI.
-- Audio integration, sound-effect mapping, and background-music selection.
-- Asset import, animation setup, debugging, testing, and documentation.
-
----
-
-## Testing Checklist
-
-Use this checklist to validate the project before submitting it to the lecturer.
-
-### Game Flow
-
-- [ ] The Main Menu loads without errors.
-- [ ] Save-slot selection opens correctly.
-- [ ] Character selection opens correctly.
-- [ ] The Shop scene opens correctly.
-- [ ] Levels 1, 2, and 3 can be entered in sequence.
-- [ ] The victory screen appears when a level goal is completed.
-
-### Player and Combat
-
-- [ ] Horizontal movement works with the documented controls.
-- [ ] Jump and double jump work correctly.
-- [ ] Slash, projectile throw, and kick attacks work correctly.
-- [ ] Player health changes correctly after taking damage.
-- [ ] Enemy health and defeat behaviour work correctly.
-- [ ] Projectiles move and apply damage as intended.
-
-### Inventory and Equipment
-
-- [ ] The inventory opens and closes correctly.
-- [ ] Items can be collected and displayed.
-- [ ] Health potions heal the player when the player is not at full health.
-- [ ] Equipment can be assigned and changes statistics correctly.
-- [ ] Gold and shop interactions work correctly.
-
-### Final Submission Quality
-
-- [ ] No compile errors appear in the Unity Console.
-- [ ] No missing-script warnings remain in the final scenes.
-- [ ] All build scenes are enabled in Unity Build Settings.
-- [ ] Screenshots have been added to the paths listed in this README.
-- [ ] Student names, codes, course information, and resource credits are complete.
-
----
 
 ## Resources and Attribution
-
-All third-party assets must be used according to their respective licences. Replace every bracketed placeholder below with the verified source URL, author name, licence, and required credit text before submitting or publishing the project.
-
-The detailed asset record is maintained in [CREDITS.txt](CREDITS.txt). Keep both documents synchronized whenever an asset is added or replaced.
 
 ### Audio Resources
 
@@ -504,7 +369,7 @@ The detailed asset record is maintained in [CREDITS.txt](CREDITS.txt). Keep both
 | Free 2D Monster Sprites | CraftPix.net | https://craftpix.net/ | CraftPix Free License | Enemy sprite artwork. |
 | Free Slime Mobs Pixel Art Top-Down Sprite Pack | CraftPix.net | https://craftpix.net/ | CraftPix Free License | Slime, boss, and bat enemy visuals. |
 
-> **Attribution reminder:** CraftPix free assets and the JDSherbert UI pack require attribution. Confirm the latest licence text for each downloaded pack and include the exact required credit in the final report, README, and/or in-game credits as appropriate.
+
 
 ### Game Design Inspirations
 
@@ -514,25 +379,6 @@ The original project brief identifies the following titles as gameplay and artis
 - **Hollow Knight**
 - **Castlevania**
 
-These titles are referenced as creative inspiration only. Add any required links or academic citations below if requested by the course:
-
-- [Magic Rampage reference URL]
-- [Hollow Knight reference URL]
-- [Castlevania reference URL]
-
+These titles are referenced as creative inspiration only. 
 ---
 
-## Submission Checklist
-
-- [ ] Replace all team-member placeholders with official student codes and full names.
-- [ ] Complete the course, lecturer, semester, date, and repository fields.
-- [ ] Fill in the team-contribution record.
-- [ ] Add every screenshot listed in the screenshot gallery.
-- [ ] Complete missing source URLs, authors, licences, and attribution text.
-- [ ] Verify the project in Unity `6000.3.16f1`.
-- [ ] Build and test the Windows Standalone version.
-- [ ] Confirm that the Unity Console has no unresolved errors before submission.
-
----
-
-**Temple of Shadow** — Midterm Project for the Game Development Course.
