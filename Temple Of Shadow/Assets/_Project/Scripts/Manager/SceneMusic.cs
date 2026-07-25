@@ -5,11 +5,18 @@ public class SceneMusic : MonoBehaviour
     [SerializeField] private string bgmKey;
     [SerializeField] private bool loop = true;
 
-    private void Start()
+private System.Collections.IEnumerator Start()
     {
-        if (!string.IsNullOrWhiteSpace(bgmKey))
+        if (string.IsNullOrWhiteSpace(bgmKey))
         {
-            SoundManager.Instance?.PlayBGM(bgmKey, loop);
+            yield break;
         }
+
+        while (SoundManager.Instance == null)
+        {
+            yield return null;
+        }
+
+        SoundManager.Instance.PlayBGM(bgmKey, loop);
     }
 }

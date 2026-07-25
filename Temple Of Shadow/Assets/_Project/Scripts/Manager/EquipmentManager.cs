@@ -226,17 +226,13 @@ public class EquipmentManager : MonoBehaviour
         }
     }
 
-    private void RefreshEquipmentUI()
+private void RefreshEquipmentUI()
     {
         ResolveEquipmentUI();
-
-        if (equipmentUI == null)
+        if (equipmentUI != null)
         {
-            Debug.LogWarning("[EquipmentManager] Missing EquipmentUI. Add EquipmentUI to the scene or assign it in the Inspector.");
-            return;
+            equipmentUI.Refresh();
         }
-
-        equipmentUI.Refresh();
     }
 
     private void HandleEquipmentStateChanged()

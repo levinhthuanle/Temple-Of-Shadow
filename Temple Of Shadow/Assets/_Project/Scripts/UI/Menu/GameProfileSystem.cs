@@ -238,13 +238,32 @@ public static class GameSession
     public static GameProfileData CurrentProfile { get; private set; }
     public static GameContentCatalog Catalog { get; private set; }
 
-    public static GameProfileData SelectSlot(int slotIndex)
+public static GameProfileData SelectSlot(int slotIndex)
     {
         Catalog = GameContentCatalog.Load();
         CurrentProfile = GameProfileStore.LoadOrCreate(slotIndex, Catalog);
+        EnsureDefaultLevelsUnlocked(CurrentProfile, Catalog);
         GameProfileStore.Save(CurrentProfile);
         return CurrentProfile;
     }
+
+private static void EnsureDefaultLevelsUnlocked(GameProfileData profile, GameContentCatalog catalog)
+    {
+        if (profile == null || catalog == null)
+        {
+            return;
+        }
+
+        profile.unlockedLevelIds ??= new List<string>();
+        foreach (LevelMenuEntry level in catalog.levels)
+        {
+            if (level != null && level.unlockedByDefault && !profile.IsLevelUnlocked(level.Id))
+            {
+                profile.unlockedLevelIds.Add(level.Id);
+            }
+        }
+    }
+
 
     public static GameProfileData EnsureProfile()
     {
