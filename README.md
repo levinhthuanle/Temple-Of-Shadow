@@ -37,7 +37,7 @@ Replace every bracketed field with the official information of each group member
 | 1 | 23125019 | Le Vinh Thuan | 
 | 2 | 23125009 | Nguyen Minh Khoa | 
 | 3 | 23125066 | Nguyen Hoang Phat | 
-| 4 | [Student Code 4] | Nguyen Van Hoang Nhat | 
+| 4 | 23125043 | Nguyen Van Hoang Nhat | 
 
 ---
 
