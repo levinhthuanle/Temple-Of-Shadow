@@ -3,7 +3,9 @@
 > **Midterm Project — Game Development Course**
 > A 2D action-adventure platformer developed with Unity.
 
-![Project banner placeholder — add `docs/images/00-project-banner.png`](docs/images/00-project-banner.png)
+![Temple of Shadow project banner](docs/images/00-project-banner.png)
+
+[Watch the gameplay trailer on YouTube](https://www.youtube.com/watch?v=SmO4qc1t2Nc)
 
 ---
 
@@ -21,23 +23,18 @@
 - [Project Structure](#project-structure)
 - [How to Run the Project](#how-to-run-the-project)
 - [Screenshot Gallery](#screenshot-gallery)
-- [Team Contribution Record](#team-contribution-record)
-- [Testing Checklist](#testing-checklist)
 - [Resources and Attribution](#resources-and-attribution)
-- [Submission Checklist](#submission-checklist)
 
 ---
 
 ## Team Members
 
-Replace every bracketed field with the official information of each group member before submission.
-
-| No. | Student ID | Full Name | 
+| No. | Student ID | Full Name |
 | --- | --- | --- |
-| 1 | 23125019 | Le Vinh Thuan | 
-| 2 | 23125009 | Nguyen Minh Khoa | 
-| 3 | 23125066 | Nguyen Hoang Phat | 
-| 4 | [Student Code 4] | Nguyen Van Hoang Nhat | 
+| 1 | 23125019 | Le Vinh Thuan |
+| 2 | 23125009 | Nguyen Minh Khoa |
+| 3 | 23125066 | Nguyen Hoang Phat |
+| 4 | 23125043 | Nguyen Van Hoang Nhat |
 
 ---
 
@@ -315,39 +312,29 @@ Temple Of Shadow/
 
 ## Screenshot Gallery
 
-
 ### 1. Main Menu
 
-![Main menu screenshot placeholder — add `docs/images/01-main-menu.png`](docs/images/01-main-menu.png)
-
-
+![Temple of Shadow main menu](docs/images/01-main-menu.png)
 
 ### 2. Save Slot Selection
 
-![Save-slot screen placeholder — add `docs/images/02-save-slot-select.png`](docs/images/02-save-slot-select.png)
-
-
+![Save-slot selection screen](docs/images/02-save-slot-select.png)
 
 ### 3. Character Selection
 
-![Character-selection screen placeholder — add `docs/images/03-character-select.png`](docs/images/03-character-select.png)
+![Character preparation and selection screen](docs/images/03-character-select.png)
 
 ### 4. Shop
 
-![Shop screen placeholder — add `docs/images/04-shop.png`](docs/images/04-shop.png)
-
+![Shop and purchasing interface](docs/images/04-shop.png)
 
 ### 5. Inventory
 
-![Inventory screen placeholder — add `docs/images/05-inventory.png`](docs/images/05-inventory.png)
-
-
+![Inventory, equipment, and character statistics](docs/images/05-inventory.png)
 
 ### 6. Boss Encounter
 
-![Boss encounter placeholder — add `docs/images/11-boss.png`](docs/images/11-boss.png)
-
-
+![Level 3 boss encounter](docs/images/11-boss.png)
 
 ## Resources and Attribution
 
@@ -355,21 +342,19 @@ Temple Of Shadow/
 
 | Resource | Author | Source | Licence | Used For |
 | --- | --- | --- | --- | --- |
-| RPG Essentials SFX | [Author name] | [Source URL] | [Licence] | Gameplay and interface sound effects. |
-| Ultimate UI SFX Pack | JDSherbert | [Source URL] | [Licence] | User-interface sounds. Attribution required; include the exact wording from the licence. |
-| Jump SFX | Ambroggio | [Source URL] | [Licence] | Player jump sounds. |
-| Super Dialogue Audio Pack | [Author name] | [Source URL] | [Licence] | Damage, death, and dialogue cues. |
-| 16-bit Fantasy & Adventure Music (2025) | xDeviruchi | [Source URL or bundled-pack reference] | [Exact licence text] | Menu, forest, dungeon, boss, and shop music. |
-| 16 Monster Growls | StarNinjas | https://opengameart.org/content/16-monster-growls | CC0 | Enemy hurt and death vocal variations. |
+| RPG Essentials SFX | Leohpaz | [Official page](https://leohpaz.itch.io/rpg-essentials-sfx-free) | Free for commercial and non-commercial projects; credit optional; redistribution prohibited | Gameplay and interface sound effects. |
+| Ultimate UI SFX Pack | JDSherbert | [Official page](https://jdsherbert.itch.io/ultimate-ui-sfx-pack) | Royalty-free; visible credit to JDSherbert required; redistribution prohibited | User-interface sounds. Retain the included `LICENSE.pdf`. |
+| Jump SFX | AmbroggioMusic | [Official page](https://ambroggiomusic.itch.io/jump-sfx) | Free project use with credit; confirm the terms included with the downloaded pack | Retained in the repository; the current jump event uses RPG Essentials SFX. |
+| Super Dialogue Audio Pack | Dillon Becker | [Official page](https://dillonbecker.itch.io/sdap) | [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/) | Damage, death, and dialogue cues; credit Dillon Becker. |
+| 16-bit Fantasy & Adventure Music (2025) | Marllon Silva (xDeviruchi) | [Official page](https://xdeviruchi.itch.io/16-bit-fantasy-adventure-music-pack) | Commercial and non-commercial project use; credit optional; redistribution, resale, OST release, AI training, and claims of authorship prohibited | Menu, forest, dungeon, boss, and shop music. |
+| 16 Monster Growls | StarNinjas | [OpenGameArt page](https://opengameart.org/content/16-monster-growls) | CC0 | Enemy hurt and death vocal variations. |
 
 ### Art Resources
 
 | Resource | Author | Source | Licence | Used For |
 | --- | --- | --- | --- | --- |
-| Free 2D Monster Sprites | CraftPix.net | https://craftpix.net/ | CraftPix Free License | Enemy sprite artwork. |
-| Free Slime Mobs Pixel Art Top-Down Sprite Pack | CraftPix.net | https://craftpix.net/ | CraftPix Free License | Slime, boss, and bat enemy visuals. |
-
-
+| Free 2D Monster Sprites | CraftPix.net | [Official page](https://craftpix.net/freebies/free-2d-monster-sprites/) | [CraftPix Freebie License](https://craftpix.net/file-licenses/); attribution optional; source-art redistribution prohibited | Enemy sprite artwork. |
+| Free Slime Mobs Pixel Art Top-Down Sprite Pack | CraftPix.net | [Official page](https://craftpix.net/freebies/free-slime-mobs-pixel-art-top-down-sprite-pack/) | [CraftPix Freebie License](https://craftpix.net/file-licenses/); attribution optional; source-art redistribution prohibited | Flaming slime enemy visuals. |
 
 ### Game Design Inspirations
 
@@ -379,6 +364,7 @@ The original project brief identifies the following titles as gameplay and artis
 - **Hollow Knight**
 - **Castlevania**
 
-These titles are referenced as creative inspiration only. 
+These titles are referenced as creative inspiration only.
+
 ---
 
